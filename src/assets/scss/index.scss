@@ -1,0 +1,52 @@
+*, *::after, *::before {
+  box-sizing: border-box;
+
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+
+  color: black;
+}
+
+button {
+  border: none;
+}
+
+li {
+  list-style-type: none;
+}
+
+:root {
+  --button2: colors.$button2;
+
+  font-family: "Montserrat", Helvetica, Arial, sans-serif;
+
+  color: black;
+  background-color: colors.$bg;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  box-sizing: border-box;
+
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px;
+
+  font-family: "Montserrat", Helvetica, Arial, sans-serif;
+  text-align: center;
+
+  background-color: colors.$bg;
+}
+
+.main {
+  margin: 0 auto;
+}
