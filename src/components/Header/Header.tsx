@@ -1,12 +1,5 @@
 import { Link } from "react-router";
-import type Product from "../../types/Product";
 import styles from "./Header.module.scss";
-
-interface MenuNavProps {
-  searchFocused: boolean;
-  handleBackBtnClick: () => void;
-  setVisibleProducts: React.Dispatch<React.SetStateAction<Product[]>>;
-}
 
 export function Header() {
   return (

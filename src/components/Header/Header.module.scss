@@ -18,6 +18,22 @@
       border-radius: 16px;
 
       box-shadow: buttons.$btn-shadow;
+      cursor: pointer;
+    }
+
+    .loginBtn:hover {
+      box-shadow: none;
+    }
+
+    .loginBtn:active {
+      background-color: colors.$button2Pressed;
+      box-shadow: none;
+    }
+
+    .loginBtn:disabled {
+      background-color: colors.$disabled;
+      box-shadow: none;
+      color: colors.$disabled;
     }
   }
 
