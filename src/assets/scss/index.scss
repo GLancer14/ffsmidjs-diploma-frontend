@@ -37,9 +37,8 @@ li {
   box-sizing: border-box;
 
   width: 100%;
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 40px;
+  padding-top: 40px;
 
   font-family: "Montserrat", Helvetica, Arial, sans-serif;
   text-align: center;
@@ -48,5 +47,6 @@ li {
 }
 
 .main {
+  width: 1280px;
   margin: 0 auto;
 }

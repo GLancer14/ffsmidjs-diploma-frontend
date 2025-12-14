@@ -1,0 +1,109 @@
+.wrp {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  gap: 38px;
+  width: 515px;
+  height: 490px;
+  padding: 32px;
+
+  background-color: colors.$cardBg;
+  border: 1px solid colors.$textAndBorder;
+  border-radius: 32px;
+
+  .cover {
+    width: 140px;
+    align-self: flex-start;
+
+    object-fit:fill;
+  }
+
+  .dataWrp {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: calc(100% - 178px);
+    height: 332px;
+
+    .title {
+      margin-bottom: 16px;
+
+      font: text.$h3;
+    }
+
+    .data {
+      margin-bottom: 8px;
+
+      text-align: left;
+
+      vertical-align: top;
+
+      .field {
+        margin-right: 16px;
+        margin-bottom: 4px;
+
+        font: text.$textP;
+        // text-overflow: ellipsis;
+        // overflow: hidden;
+
+        color: colors.$placeholder;
+      }
+    }
+
+    .dataDesc {
+      margin-bottom: 8px;
+
+      text-align: left;
+      text-overflow: ellipsis;
+
+      overflow: hidden;
+
+      vertical-align: top;
+
+      .field {
+        margin-right: 16px;
+        margin-bottom: 4px;
+
+        font: text.$textP;
+
+        color: colors.$placeholder;
+      }
+    }
+    
+  }
+
+  .rentBtn {
+    align-self: center;;
+    width: 300px;
+    height: 50px;
+    margin: 0 auto;
+    padding: 16px 24px;
+
+    font: text.$buttonText;
+    text-align: center;
+
+    background-color: colors.$button1;
+    box-shadow: buttons.$btn-shadow;
+    vertical-align: middle;
+    border-radius: 16px;
+    
+    cursor: pointer;
+  }
+
+  .rentBtn:hover {
+    box-shadow: none;
+  }
+
+  .rentBtn:active {
+    background-color: colors.$button1Pressed;
+    box-shadow: none;
+  }
+
+  .rentBtn:disabled {
+    background-color: colors.$disabled;
+    box-shadow: none;
+    color: colors.$disabled;
+  }
+}
+

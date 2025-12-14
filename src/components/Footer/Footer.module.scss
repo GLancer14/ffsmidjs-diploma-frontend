@@ -1,0 +1,50 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  margin-top: 200px;
+  padding: 40px 0;
+
+
+  background-image: 
+    url("../../assets/amorphous-shape-1.svg"),
+    url("../../assets/amorphous-shape-2.svg");
+  background-repeat: no-repeat;
+  background-position:
+    top -80px right -270px,
+    bottom -100px left -40px;
+  background-color: colors.$accentBg;
+  border: 1px solid colors.$textAndBorder;
+  border-radius: 32px 32px 0 0;
+
+  .logo {
+    margin-bottom: 40px;
+
+    font: text.$logo;
+  }
+
+  .social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+
+    .iconLink {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70px;
+      height: 70px;
+
+      background-color: colors.$button2;
+      border-radius: 50%;
+    }
+  }
+
+  .policy {
+    margin-top: auto;
+
+    font: text.$footerText;
+  }
+
+}
