@@ -1,7 +1,6 @@
-import { Link } from "react-router";
 import styles from "./BookCard.module.scss";
-import { useState } from "react";
-import classNames from "classnames";
+import { useEffect, useRef } from "react";
+import { applyDynamicEllipsis } from "../../utils/dynamicEllipsis";
 
 export interface BookCardProps {
   title: string;
@@ -20,6 +19,14 @@ export function BookCard({
   year,
   description
 }: BookCardProps) {
+  const bookDescriptionElement = useRef(null);
+
+  useEffect(() => {
+    if (bookDescriptionElement.current) {
+      applyDynamicEllipsis(bookDescriptionElement.current);
+    }
+  })
+
   return (
     <div className={styles.wrp}>
       <img
@@ -28,22 +35,24 @@ export function BookCard({
         alt="обложка книги"
       />
       <div className={styles.dataWrp}>
-        <div className={styles.title}>{title}</div>
-        <div className={styles.data}>
-          <span className={styles.field}>Автор: </span>{author}
+        <div className={styles.title}>
+          <span>{title}</span>
         </div>
         <div className={styles.data}>
-          <span className={styles.field}>Год: </span>{year}
+          <span className={styles.field}>Автор: </span>
+          <span>{author}</span>
+        </div>
+        <div className={styles.data}>
+          <span className={styles.field}>Год: </span>
+          <span>{year}</span>
         </div>
         <div className={styles.dataDesc}>
-          <span className={styles.field}>Описание: </span>
-          <br />
-          {description}
+          <span className={styles.fieldDesc}>Описание: </span>
+          <span className={styles.content}ref={bookDescriptionElement}>{description}</span>
         </div>
-        <div className={styles.data}>
+        <div className={styles.dataLibrary}>
           <span className={styles.field}>Библиотека: </span>
-          <br />
-          {library}
+          <span>{library}</span>
         </div>
       </div>
       <button className={styles.rentBtn}>Забронировать</button>

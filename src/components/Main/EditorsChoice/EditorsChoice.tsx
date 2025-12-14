@@ -1,8 +1,8 @@
-import { Link } from "react-router";
 import styles from "./EditorsChoice.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getEditorsChoiceBooks } from "../../../api/books";
 import { BookCard } from "../../BookCard/BookCard";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
 export interface Book {
   title: string;
@@ -19,10 +19,25 @@ export interface Book {
 
 export function EditorsChoice() {
   const [books, setBooks] = useState<Book[]>([]);
+  const booksRef = useRef(null);
 
   async function getChoosedBooks() {
     const booksFromApi = await getEditorsChoiceBooks();
     setBooks(booksFromApi);
+  }
+
+  function handleScrollRight(element: any) {
+    element.scrollBy({
+      left: -547,
+      behavior: "smooth",
+    })
+  }
+
+  function handleScrollLeft(element: any) {
+    element.scrollBy({
+      left: 547,
+      behavior: "smooth",
+    })
   }
 
   useEffect(() => {
@@ -32,7 +47,7 @@ export function EditorsChoice() {
   return (
     <div className={styles.wrp}>
       <header className={styles.header}>Выбор редакции</header>
-      <div className={styles.books}>
+      <div className={styles.books} ref={booksRef}>
         {books.map(book => {
           return (
             <BookCard
@@ -45,6 +60,30 @@ export function EditorsChoice() {
             />
           );
         })}
+      </div>
+      <div className={styles.buttons}>
+        <button
+          className={styles.forward}
+          onClick={() => {
+            handleScrollRight(booksRef.current)
+          }}
+        >
+          <ArrowBigLeft 
+            className={styles.icon}
+            size={24}
+          />
+        </button>
+        <button 
+          className={styles.backward}
+          onClick={() => {
+            handleScrollLeft(booksRef.current)
+          }}
+        >
+          <ArrowBigRight 
+            className={styles.icon}
+            size={24}
+          />
+        </button>
       </div>
     </div>
   );

@@ -14,19 +14,16 @@ export const getEditorsChoiceBooks = async () => {
   try {
     const projectData = await connection.get("/api/common/books", {
       params: {
-        author: "Антон Чехов",
+        library: 4,
+        author: "Федор Достоевский",
       }
     });
-    console.log(projectData)
 
     return projectData.data;
   } catch(e) {
-    console.log(e)
     if (request.isAxiosError(e)) {
-      if (e.response?.status === 404) {
-        return { message: "not found", status: "error" };
-      } else if (e.response?.status === 403) {
-        return { message: "forbidden", status: "error" };
+      if (e.response) {
+        return e.response.data;
       }
     }
 

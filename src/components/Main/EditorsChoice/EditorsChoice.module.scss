@@ -13,6 +13,43 @@
     flex-direction: row;
     gap: 32px;
 
-    overflow-x: scroll;
+    overflow: scroll;
+    scrollbar-width: none;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 40px;
+
+    .forward {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+
+      background-color: colors.$button1;
+      border-radius: 50%;
+      box-shadow: buttons.$btn-shadow;
+
+      cursor: pointer;
+    }
+
+    .backward {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      margin-left: 10px;
+
+      background-color: colors.$button1;
+      border-radius: 50%;
+      box-shadow: buttons.$btn-shadow;
+
+      cursor: pointer;
+    }
   }
 }
