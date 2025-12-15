@@ -1,6 +1,6 @@
-import styles from "./EditorsChoice.module.scss";
+import styles from "./NewIncomings.module.scss";
 import { useEffect, useRef, useState } from "react";
-import { getEditorsChoiceBooks } from "../../../api/books";
+import { getNewIncomings } from "../../../api/books";
 import { BookCard } from "../../BookCard/BookCard";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
@@ -17,12 +17,12 @@ export interface Book {
   availableCopies: number;
 }
 
-export function EditorsChoice() {
+export function NewIncomings() {
   const [books, setBooks] = useState<Book[]>([]);
   const booksRef = useRef(null);
 
   async function getChoosedBooks() {
-    const booksFromApi = await getEditorsChoiceBooks();
+    const booksFromApi = await getNewIncomings();
     setBooks(booksFromApi);
   }
 
@@ -48,7 +48,7 @@ export function EditorsChoice() {
 
   return (
     <div className={styles.wrp}>
-      <header className={styles.header}>Выбор редакции</header>
+      <header className={styles.header}>Новые поступления</header>
       <div className={styles.books} ref={booksRef}>
         {books.map(book => {
           return (

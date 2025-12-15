@@ -12,7 +12,6 @@ export function applyDynamicEllipsis(element: HTMLElement, lineHeight = 1.5) {
       element.style.display = "-webkit-box";
       element.style.webkitBoxOrient = "vertical";
     }
-    console.log(element.style.webkitLineClamp)
   }
   ;
 }

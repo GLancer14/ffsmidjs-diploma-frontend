@@ -1,6 +1,6 @@
-import styles from "./BookCard.module.scss";
+import styles from "./SmallBookCard.module.scss";
 import { useEffect, useRef } from "react";
-import { applyDynamicEllipsis } from "../../utils/dynamicEllipsis";
+import { applyDynamicEllipsis } from "../../../utils/dynamicEllipsis";
 
 export interface BookCardProps {
   width?: number;
@@ -12,7 +12,7 @@ export interface BookCardProps {
   description?: string;
 }
 
-export function BookCard({
+export function SmallBookCard({
   width,
   title,
   author,

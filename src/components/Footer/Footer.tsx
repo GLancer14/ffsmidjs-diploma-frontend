@@ -8,9 +8,9 @@ import { Link } from "react-router";
 
 export function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} id="footer">
       <div className={styles.logo}>
-        <Link to="/">LOGO</Link>
+        <Link to="#">LOGO</Link>
       </div>
       <div className={styles.social}>
         <a className={styles.iconLink} href="#">

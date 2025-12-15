@@ -1,4 +1,4 @@
-import "./customCalendar.scss";
+import "./CustomCalendar.scss";
 import { X } from "lucide-react";
 import { useState } from "react";
 import Calendar from "react-calendar";
@@ -31,11 +31,17 @@ export function CustomCalendar({
       display: visibility ? "block" : "none"
     }}>
       <div className="custom-calendar_header">
-        {value?.toLocaleString("ru-RU", {
-          weekday: "short",
-          day: "numeric",
-          month: "long",
-        })}
+        {value === null ? (new Date()).toLocaleString("ru-RU", {
+            weekday: "short",
+            day: "numeric",
+            month: "long",
+          }) : 
+          value?.toLocaleString("ru-RU", {
+            weekday: "short",
+            day: "numeric",
+            month: "long",
+          })
+        }
         <X
           className="custom-calendar_header_close-btn"
           color={"black"}

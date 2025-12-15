@@ -1,0 +1,52 @@
+.wrp {
+  width: 100vw;
+  margin-top: 160px;
+  margin-right: calc((1280px - 100vw) / 2);
+  margin-left: calc((1280px - 100vw) / 2);
+  padding: 84px 0;
+
+  background-image: url("../../../assets/amorphous-shape-3.svg");
+  background-repeat: no-repeat;
+  background-position: top -60px right 245px;
+  background-color: colors.$accentBg;
+  border: 1px solid colors.$textAndBorder;
+  border-radius: 32px;
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 9%;
+    width: 1280px;
+    margin: 0 auto;
+
+    .text {
+      width: 57%;
+
+      .header {
+        margin-bottom: 24px;
+
+        font: text.$h1h2;
+        text-align: left;
+      }
+
+      .description {
+        p {
+          margin-bottom: 24px;
+
+          font: text.$textPv2;
+          text-align: left;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+        
+      }
+    }
+
+    .stackImage {
+      width: 34%;
+    }
+  }
+}

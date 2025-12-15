@@ -7,7 +7,12 @@
   margin: 0 auto;
 
   .authWrp {
-    .loginBtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+
+    .authBtn {
       width: 190px;
       height: 50px;
       padding: 16px 24px;
@@ -22,16 +27,16 @@
       cursor: pointer;
     }
 
-    .loginBtn:hover {
+    .authBtn:hover {
       box-shadow: none;
     }
 
-    .loginBtn:active {
+    .authBtn:active {
       background-color: colors.$button2Pressed;
       box-shadow: none;
     }
 
-    .loginBtn:disabled {
+    .authBtn:disabled {
       background-color: colors.$disabled;
       box-shadow: none;
       color: colors.$disabled;

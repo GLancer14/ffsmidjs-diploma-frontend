@@ -1,0 +1,17 @@
+.wrp {
+  width: 1280px;
+  margin-top: 120px;
+
+  .header {
+    font: text.$h1h2;
+    text-align: left;
+  }
+
+  .books {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-top: 40px;
+  }
+}
