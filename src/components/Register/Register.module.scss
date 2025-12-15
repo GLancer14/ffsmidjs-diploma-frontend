@@ -32,7 +32,7 @@
       }
     }
 
-    .input:first-of-type {
+    .input:nth-of-type(n + 1) {
       margin-bottom: 32px;
     }
 
@@ -70,10 +70,10 @@
     }
   }
 
-  .register {
+  .login {
     width: 100%;
 
-    .registerBtn {
+    .loginBtn {
       font: inherit;
 
       background-color: transparent;
