@@ -53,6 +53,8 @@ export function NewIncomings() {
         {books.map(book => {
           return (
             <BookCard
+              id={book.id}
+              key={book.id}
               title={book.title}
               author={book.author}
               library={book.libraryId}

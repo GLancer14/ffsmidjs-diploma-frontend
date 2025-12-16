@@ -5,12 +5,13 @@ import tg from "../../assets/social-telegram.svg";
 import yt from "../../assets/social-youtube.svg";
 import ok from "../../assets/social-odnoklassniki.svg";
 import { Link } from "react-router";
+import { HashLink } from "react-router-hash-link";
 
 export function Footer() {
   return (
     <footer className={styles.footer} id="footer">
       <div className={styles.logo}>
-        <Link to="#">LOGO</Link>
+        <HashLink smooth to="/#">LOGO</HashLink>
       </div>
       <div className={styles.social}>
         <a className={styles.iconLink} href="#">

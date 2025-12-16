@@ -53,6 +53,8 @@ export function EditorsChoice() {
         {books.map(book => {
           return (
             <BookCard
+              key={book.id}
+              id={book.id}
               title={book.title}
               author={book.author}
               library={book.libraryId}

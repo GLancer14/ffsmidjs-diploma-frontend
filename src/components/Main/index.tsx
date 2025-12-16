@@ -15,7 +15,7 @@ export function MainLayout() {
         <EditorsChoice />
         <AboutUs />
         <NewIncomings />
-        <LibrariesOnMap />
+        {/* <LibrariesOnMap /> */}
       </main>
       <Footer />
     </>

@@ -33,7 +33,10 @@ export const booksSearchSlice = createSlice({
   reducers: {
     updateFoundBooks: (state, action: PayloadAction<Book[]>) => {
       return action.payload;
-    }
+    },
+    // updateFoundBookForRent: (state, action: PayloadAction<Book>) => {
+    //   state = [action.payload];
+    // }
   }
 });
 

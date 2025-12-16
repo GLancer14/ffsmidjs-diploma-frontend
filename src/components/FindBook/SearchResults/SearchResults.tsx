@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../../hooks/reduxHook";
-import { SmallBookCard } from "../SmallBookCard/SmallBookCard";
+import { BookCard } from "../../BookCard/BookCard";
 import styles from "./SearchResults.module.scss";
 
 export function SearchResults() {
@@ -11,9 +11,10 @@ export function SearchResults() {
       <div className={styles.books}>
         {searchedBooks.map(book => {
             return (
-              <SmallBookCard
+              <BookCard
+                id={book.id}
                 key={book.id}
-                width={405}
+                type="small"
                 title={book.title}
                 author={book.author}
                 library={book.libraryId}
