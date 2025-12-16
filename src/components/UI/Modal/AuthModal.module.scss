@@ -10,7 +10,7 @@
   width: 100vw;
   height: 100vh;
 
-  background-color: rgba(0, 0, 0, 0.5);
+  animation: 1000ms shading linear;
 
   .content {
     position: relative;
@@ -21,6 +21,8 @@
     border-radius: 32px;
     border: 1px solid colors.$textAndBorder;
     background-color: colors.$bg;
+    
+    animation: 1000ms rollout ease-in-out;
 
     .close {
       position: absolute;
@@ -32,5 +34,60 @@
 
       cursor: pointer;
     }
+  }
+
+  &.notVisible {
+    display: none;
+
+    animation: 1000ms notVisible linear;
+
+    .content {
+      animation: 1000ms rollIn ease-in-out;
+    }
+  }
+}
+
+@keyframes rollout {
+  0% {
+    position: absolute;
+    left: -842px;
+  }
+
+  100% {
+    position: relative;
+    left: 0;
+  }
+}
+
+@keyframes rollIn {
+  0% {
+    position: relative;
+    left: 0;
+  }
+
+  100% {
+    position: absolute;
+    left: -842px;
+  }
+}
+
+@keyframes shading {
+  0% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+@keyframes notVisible {
+  0% {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  100% {
+    display: none;
+    background-color: rgba(0, 0, 0, 0);
   }
 }
