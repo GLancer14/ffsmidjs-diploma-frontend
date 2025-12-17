@@ -35,7 +35,7 @@ export const getNewIncomings = async () => {
   try {
     const projectData = await connection.get("/api/common/books", {
       params: {
-        library: 6,
+        library: 3,
         author: "Антон Чехов",
       }
     });
@@ -58,7 +58,6 @@ export const findBooks = async (title: string, author: string) => {
       params: {
         title,
         author,
-        availableOnly: true,
       }
     });
 

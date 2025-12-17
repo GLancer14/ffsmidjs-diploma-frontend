@@ -1,17 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import type { Book } from "../../types/books";
 
-export interface Book {
-  id: number;
-  libraryId: number;
-  title: string;
-  author: string;
-  coverImage?: string;
-  year?: number;
-  description?: string;
-  totalCopies?: number;
-  availableCopies?: number;
-}
+// export interface Book {
+//   id: number;
+//   libraryId: number;
+//   title: string;
+//   author: string;
+//   coverImage?: string;
+//   year?: number;
+//   description?: string;
+//   totalCopies?: number;
+//   availableCopies?: number;
+// }
 
 const initialState: Book[] = [
   // {

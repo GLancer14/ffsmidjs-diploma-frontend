@@ -174,21 +174,21 @@
       border-radius: 16px;
       
       cursor: pointer;
-    }
 
-    .findBtn:hover {
-      box-shadow: none;
-    }
+      &:hover {
+        box-shadow: none;
+      }
 
-    .findBtn:active {
-      background-color: colors.$button1Pressed;
-      box-shadow: none;
-    }
+      &:active {
+        background-color: colors.$button1Pressed;
+        box-shadow: none;
+      }
 
-    .findBtn:disabled {
-      background-color: colors.$disabled;
-      box-shadow: none;
-      color: colors.$disabled;
+      &:disabled {
+        background-color: colors.$disabled;
+        box-shadow: none;
+        color: colors.$disabled;
+      }
     }
   }
 

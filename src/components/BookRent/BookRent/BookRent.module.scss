@@ -1,4 +1,4 @@
-.wrp {
+.form {
   margin-top: 120px;
 
   .header {
@@ -38,6 +38,17 @@
       border: 1px solid colors.$textAndBorder;
       border-radius: 32px;
 
+      cursor: pointer;
+
+      .radio {
+        position: fixed;
+        transform: scale(0);
+
+        &:checked {
+          background-color: colors.$cardBg;
+        }
+      }
+
       .text {
         flex-grow: 1;
 
@@ -63,6 +74,43 @@
         gap: 8px;
         flex-grow: 1;
       }
+    }
+  }
+
+  .dateRange {
+    margin-top: 120px;
+  }
+
+  .submit {
+    align-self: center;;
+    width: 400px;
+    height: 50px;
+    margin-top: 160px;
+    padding: 16px 24px;
+
+    font: text.$buttonText;
+    text-align: center;
+
+    background-color: colors.$button1;
+    box-shadow: buttons.$btn-shadow;
+    vertical-align: middle;
+    border-radius: 16px;
+    
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: none;
+    }
+
+    &:active {
+      background-color: colors.$button1Pressed;
+      box-shadow: none;
+    }
+
+    &:disabled {
+      background-color: colors.$disabled;
+      box-shadow: none;
+      color: colors.$disabled;
     }
   }
 }

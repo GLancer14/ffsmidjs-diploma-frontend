@@ -9,7 +9,7 @@ export interface BookCardProps {
   type?: "regular" | "small" | "rent";
   title: string;
   author: string;
-  library: number;
+  library: string | number;
   cover?: string;
   year?: number;
   description?: string;
@@ -38,6 +38,20 @@ export function BookCard({
     }
   });
 
+  let librariesBlock;
+  if (type === "regular") {
+    librariesBlock = (<div className={styles.dataLibrary}>
+      <span className={styles.field}>Библиотека: </span>
+      <span>{library}</span>
+    </div>);
+  } else if (type === "small") {
+    librariesBlock = (<div className={styles.dataLibrary}>
+      <span className={styles.field}>Доступна в {library} библиотеке(ах)</span>
+    </div>);
+  } else {
+    librariesBlock = null;
+  }
+
   return (
     <div className={classNames(styles.wrp, styles[type])} >
       <img
@@ -61,13 +75,7 @@ export function BookCard({
           <span className={styles.fieldDesc}>Описание: </span>
           <span className={styles.content}ref={bookDescriptionElement}>{description}</span>
         </div>
-        {type !== "rent" && 
-          (<div className={styles.dataLibrary}>
-            <span className={styles.field}>Библиотека: </span>
-            <span>{library}</span>
-          </div>)
-        }
-        
+        {librariesBlock}
       </div>
       {type !== "rent" &&
         <button

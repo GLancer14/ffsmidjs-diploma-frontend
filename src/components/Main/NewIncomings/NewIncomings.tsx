@@ -3,19 +3,20 @@ import { useEffect, useRef, useState } from "react";
 import { getNewIncomings } from "../../../api/books";
 import { BookCard } from "../../BookCard/BookCard";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
+import type { Book } from "../../../types/books";
 
-export interface Book {
-  title: string;
-  description?: string;
-  libraryId: number;
-  author: string;
-  year?: number;
-  totalCopies: number;
-  id: number;
-  coverImage?: string;
-  isAvailable: boolean;
-  availableCopies: number;
-}
+// export interface Book {
+//   title: string;
+//   description?: string;
+//   libraryId: number;
+//   author: string;
+//   year?: number;
+//   totalCopies: number;
+//   id: number;
+//   coverImage?: string;
+//   isAvailable: boolean;
+//   availableCopies: number;
+// }
 
 export function NewIncomings() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -57,7 +58,7 @@ export function NewIncomings() {
               key={book.id}
               title={book.title}
               author={book.author}
-              library={book.libraryId}
+              library={book.library[0].library.name}
               cover={book.coverImage}
               year={book.year}
               description={book.description}

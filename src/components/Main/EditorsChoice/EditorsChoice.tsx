@@ -3,19 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { getEditorsChoiceBooks } from "../../../api/books";
 import { BookCard } from "../../BookCard/BookCard";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
-
-export interface Book {
-  title: string;
-  description?: string;
-  libraryId: number;
-  author: string;
-  year?: number;
-  totalCopies: number;
-  id: number;
-  coverImage?: string;
-  isAvailable: boolean;
-  availableCopies: number;
-}
+import type { Book } from "../../../types/books";
 
 export function EditorsChoice() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -57,7 +45,7 @@ export function EditorsChoice() {
               id={book.id}
               title={book.title}
               author={book.author}
-              library={book.libraryId}
+              library={book.library[0].library.name}
               cover={book.coverImage}
               year={book.year}
               description={book.description}
