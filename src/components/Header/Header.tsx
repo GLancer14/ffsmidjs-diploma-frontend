@@ -3,11 +3,13 @@ import { HashLink } from "react-router-hash-link";
 import styles from "./Header.module.scss";
 import { AuthModal } from "../UI/Modal/AuthModal";
 import { useState } from "react";
+import { useAppSelector } from "../../hooks/reduxHook";
 
 export function Header() {
   const [authModalVisibility, setAuthModalVisibility] = useState<boolean>(false);
   const [authModalType, setAuthModalType] = useState<string>("login");
-  console.log(authModalVisibility, authModalType);
+  const userState = useAppSelector((state) => state.usersReducer);
+
   return (
     <>
       <header className={styles.header}>
@@ -18,24 +20,41 @@ export function Header() {
           setAuthModalType={setAuthModalType}
         />
         <div className={styles.authWrp}>
-          <button
-            className={styles.authBtn}
-            onClick={() => {
-              setAuthModalType("login");
-              setAuthModalVisibility(true);
-            }}
-          >
-            Вход
-          </button>
-          <button
-            className={styles.authBtn}
-            onClick={() => {
-              setAuthModalType("register");
-              setAuthModalVisibility(true);
-            }}
-          >
-            Регистрация
-          </button>
+          {userState.email !== ""
+            ? (
+              <button
+                className={styles.authBtn}
+                onClick={() => {
+                  setAuthModalType("login");
+                  setAuthModalVisibility(true);
+                }}
+              >
+                Войти в ЛК
+              </button>
+              )
+            : (
+              <>
+                <button
+                  className={styles.authBtn}
+                  onClick={() => {
+                    setAuthModalType("login");
+                    setAuthModalVisibility(true);
+                  }}
+                >
+                  Вход
+                </button>
+                <button
+                  className={styles.authBtn}
+                  onClick={() => {
+                    setAuthModalType("register");
+                    setAuthModalVisibility(true);
+                  }}
+                >
+                  Регистрация
+                </button>
+              </>
+            )
+          }
         </div>
         <div className="">
           <Link to="/">LOGO</Link>

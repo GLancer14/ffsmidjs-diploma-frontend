@@ -5,7 +5,8 @@ export interface UserState {
   name: string;
   email: string;
   contactPhone: string;
-  role: string;}
+  role: string;
+}
 
 const initialState: UserState = {
   name: "",
@@ -18,10 +19,11 @@ export const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    changeName: (state, action: PayloadAction<string>) => {
-      state.name = action.payload;
+    updateCurrentUser: (state, action: PayloadAction<UserState>) => {
+      return action.payload;
     }
   }
 });
 
+export const { updateCurrentUser } = usersSlice.actions;
 export default usersSlice.reducer;

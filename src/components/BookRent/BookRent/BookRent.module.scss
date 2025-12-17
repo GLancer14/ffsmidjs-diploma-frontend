@@ -35,18 +35,16 @@
       width: calc((100% - 64px) / 3);
       padding: 16px 16px 20px 24px;
 
+      background-color: colors.$accentBg;
       border: 1px solid colors.$textAndBorder;
       border-radius: 32px;
 
+      box-shadow: buttons.$btn-shadow;
       cursor: pointer;
 
       .radio {
         position: fixed;
         transform: scale(0);
-
-        &:checked {
-          background-color: colors.$cardBg;
-        }
       }
 
       .text {
@@ -74,6 +72,18 @@
         gap: 8px;
         flex-grow: 1;
       }
+    }
+
+    .library:has(.radio:checked) {
+      background-color: colors.$cardBg;
+
+      box-shadow: none;
+    }
+
+    .library:not(:has(.radio)) {
+      background-color: colors.$disabled;
+
+      box-shadow: none;
     }
   }
 

@@ -6,8 +6,8 @@ import request from "axios";
 export interface RentBookDto {
   libraryId: number;
   bookId: number;
-  dateStart: number;
-  dateEnd?: string;
+  dateStart: string;
+  dateEnd: string;
 }
 
 export const rentBook = async (rentBookData: RentBookDto) => {

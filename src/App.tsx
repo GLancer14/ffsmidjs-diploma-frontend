@@ -7,8 +7,26 @@ import { MainLayout } from './components/Main';
 import { FindBookLayout } from './components/FindBook';
 import { BookRent } from './components/BookRent/BookRent/BookRent';
 import { BookRentLayout } from './components/BookRent';
+import { useAppDispatch } from './hooks/reduxHook';
+import { useEffect } from 'react';
+import { updateCurrentUser } from './store/reducers/userSlice';
+import { getLoggedUser } from './api/auth';
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  async function getUserFromSession() {
+    const user = await getLoggedUser();
+    if (user.status) {
+      return;
+    }
+
+    dispatch(updateCurrentUser(user));
+  }
+  
+  useEffect(() => {
+    getUserFromSession();
+  }, []);
 
   return (
     <>
