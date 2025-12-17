@@ -1,3 +1,4 @@
+import { Outlet } from "react-router";
 import { useAppSelector } from "../../hooks/reduxHook";
 import { Footer } from "../Footer/Footer";
 import { Header } from "../Header/Header";
@@ -9,7 +10,7 @@ export function BookRentLayout() {
     <>
       <Header />
       <main className="main">
-        <BookRent />
+        <Outlet />
       </main>
       <Footer />
     </>

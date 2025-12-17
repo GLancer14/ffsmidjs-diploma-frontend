@@ -14,12 +14,14 @@ export interface BookOnLibrary {
   totalCopies: number;
   availableCopies: number;
   isAvailable: boolean;
-  library: {
-    id: number;
-    name: string;
-    address: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-  }
+  library: Library;
+}
+
+export interface Library {
+  id: number;
+  name: string;
+  address: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
 }

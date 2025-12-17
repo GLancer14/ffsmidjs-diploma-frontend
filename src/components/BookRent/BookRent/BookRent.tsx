@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { findBooks } from "../../../api/books";
 import { BookCard } from "../../BookCard/BookCard";
 import { BookCheck } from "lucide-react";
-import type { Book } from "../../../types/books";
+import type { Book } from "../../../types/library";
 import { RentRange } from "../../RentRange/RentRange";
 import { rentBook } from "../../../api/bookRent";
 import { parseRuDate } from "../../../utils/parseRuDate";
@@ -41,7 +41,7 @@ export function BookRent() {
       dateEnd: parsedRuDates[1],
     });
 
-    // navigation("/rent-book/result/:id");
+    navigation("/rent-book/result/:id");
   }
 
   useEffect(() => {

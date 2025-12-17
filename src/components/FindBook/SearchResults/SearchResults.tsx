@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../../hooks/reduxHook";
-import type { Book } from "../../../types/books";
+import type { Book } from "../../../types/library";
 import { BookCard } from "../../BookCard/BookCard";
 import styles from "./SearchResults.module.scss";
 

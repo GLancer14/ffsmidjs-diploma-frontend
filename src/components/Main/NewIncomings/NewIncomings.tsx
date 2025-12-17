@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { getNewIncomings } from "../../../api/books";
 import { BookCard } from "../../BookCard/BookCard";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
-import type { Book } from "../../../types/books";
+import type { Book } from "../../../types/library";
 
 // export interface Book {
 //   title: string;

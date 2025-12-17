@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { getEditorsChoiceBooks } from "../../../api/books";
 import { BookCard } from "../../BookCard/BookCard";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
-import type { Book } from "../../../types/books";
+import type { Book } from "../../../types/library";
 
 export function EditorsChoice() {
   const [books, setBooks] = useState<Book[]>([]);

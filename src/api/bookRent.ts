@@ -25,3 +25,20 @@ export const rentBook = async (rentBookData: RentBookDto) => {
     return { message: "error", status: "error" };
   }
 };
+
+export const findBookRent = async (id: string) => {
+  try {
+    const rentData = await connection.get(`/api/client/rentals/${id}`);
+
+    return rentData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+

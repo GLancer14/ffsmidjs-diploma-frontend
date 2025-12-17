@@ -88,3 +88,19 @@ export const getBookById = async (id: string) => {
     return { message: "error", status: "error" };
   }
 };
+
+export const getLibraryById = async (id: string) => {
+  try {
+    const projectData = await connection.get(`/api/common/libraries/${id}`);
+
+    return projectData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
