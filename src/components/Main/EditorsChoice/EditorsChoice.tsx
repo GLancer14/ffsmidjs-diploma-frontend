@@ -1,6 +1,6 @@
 import styles from "./EditorsChoice.module.scss";
 import { useEffect, useRef, useState } from "react";
-import { getEditorsChoiceBooks } from "../../../api/books";
+import { getEditorsChoiceBooks } from "../../../api/libraries";
 import { BookCard } from "../../BookCard/BookCard";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import type { Book } from "../../../types/library";

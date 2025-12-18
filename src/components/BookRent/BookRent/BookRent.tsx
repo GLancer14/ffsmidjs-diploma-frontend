@@ -2,7 +2,7 @@
 import { useNavigate, useParams } from "react-router";
 import styles from "./BookRent.module.scss";
 import { useEffect, useState } from "react";
-import { findBooks } from "../../../api/books";
+import { findBooks } from "../../../api/libraries";
 import { BookCard } from "../../BookCard/BookCard";
 import { BookCheck } from "lucide-react";
 import type { Book } from "../../../types/library";
@@ -41,7 +41,7 @@ export function BookRent() {
       dateEnd: parsedRuDates[1],
     });
 
-    navigation("/rent-book/result/:id");
+    navigation(`/rent-book/result/${sentRentedBook.id}`);
   }
 
   useEffect(() => {

@@ -8,6 +8,10 @@ import { useEffect } from 'react';
 import { updateCurrentUser } from './store/reducers/userSlice';
 import { getLoggedUser } from './api/auth';
 import { BookRent } from './components/BookRent/BookRent/BookRent';
+import { RentOrder } from './components/BookRent/RentOrder/RentOrder';
+import { ProfileLayout } from './components/Profile';
+import { Welcome } from './components/Profile/Welcome/Welcome';
+import { Settings } from './components/Profile/Settings/Settings';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -29,12 +33,15 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<MainLayout />} />
-        <Route path='/find-book' element={<FindBookLayout />} />
-        <Route path='/rent-book' element={<BookRentLayout />}>
+        <Route path='find-book' element={<FindBookLayout />} />
+        <Route path='rent-book' element={<BookRentLayout />}>
           <Route path=':title/:author' element={<BookRent />} />
-          <Route path='result/:id' element={<BookRent />} />
+          <Route path='result/:id' element={<RentOrder />} />
         </Route>
-        <Route path="/profile" />
+        <Route path="/profile" element={<ProfileLayout />}>
+          <Route index element={<Welcome /> } />
+          <Route path={"settings"} element={<Settings /> } />
+        </Route>
       </Routes>
     </>
   )

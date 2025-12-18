@@ -1,0 +1,134 @@
+.wrp {
+  width: 100%;
+  margin-top: 100px;
+
+  .header {
+    font: text.$h1h2;
+  }
+
+  .contentWrp {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10%;
+    margin-top: 64px;
+
+    .illustration {
+      width: 40%;
+    }
+
+    .orderWrp {
+      width: 50%;
+
+      .paragraph {
+        font: text.$textP;
+        text-align: left;
+      }
+
+      .orderData {
+        margin: 24px 0;
+        padding: 32px;
+
+        background-color: colors.$formBg;
+        border: 1px solid colors.$textAndBorder;
+        border-radius: 32px;
+
+        .data {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 24px;
+          margin-bottom: 32px;
+
+          .text {
+            text-align: left;
+
+            .bold {
+              font-weight: 600;
+            }
+          }
+
+          .icon {
+            flex-shrink: 0;
+            width: 24px;
+
+            color: colors.$button2;
+          }
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .btnsWrp {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 40px;
+
+        .find {
+          width: 300px;
+          height: 50px;
+          padding: 16px 24px;
+
+          font: text.$buttonText;
+          text-align: center;
+
+          background-color: colors.$button1;
+          box-shadow: buttons.$btn-shadow;
+          vertical-align: middle;
+          border-radius: 16px;
+
+          cursor: pointer;
+
+          &:hover {
+            box-shadow: none;
+          }
+        
+          &:active {
+            background-color: colors.$button1Pressed;
+            box-shadow: none;
+          }
+        
+          &:disabled {
+            background-color: colors.$disabled;
+            box-shadow: none;
+            color: colors.$disabled;
+          }
+        }
+
+        .rents {
+          width: 300px;
+          height: 50px;
+          padding: 16px 24px;
+
+          font: text.$buttonText;
+
+          background-color: colors.$button2;
+          border: 1px solid colors.$textAndBorder;
+          border-radius: 16px;
+
+          box-shadow: buttons.$btn-shadow;
+          cursor: pointer;
+
+          &:hover {
+            box-shadow: none;
+          }
+
+          &:active {
+            background-color: colors.$button2Pressed;
+            box-shadow: none;
+          }
+
+          &:disabled {
+            background-color: colors.$disabled;
+            box-shadow: none;
+            color: colors.$disabled;
+          }
+        }
+      }
+    }
+  }
+}

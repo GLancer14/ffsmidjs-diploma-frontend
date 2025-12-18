@@ -1,13 +1,12 @@
-import { Link, useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import styles from "./FindBook.module.scss";
-import { useEffect, useState } from "react";
-import { CustomCalendar, type Value } from "../UI/Calendar/CustomCalendar";
-import stackOfBooks from "../../assets/stack-of-books-2.svg";
-import books2 from "../../assets/books-2.svg";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHook";
-import { findBooks } from "../../api/books";
-import { updateFoundBooks } from "../../store/reducers/booksSearchSlice";
-import { RentRange } from "../RentRange/RentRange";
+import { useState } from "react";
+import stackOfBooks from "../../../assets/stack-of-books-2.svg";
+import books2 from "../../../assets/books-2.svg";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
+import { findBooks } from "../../../api/libraries";
+import { updateFoundBooks } from "../../../store/reducers/booksSearchSlice";
+import { RentRange } from "../../RentRange/RentRange";
 
 export function FindBook() {
   const dispatch = useAppDispatch();

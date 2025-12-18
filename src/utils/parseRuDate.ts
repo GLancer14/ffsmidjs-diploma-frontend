@@ -6,3 +6,13 @@ export function parseRuDate(ruDateString: string) {
     Number(parts[0]),
   )).toString();
 }
+
+export function parseDateFromUTCToRu(UTCString: string | undefined) {
+  if (UTCString) {
+    return (new Date(UTCString)).toLocaleString("ru-RU", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  }
+}

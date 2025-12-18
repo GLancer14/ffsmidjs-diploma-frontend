@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../hooks/reduxHook";
-import { FindBook } from "../FindBook/FindBook";
+import { FindBook } from "./FindBook/FindBook";
 import { Footer } from "../Footer/Footer";
 import { Header } from "../Header/Header";
 import { LibrariesOnMap } from "../LibrariesOnMap/LibrariesOnMap";

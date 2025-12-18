@@ -1,11 +1,13 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { HashLink } from "react-router-hash-link";
 import styles from "./Header.module.scss";
-import { AuthModal } from "../UI/Modal/AuthModal";
+import { AuthModal } from "../UI/AuthModal/AuthModal";
 import { useState } from "react";
 import { useAppSelector } from "../../hooks/reduxHook";
+import avatar from "../../assets/avatars/avatar 1.svg";
 
 export function Header() {
+  const navigation = useNavigate();
   const [authModalVisibility, setAuthModalVisibility] = useState<boolean>(false);
   const [authModalType, setAuthModalType] = useState<string>("login");
   const userState = useAppSelector((state) => state.usersReducer);
@@ -20,16 +22,16 @@ export function Header() {
           setAuthModalType={setAuthModalType}
         />
         <div className={styles.authWrp}>
-          {userState.email !== ""
+          {userState?.email !== ""
             ? (
               <button
                 className={styles.authBtn}
                 onClick={() => {
-                  setAuthModalType("login");
-                  setAuthModalVisibility(true);
+                  navigation("/profile");
                 }}
               >
-                Войти в ЛК
+                <img className={styles.avatar} src={avatar} alt="аватар" />
+                <span>Войти в ЛК</span>
               </button>
               )
             : (
@@ -56,7 +58,7 @@ export function Header() {
             )
           }
         </div>
-        <div className="">
+        <div className={styles.logo}>
           <Link to="/">LOGO</Link>
         </div>
         <nav>

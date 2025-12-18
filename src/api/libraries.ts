@@ -104,3 +104,19 @@ export const getLibraryById = async (id: string) => {
     return { message: "error", status: "error" };
   }
 };
+
+export const getLibrariesCount = async () => {
+  try {
+    const projectData = await connection.get(`/api/common/libraries-count/`);
+
+    return projectData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
