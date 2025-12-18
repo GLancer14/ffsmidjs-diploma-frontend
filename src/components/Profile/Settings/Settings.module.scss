@@ -1,77 +1,135 @@
 .welcome {
   flex-grow: 1;
   margin-left: 80px;
+  padding-bottom: 40px;
 
   .header {
+    margin-bottom: 64px;
+    
     font: text.$h1h2;
     text-align: left
   }
 
-  .services {
-    column-count: 2;
-    column-gap: 32px;
-    margin-top: 64px;
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 435px;
 
-    .category {
-      padding: 32px;
+    font: text.$label;
+
+    .label {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
       margin-bottom: 32px;
-      break-inside: avoid;
 
-      border: 1px solid colors.$textAndBorder;
-      border-radius: 32px;
-      background-color: colors.$accentBg;
+      cursor: pointer;
 
-      .stats {
-        .stat {
-          margin-bottom: 16px;
+      .textInput {
+        width: 100%;
+        padding: 16px 24px;
 
-          text-align: left;
+        font: text.$placeholder;
+
+        border-radius: 16px;
+        border: 1px solid colors.$textAndBorder;
+        background-color: colors.$cardBg;
+
+        &:focus {
+          background-color: colors.$accentBg;
+          outline: none;
         }
 
-        .bold {
-          margin-left: 18px;
+        &::placeholder {
+          font: text.$placeholder;
 
-          font-size: 22px;
-          font-weight: 600;
+          color: colors.$placeholder;
         }
-        
+      }
+    }
+
+    .avatarActions {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      margin-top: -22px;
+
+      font: text.$textP;
+
+      cursor: pointer;
+
+      .fileInput {
+        position: fixed;
+        transform: scale(0);
       }
 
-      .actionWrp {
+      .fileActionWrp {
         display: flex;
-        justify-content: center;
-        margin-top: 40px;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
 
-        .action {
-          width: 300px;
-          height: 50px;
-          padding: 16px 24px;
+        .icon {
+          width: 12px;
+        }
 
-          font: text.$buttonText;
-          text-align: center;
+        .btn {
+          font: text.$textP;
 
-          background-color: colors.$button1;
-          box-shadow: buttons.$btn-shadow;
-          vertical-align: middle;
-          border-radius: 16px;
+          background-color: transparent;
 
           cursor: pointer;
-
-          &:hover {
-            box-shadow: none;
-          }
-        
-          &:active {
-            background-color: colors.$button1Pressed;
-            box-shadow: none;
-          }
-        
-          &:disabled {
-            background-color: colors.$disabled;
-            box-shadow: none;
-            color: colors.$disabled;
-          }
         }
+      }
+
+      
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 38px;
+
+      background-color: colors.$cardBg;
+      border-radius: 16px;
+      border: 1px solid colors.$textAndBorder;
+      
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .submit {
+      width: 300px;
+      height: 50px;
+      margin-top: 40px;
+      padding: 16px 24px;
+
+      font: text.$buttonText;
+      text-align: center;
+
+      background-color: colors.$button1;
+      box-shadow: buttons.$btn-shadow;
+      vertical-align: middle;
+      border-radius: 16px;
+      
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: none;
+      }
+
+      &:active {
+        background-color: colors.$button1Pressed;
+        box-shadow: none;
+      }
+
+      &:disabled {
+        background-color: colors.$disabled;
+        box-shadow: none;
+        color: colors.$disabled;
       }
     }
   }
