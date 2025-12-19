@@ -1,78 +1,49 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styles from "./Users.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
-import { getLibrariesCount } from "../../../api/libraries";
-import { Paperclip, X } from "lucide-react";
 import { fileToDataUrl } from "../../../utils/fileToDataUrl";
 import { updateSelf } from "../../../api/users";
 import { updateCurrentUser } from "../../../store/reducers/userSlice";
-import { ActionModal } from "../../UI/ActionModal/ActionModal";
 import { AddUser } from "../Actions/AddUser/AddUser";
+import { ActionModalContext } from "../../../context/ActionModalContext";
 
 export function Users() {
-  const dispatch = useAppDispatch();
-  const [windowVisibility, setWindowVisibility] = useState(false);
-  const user = useAppSelector(state => state.usersReducer);
-  const [modalVisibility, setModalVisibility] = useState(false);
-  const [modalContent, setModalContent] = useState<React.ReactNode | null>(null);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [contactPhone, setContactPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState<string | null>(null);
-  const avatarFileInput = useRef<HTMLInputElement>(null);
-
-  async function handleAvatarSelect (e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.files !== null) {
-      const files = [...e.target.files];
-      const urls = await Promise.all(files.map(o => fileToDataUrl(o)));
-      setAvatar(urls[0]);
-    }
-  }
-
-  function handleAvatarDelete() {
-    if (avatarFileInput.current) {
-      avatarFileInput.current.value = "";
-    }
-
-    setAvatar(null);
-  }
-
-  async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const updatedUser = await updateSelf({
-      name,
-      email,
-      contactPhone,
-      password,
-    });
-
-    dispatch(updateCurrentUser(updatedUser));
-  }
-
-  useEffect(() => {
-    setName(user.name);
-    setEmail(user.email);
-    setContactPhone(user.contactPhone);
-  }, []);
+  const { showActionModal } = useContext(ActionModalContext);
 
   return (
     <div className={styles.users}>
-      <ActionModal visibility={modalVisibility} setVisibility={setModalVisibility}>
-        {modalContent}
-      </ActionModal>
       <header className={styles.header}>
         <span>Пользователи</span>
         <button
           className={styles.addUserBtn}
           onClick={() => {
-            setModalVisibility(true);
-            setModalContent(<AddUser/>);
+            showActionModal!(<AddUser/>);
           }}
         >
           Добавить пользователя
         </button>
       </header>
+      <form className={styles.form}>
+        <input className={styles.search} type="text" />
+        <div className={styles.usersTypesWrp}>
+          <label className={styles.label}>
+            <span>Все</span>
+            <input className={styles.input} type="radio" />
+          </label>
+          <label className={styles.label}>
+            <span>Администратор</span>
+            <input className={styles.input} type="radio" />
+          </label>
+          <label className={styles.label}>
+            <span>Библиотекарь</span>
+            <input className={styles.input} type="radio" />
+          </label>
+          <label className={styles.label}>
+            <span>Клиент</span>
+            <input className={styles.input} type="radio" />
+          </label>
+        </div>
+      </form>
     </div>
   );
 }

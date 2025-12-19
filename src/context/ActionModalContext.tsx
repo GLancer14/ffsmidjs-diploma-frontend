@@ -1,101 +1,48 @@
-import React, { createContext, useState, useEffect } from "react";
-import Modal from "../components/modals/Modal/Modal";
+import React, { createContext, useState } from "react";
+import Alert from "../components/UI/Alert/Alert.tsx";
+import { ActionModal } from "../components/UI/ActionModal/ActionModal.tsx";
 
-type ModalStateProps = {
+type ActionModalStateProps = {
     children?: React.ReactNode;
-    showModal?: (data: {
-        content: React.ReactNode | string;
-        closeOnBorder?: boolean;
-        onCloseFunction?: boolean;
-        onClose?: (() => any) | undefined;
-        allowClose?: boolean;
-    }) => void;
-    closeModal?: () => void;
+    showActionModal?: (
+        content: React.ReactNode | string,
+    ) => void;
+    closeActionModal?: (
+        content: React.ReactNode | string,
+    ) => void;
 };
 
-export const ModalContext = createContext<ModalStateProps>(
-    {} as ModalStateProps,
-);
+export const ActionModalContext = createContext<ActionModalStateProps>({} as ActionModalStateProps);
 
-const ModalState = ({ children }: ModalStateProps) => {
+export function ActionModalState ({ children }: ActionModalStateProps) {
     const [isOpened, setIsOpened] = useState<boolean>(false);
-    const [closeOnBorder, setCloseOnBorder] = useState<boolean>(true);
-    const [allowClose, setAllowClose] = useState<boolean>(true);
     const [currContent, setCurrContent] = useState<React.ReactNode>("");
-    const [onCloseFunction, setOnCloseFunction] = useState<boolean>(false);
-    const [onClose, setOnClose] = useState<(() => void) | undefined>(undefined);
 
-    // useEffect(() => {
-    //     const listener = (e: KeyboardEvent) => {
-    //         if (isOpened && e.key === "Escape" && closeOnBorder && allowClose) {
-    //             setIsOpened(false);
-    //             setTimeout(() => {
-    //                 closeModal();
-    //             }, 300);
-    //         }
-    //     };
-    //     window.addEventListener("keydown", listener);
-
-    //     return () => {
-    //         window.removeEventListener("keydown", listener);
-    //     };
-    //     // eslint-disable-next-line
-    // }, [isOpened, closeOnBorder, allowClose]);
-
-    const showModal = (data: {
-        content: React.ReactNode | string;
-        closeOnBorder?: boolean;
-        onCloseFunction?: boolean;
-        onClose?: (() => any) | undefined;
-        allowClose?: boolean;
-    }) => {
-        const closeOnBorder =
-            data.closeOnBorder === undefined ? true : data.closeOnBorder;
-        const onCloseFunction =
-            data.onCloseFunction === undefined ? false : data.onCloseFunction;
-        const allowClose =
-            data.allowClose == undefined ? true : data.allowClose;
+    const showActionModal = (
+        content: React.ReactNode | string,
+    ) => {
         setIsOpened(true);
-        setAllowClose(allowClose);
-        setCloseOnBorder(closeOnBorder);
-        setCurrContent(data.content);
-        setOnCloseFunction(onCloseFunction);
-        setOnClose((prev) => {
-            return data.onClose;
-        });
+        setCurrContent(content);
     };
 
-    const closeModal = () => {
-        // if (onCloseFunction) {
-        //     console.log(onClose);
-        //     setIsOpened(false);
-        //     setCurrContent("");
-        //     onClose!();
-        //     return;
-        // }
-        setIsOpened(false);
-        setCurrContent("");
+    const closeActionModal = (
+        content: React.ReactNode | string,
+    ) => {
+        setIsOpened(true);
+        setCurrContent(content);
     };
+
 
     return (
-        <ModalContext.Provider value={{ showModal, closeModal }}>
-            <Modal
-                // closeOnBorder={closeOnBorder}
-                // children={currContent}
-                isOpen={isOpened}
-                // allowClose={allowClose}
-                handleClose={() => {
-                    // if (onCloseFunction) {
-                    //     setIsOpened(false);
-                    //     onClose!();
-                    //     return;
-                    // }
-                    setIsOpened(false);
-                }}
-            />
-            {children}
-        </ModalContext.Provider>
+      <ActionModalContext.Provider value={{ showActionModal, closeActionModal }}>
+          <ActionModal
+              children={currContent}
+              isOpen={isOpened}
+              handleClose={() => setIsOpened(false)}
+          />
+          {children}
+      </ActionModalContext.Provider>
     );
 };
 
-export default ModalState;
+export default ActionModalState;

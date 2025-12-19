@@ -5,14 +5,17 @@ import { BrowserRouter } from 'react-router'
 import { Provider } from 'react-redux'
 import { setupStore } from './store/index.ts'
 import AlertState from './context/AlertContext.tsx'
+import ActionModalState from './context/ActionModalContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Provider store={setupStore}>
-        <AlertState>
-          <App />
-        </AlertState>
+        <ActionModalState>
+          <AlertState>
+            <App />
+          </AlertState>
+        </ActionModalState>
       </Provider>
     </BrowserRouter>
   </StrictMode>,

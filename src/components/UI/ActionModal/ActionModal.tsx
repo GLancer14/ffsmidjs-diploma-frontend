@@ -1,35 +1,29 @@
 import styles from "./ActionModal.module.scss";
-import { Login } from "../../Login/Login";
-import { Register } from "../../Register/Register";
 import { X } from "lucide-react";
 import classNames from "classnames";
 import { motion } from "motion/react";
-import { useState } from "react";
 
-export interface ModalProps {
-  // type: string;
-  visibility: boolean;
-  setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
-  // setAuthModalType: React.Dispatch<React.SetStateAction<string>>;
+export interface ActionModalProps {
+  isOpen: boolean;
+  handleClose: () => void;
   children: React.ReactNode;
 }
 
-export function ActionModal({ visibility, setVisibility, children }: ModalProps) {
+export function ActionModal({ isOpen, handleClose, children }: ActionModalProps) {
   function handleCloseModal() {
-    setVisibility(false);
-    console.log(visibility);
+    handleClose();
   }
 
   return (
     <motion.div
       className={classNames(styles.wrp, {
-        [styles.notVisible]: !visibility
+        [styles.notVisible]: !isOpen
       })}
       transition={{
         duration: 1
       }}
       animate={{
-        display: visibility ? "flex" : "none",
+        display: isOpen ? "flex" : "none",
       }}
     >
       <div className={styles.content}>
