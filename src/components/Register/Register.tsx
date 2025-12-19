@@ -18,7 +18,7 @@ export function Register({ setAuthModalType }: RegisterProps) {
         <button className={styles.submit}>Зарегистрироваться</button>
       </form>
       <div className={styles.login}>
-        <span>У меня уже есть аккаунт? </span>
+        <span>У меня уже есть аккаунт. </span>
         <button
           className={styles.loginBtn}
           onClick={() => setAuthModalType("login")}

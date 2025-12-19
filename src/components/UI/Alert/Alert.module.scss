@@ -1,0 +1,28 @@
+.container {
+  min-width: 200px;
+  height: 40px;
+  transform: translateY(-40px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  transition: transform 0.5s, color 0.3s;
+  padding: 0 30px;
+  z-index: 100;
+
+  p {
+      color: white;
+  }
+
+  &.active {
+      transform: translateY(40px);
+  }
+
+  &.error {
+      background: colors.$button1Pressed;
+  }
+
+  &.success {
+      background: colors.$button2;
+  }
+}

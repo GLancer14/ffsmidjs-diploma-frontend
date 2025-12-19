@@ -4,22 +4,20 @@ import { Register } from "../../Register/Register";
 import { X } from "lucide-react";
 import classNames from "classnames";
 import { motion } from "motion/react";
+import { useState } from "react";
 
 export interface ModalProps {
-  type: string;
+  // type: string;
   visibility: boolean;
   setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
-  setAuthModalType: React.Dispatch<React.SetStateAction<string>>;
+  // setAuthModalType: React.Dispatch<React.SetStateAction<string>>;
+  children: React.ReactNode;
 }
 
-export function ActionModal({
-  visibility,
-  setVisibility,
-  type,
-  setAuthModalType
-}: ModalProps) {
+export function ActionModal({ visibility, setVisibility, children }: ModalProps) {
   function handleCloseModal() {
     setVisibility(false);
+    console.log(visibility);
   }
 
   return (
@@ -39,10 +37,7 @@ export function ActionModal({
           className={styles.close}
           onClick={handleCloseModal}
         />
-        {(type === "login")
-          ? <Login setAuthModalType={setAuthModalType} />
-          : <Register setAuthModalType={setAuthModalType} />
-        }
+        {children}
       </div>
     </motion.div>
   );

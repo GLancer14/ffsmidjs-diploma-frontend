@@ -6,10 +6,15 @@ import { Paperclip, X } from "lucide-react";
 import { fileToDataUrl } from "../../../utils/fileToDataUrl";
 import { updateSelf } from "../../../api/users";
 import { updateCurrentUser } from "../../../store/reducers/userSlice";
+import { ActionModal } from "../../UI/ActionModal/ActionModal";
+import { AddUser } from "../Actions/AddUser/AddUser";
 
 export function Users() {
   const dispatch = useAppDispatch();
+  const [windowVisibility, setWindowVisibility] = useState(false);
   const user = useAppSelector(state => state.usersReducer);
+  const [modalVisibility, setModalVisibility] = useState(false);
+  const [modalContent, setModalContent] = useState<React.ReactNode | null>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
@@ -53,7 +58,21 @@ export function Users() {
 
   return (
     <div className={styles.users}>
-      
+      <ActionModal visibility={modalVisibility} setVisibility={setModalVisibility}>
+        {modalContent}
+      </ActionModal>
+      <header className={styles.header}>
+        <span>Пользователи</span>
+        <button
+          className={styles.addUserBtn}
+          onClick={() => {
+            setModalVisibility(true);
+            setModalContent(<AddUser/>);
+          }}
+        >
+          Добавить пользователя
+        </button>
+      </header>
     </div>
   );
 }

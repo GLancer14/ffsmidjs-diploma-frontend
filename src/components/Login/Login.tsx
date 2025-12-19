@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./Login.module.scss";
 import { login } from "../../api/auth";
 import { useAppDispatch } from "../../hooks/reduxHook";
 import { updateCurrentUser } from "../../store/reducers/userSlice";
 import { useNavigate } from "react-router";
+import { AlertContext } from "../../context/AlertContext";
 
 export interface LoginProps {
   setAuthModalType: React.Dispatch<React.SetStateAction<string>>;
@@ -12,6 +13,7 @@ export interface LoginProps {
 export function Login({ setAuthModalType }: LoginProps) {
   const dispatch = useAppDispatch();
   const navigation = useNavigate();
+  const { showAlert } = useContext(AlertContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,6 +21,7 @@ export function Login({ setAuthModalType }: LoginProps) {
     e.preventDefault();
     const user = await login(email, password);
     if (user?.status === "fail") {
+      showAlert!(user?.data);
       return;
     }
     

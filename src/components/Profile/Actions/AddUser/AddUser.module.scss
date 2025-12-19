@@ -1,0 +1,84 @@
+.users {
+  width: 100%;
+
+  .header {
+    margin-bottom: 40px;
+
+    font: text.$h1h2;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .label {
+      font: text.$label;
+    }
+
+    .inputText {
+      width: 100%;
+      margin-top: 8px;
+      padding: 16px 24px;
+
+      border-radius: 16px;
+      border: 1px solid colors.$textAndBorder;
+      background-color: colors.$cardBg;
+
+      &::placeholder {
+        font: text.$placeholder;
+
+        color: colors.$placeholder;
+      }
+    }
+
+    .input:nth-of-type(n + 1) {
+      margin-bottom: 32px;
+    }
+
+    .submit {
+      align-self: center;
+      width: 300px;
+      height: 50px;
+      margin: 40px 0 64px 0;
+      padding: 16px 24px;
+
+      font: text.$buttonText;
+      text-align: center;
+
+      background-color: colors.$button1;
+      box-shadow: buttons.$btn-shadow;
+      vertical-align: middle;
+      border-radius: 16px;
+      
+      cursor: pointer;
+    }
+
+    .submit:hover {
+      box-shadow: none;
+    }
+
+    .submit:active {
+      background-color: colors.$button1Pressed;
+      box-shadow: none;
+    }
+
+    .submit:disabled {
+      background-color: colors.$disabled;
+      box-shadow: none;
+      color: colors.$disabled;
+    }
+  }
+
+  .login {
+    width: 100%;
+
+    .loginBtn {
+      font: inherit;
+
+      background-color: transparent;
+
+      cursor: pointer;
+    }
+  }
+}

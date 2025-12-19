@@ -7,6 +7,7 @@ import classNames from "classnames";
 import { logout } from "../../../api/auth";
 import { updateCurrentUser } from "../../../store/reducers/userSlice";
 import { useEffect, useState } from "react";
+import { ActionModal } from "../../UI/ActionModal/ActionModal";
 
 export function SidePanel() {
   const location = useLocation();
