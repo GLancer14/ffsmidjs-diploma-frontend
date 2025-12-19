@@ -5,7 +5,7 @@ export interface UserState {
   name: string;
   email: string;
   contactPhone: string;
-  role: string;
+  role?: string;
 }
 
 const initialState: UserState = {

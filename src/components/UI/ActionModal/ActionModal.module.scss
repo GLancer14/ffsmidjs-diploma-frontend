@@ -1,0 +1,95 @@
+.wrp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.7);
+
+  animation: 1000ms shading linear;
+
+  .content {
+    position: relative;
+
+    width: 842px;
+    padding: 64px 110px;
+
+    border-radius: 32px;
+    border: 1px solid colors.$textAndBorder;
+    background-color: colors.$bg;
+    
+    animation: 1000ms rollout ease-in-out;
+
+    .close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+
+      width: 24px;
+      height: 24px;
+
+      cursor: pointer;
+    }
+  }
+
+  &.notVisible {
+    display: none;
+
+    animation: 1000ms notVisible linear;
+
+    .content {
+      animation: 1000ms rollIn ease-in-out;
+    }
+  }
+}
+
+@keyframes rollout {
+  0% {
+    position: absolute;
+    left: -842px;
+  }
+
+  100% {
+    position: relative;
+    left: 0;
+  }
+}
+
+@keyframes rollIn {
+  0% {
+    position: relative;
+    left: 0;
+  }
+
+  100% {
+    position: absolute;
+    left: -842px;
+  }
+}
+
+@keyframes shading {
+  0% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+@keyframes notVisible {
+  0% {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  100% {
+    display: none;
+    background-color: rgba(0, 0, 0, 0);
+  }
+}

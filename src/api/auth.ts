@@ -44,3 +44,19 @@ export const getLoggedUser = async () => {
     return { message: "error", status: "error" };
   }
 };
+
+export const logout = async () => {
+  try {
+    const userData = await connection.post("/api/auth/logout");
+
+    return userData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};

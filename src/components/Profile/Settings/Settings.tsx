@@ -1,13 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./Settings.module.scss";
-import { useAppSelector } from "../../../hooks/reduxHook";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
 import { getLibrariesCount } from "../../../api/libraries";
 import { Paperclip, X } from "lucide-react";
 import { fileToDataUrl } from "../../../utils/fileToDataUrl";
-import { updateSelf } from "../../../api/user";
+import { updateSelf } from "../../../api/users";
+import { updateCurrentUser } from "../../../store/reducers/userSlice";
 
 export function Settings() {
+  const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.usersReducer);
+  console.log(user)
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState<string | null>(null);
   const avatarFileInput = useRef<HTMLInputElement>(null);
 
@@ -23,26 +30,42 @@ export function Settings() {
     if (avatarFileInput.current) {
       avatarFileInput.current.value = "";
     }
+
     setAvatar(null);
   }
 
-  async function handleFormSubmit() {
-    // const updatedUser = await updateSelf()
+  async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const updatedUser = await updateSelf({
+      name,
+      email,
+      contactPhone,
+      password,
+    });
+
+    dispatch(updateCurrentUser(updatedUser));
   }
+
+  useEffect(() => {
+    setName(user.name);
+    setEmail(user.email);
+    setContactPhone(user.contactPhone);
+  }, []);
 
   return (
     <div className={styles.welcome}>
       <header className={styles.header}>
         {user.role === "client" ? "Личная информация" : "Настройки"}
       </header>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={e => {handleFormSubmit(e)}}>
         <label className={styles.label}>
           <span className={styles.desc}>Имя</span>
           <input
             className={styles.textInput}
             name="form-input-name"
             type="text"
-            value={user.name}
+            value={name}
+            onInput={(e) => setName(e.currentTarget.value)}
           />
         </label>
         <label className={styles.label}>
@@ -51,7 +74,8 @@ export function Settings() {
             className={styles.textInput}
             name="form-input-phone"
             type="text"
-            value={user.contactPhone}
+            value={contactPhone}
+            onInput={(e) => setContactPhone(e.currentTarget.value)}
           />
         </label>
         <label className={styles.label}>
@@ -60,7 +84,8 @@ export function Settings() {
             className={styles.textInput}
             name="form-input-email"
             type="text"
-            value={user.email}
+            value={email}
+            onInput={(e) => setEmail(e.currentTarget.value)}
           />
         </label>
         <label className={styles.label}>
@@ -70,6 +95,8 @@ export function Settings() {
             name="form-input-password"
             type="password"
             placeholder="Введите новый пароль"
+            value={password}
+            onInput={(e) => setPassword(e.currentTarget.value)}
           />
         </label>
         <label className={styles.label} htmlFor="options_avatar-file-input">Аватар</label>

@@ -12,13 +12,11 @@ export interface UserUpdateParams {
 
 export const updateSelf = async (params: UserUpdateParams) => {
   try {
-    const projectData = await connection.put("/api/common/books", {
-      params: {
-        email: params.email,
-        name: params.name,
-        contactPhone: params.contactPhone,
-        password: params.password,
-      }
+    const projectData = await connection.put("/api/self/users", {
+      email: params.email,
+      name: params.name,
+      contactPhone: params.contactPhone,
+      password: params.password,
     });
 
     return projectData.data;

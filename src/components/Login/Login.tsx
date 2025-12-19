@@ -21,11 +21,9 @@ export function Login({ setAuthModalType }: LoginProps) {
     if (user?.status === "fail") {
       return;
     }
+    
     dispatch(updateCurrentUser(user));
-    // navigation("/profile");
-    // if (user.data.status === "fail") {
-
-    // }
+    navigation("/profile");
   }
 
   return (

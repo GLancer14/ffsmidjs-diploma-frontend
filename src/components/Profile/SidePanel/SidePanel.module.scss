@@ -43,11 +43,17 @@
     width: 100%;
     margin-top: 40px;
 
+    .active {
+      color: colors.$button1Pressed;
+    }
+
     .link a {
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 16px;
+
+      color: inherit;
     }
 
     .logout {
