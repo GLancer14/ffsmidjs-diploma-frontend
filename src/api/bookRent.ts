@@ -42,3 +42,22 @@ export const findBookRent = async (id: string) => {
   }
 };
 
+export const findUserBookRents = async (userId: number) => {
+  try {
+    const rentData = await connection.get(`/api/common/rentals`, {
+      params: {
+        userId: userId,
+      }
+    });
+
+    return rentData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};

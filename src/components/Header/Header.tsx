@@ -10,7 +10,7 @@ export function Header() {
   const navigation = useNavigate();
   const [authModalVisibility, setAuthModalVisibility] = useState<boolean>(false);
   const [authModalType, setAuthModalType] = useState<string>("login");
-  const userState = useAppSelector((state) => state.usersReducer);
+  const userState = useAppSelector((state) => state.userReducer);
 
   return (
     <>

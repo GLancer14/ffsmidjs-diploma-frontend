@@ -9,7 +9,7 @@ import { updateCurrentUser } from "../../../store/reducers/userSlice";
 
 export function Settings() {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.usersReducer);
+  const user = useAppSelector(state => state.userReducer);
   console.log(user)
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

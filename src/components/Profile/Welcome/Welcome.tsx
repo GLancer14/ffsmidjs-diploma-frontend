@@ -5,7 +5,7 @@ import { getLibrariesCount } from "../../../api/libraries";
 
 
 export function Welcome() {
-  const user = useAppSelector(state => state.usersReducer);
+  const user = useAppSelector(state => state.userReducer);
   const [librariesCount, setLibrariesCount] = useState<number>(0);
 
   async function getLibrariesCountFromApi() {

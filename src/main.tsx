@@ -11,11 +11,11 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Provider store={setupStore}>
-        <ActionModalState>
-          <AlertState>
+        <AlertState>
+          <ActionModalState>
             <App />
-          </AlertState>
-        </ActionModalState>
+          </ActionModalState>
+        </AlertState>
       </Provider>
     </BrowserRouter>
   </StrictMode>,

@@ -12,7 +12,7 @@ import { ActionModal } from "../../UI/ActionModal/ActionModal";
 export function SidePanel() {
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.usersReducer);
+  const user = useAppSelector(state => state.userReducer);
 
   const [currentPage, setCurrentPage] = useState("");
 

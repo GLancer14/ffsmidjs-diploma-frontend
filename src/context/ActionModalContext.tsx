@@ -7,9 +7,7 @@ type ActionModalStateProps = {
     showActionModal?: (
         content: React.ReactNode | string,
     ) => void;
-    closeActionModal?: (
-        content: React.ReactNode | string,
-    ) => void;
+    closeActionModal?: () => void;
 };
 
 export const ActionModalContext = createContext<ActionModalStateProps>({} as ActionModalStateProps);
@@ -25,11 +23,8 @@ export function ActionModalState ({ children }: ActionModalStateProps) {
         setCurrContent(content);
     };
 
-    const closeActionModal = (
-        content: React.ReactNode | string,
-    ) => {
-        setIsOpened(true);
-        setCurrContent(content);
+    const closeActionModal = () => {
+        setIsOpened(false);
     };
 
 

@@ -1,90 +1,136 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useState, type ChangeEvent } from "react";
 import styles from "./AddUser.module.scss";
-// import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
-// import { getLibrariesCount } from "../../../api/libraries";
-// import { Paperclip, X } from "lucide-react";
-// import { fileToDataUrl } from "../../../utils/fileToDataUrl";
-// import { updateSelf } from "../../../api/users";
-// import { updateCurrentUser } from "../../../store/reducers/userSlice";
+import classNames from "classnames";
+import { ActionModalContext } from "../../../../context/ActionModalContext";
+import { createUser } from "../../../../api/users";
+import { AlertContext } from "../../../../context/AlertContext";
 
 export function AddUser() {
-  
-  // const dispatch = useAppDispatch();
-  // const user = useAppSelector(state => state.usersReducer);
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [contactPhone, setContactPhone] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [avatar, setAvatar] = useState<string | null>(null);
-  // const avatarFileInput = useRef<HTMLInputElement>(null);
+  const { showAlert } = useContext(AlertContext);
+  const { closeActionModal } = useContext(ActionModalContext);
+  const [selectedRole, setSelectedRole] = useState("client");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [password, setPassword] = useState("");
 
-  // async function handleAvatarSelect (e: React.ChangeEvent<HTMLInputElement>) {
-  //   if (e.target.files !== null) {
-  //     const files = [...e.target.files];
-  //     const urls = await Promise.all(files.map(o => fileToDataUrl(o)));
-  //     setAvatar(urls[0]);
-  //   }
-  // }
+  function handleChooseRole(e: ChangeEvent<HTMLInputElement>) {
+    setSelectedRole(e.currentTarget.value);
+  }
 
-  // function handleAvatarDelete() {
-  //   if (avatarFileInput.current) {
-  //     avatarFileInput.current.value = "";
-  //   }
+  async function hanldeSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const createdUser = await createUser({
+      name,
+      email,
+      contactPhone,
+      password,
+      role: selectedRole,
+    });
 
-  //   setAvatar(null);
-  // }
-
-  // async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
-  //   e.preventDefault();
-  //   const updatedUser = await updateSelf({
-  //     name,
-  //     email,
-  //     contactPhone,
-  //     password,
-  //   });
-
-  //   dispatch(updateCurrentUser(updatedUser));
-  // }
-
-  // useEffect(() => {
-  //   setName(user.name);
-  //   setEmail(user.email);
-  //   setContactPhone(user.contactPhone);
-  // }, []);
+    if (createdUser) {
+      showAlert!("Пользователь успешно создан!", "success");
+      closeActionModal!();
+      setName("");
+      setEmail("");
+      setContactPhone("");
+      setPassword("");
+      setSelectedRole("client");
+    }
+  }
 
   return (
     <div className={styles.users}>
       <header className={styles.header}>
         Добавить нового пользователя
       </header>
-      <form className={styles.form}>
-        <label className={styles.label}>
-          <span>ФИО</span>
-          <input className={styles.inputЕуче} type="text" />
+      <form className={styles.form} onSubmit={hanldeSubmit}>
+        <label className={styles.labelName}>
+          <span className={styles.desc}>ФИО</span>
+          <input
+            className={styles.inputText}
+            type="text"
+            value={name}
+            onInput={(e) => setName(e.currentTarget.value)}
+          />
         </label>
-        <label className={styles.label}>
-          <span>Телефон</span>
-          <input className={styles.inputЕуче} type="text" />
+        <label className={styles.labelContact}>
+          <span className={styles.desc}>Телефон</span>
+          <input
+            className={styles.inputText}
+            type="text"
+            value={contactPhone}
+            onInput={(e) => setContactPhone(e.currentTarget.value)}
+          />
         </label>
-        <label className={styles.label}>
-          <span>Почта</span>
-          <input className={styles.inputЕуче} type="text" />
+        <label className={styles.labelEmail}>
+          <span className={styles.desc}>Почта</span>
+          <input
+            className={styles.inputText}
+            type="text"
+            value={email}
+            onInput={(e) => setEmail(e.currentTarget.value)}
+          />
         </label>
-        <div className={styles.label}>Роль</div>
-        <label className={styles.label}>
-          <span>Клиент</span>
-          <input className={styles.inputRadio} type="radio" name="role" value="client" />
+        <label className={styles.labelPassword}>
+          <span className={styles.desc}>Пароль</span>
+          <input
+            className={styles.inputText}
+            type="text"
+            value={password}
+            onInput={(e) => setPassword(e.currentTarget.value)}
+          />
         </label>
-        <label className={styles.label}>
-          <span>Библиотекарь</span>
-          <input className={styles.inputRadio} type="radio" name="role" value="manager" />
-        </label>
-        <label className={styles.label}>
-          <span>Администратор</span>
-          <input className={styles.inputRadio} type="radio" name="role" value="admin" />
-        </label>
-        <button className={styles.cancel}>Зарегистрироваться</button>
-        <button className={styles.submit}>Зарегистрироваться</button>
+        <div className={styles.descRoles}>Роль</div>
+        <div className={styles.radioWrp}>
+          <label className={styles.label}>
+            <input
+              className={styles.inputRadio}
+              type="radio"
+              name="role"
+              value="client"
+              onChange={handleChooseRole}
+              checked={selectedRole === "client"}
+            />
+            <span className={styles.desc}>Клиент</span>
+          </label>
+          <label className={styles.label}>
+            <input
+              className={styles.inputRadio}
+              type="radio"
+              name="role"
+              value="manager"
+              onChange={handleChooseRole}
+              checked={selectedRole === "manager"}
+            />
+            <span className={styles.desc}>Библиотекарь</span>
+          </label>
+          <label className={styles.label}>
+            <input
+              className={styles.inputRadio}
+              type="radio"
+              name="role"
+              value="admin"
+              onChange={handleChooseRole}
+              checked={selectedRole === "admin"}
+            />
+            <span className={styles.desc}>Администратор</span>
+          </label>
+        </div>
+        <div className={styles.btnsWrp}>
+          <button
+            className={classNames(styles.btn, styles.cancel)}
+            type="button"
+            onClick={() => closeActionModal!()}
+          >
+            Отменить
+          </button>
+          <button
+            className={classNames(styles.btn, styles.submit)}
+          >
+            Добавить пользователя
+          </button>
+        </div>
       </form>
     </div>
   );

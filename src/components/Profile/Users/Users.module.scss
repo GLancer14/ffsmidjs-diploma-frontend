@@ -111,6 +111,15 @@
     border: 1px solid colors.$textAndBorder;
     border-radius: 32px;
 
+    .noResults {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 16px;
+    }
+
     .row, .headerRow {
       display: flex;
       flex-direction: row;
@@ -121,11 +130,9 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        padding: 24px;
+        padding: 16px 12px;
 
-        font: text.$buttonText;
-
-        color: colors.$placeholder;
+        color: colors.$textAndBorder;
       }
 
       .id {
@@ -138,8 +145,15 @@
         align-items: flex-start;
         width: 31%;
 
+        word-break: break-all;
+        overflow-wrap: break-word;
+
+        .contactPhone {
+          color: colors.$placeholder;
+        }
+        
         .email {
-          overflow-wrap: break-word;
+          color: colors.$placeholder;
         }
       }
 
@@ -161,17 +175,35 @@
     }
 
     .headerRow {
+      font: text.$buttonText;
+
       border-radius: 32px 32px 0 0;
       background-color: colors.$formBg;
     }
 
-    .row:nth-child(odd) {
-      background-color: colors.$accentBg;
+    .row {
+      font: text.$tableText;
+
+      border-top: 1px solid colors.$textAndBorder;
+
+      &:hover {
+        background-color: colors.$button2;
+      }
+
+      &:nth-child(odd) {
+        background-color: colors.$accentBg;
+
+        &:hover {
+          background-color: colors.$button2;
+        }
+      }
+
+      &:last-child {
+        border-radius: 0 0 32px 32px;
+      }
     }
 
-    .row:last-child {
-      border-radius: 0 0 32px 32px;
-    }
+    
   }
 
   .pagination {

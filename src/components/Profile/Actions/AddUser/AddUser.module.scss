@@ -9,11 +9,35 @@
 
   .form {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 32px;
 
-    .label {
-      font: text.$label;
+    font: text.$label;
+    text-align: left;
+
+    .labelName {
+      width: 100%;
+
+      cursor: pointer;
+    }
+
+    .labelContact {
+      width: calc(50% - 16px);
+
+      cursor: pointer;
+    }
+
+    .labelEmail {
+      width: calc(50% - 16px);
+
+      cursor: pointer;
+    }
+
+    .labelPassword {
+      width: 100%;
+
+      cursor: pointer;
     }
 
     .inputText {
@@ -21,64 +45,119 @@
       margin-top: 8px;
       padding: 16px 24px;
 
+      font: text.$placeholder;
+
       border-radius: 16px;
       border: 1px solid colors.$textAndBorder;
       background-color: colors.$cardBg;
 
-      &::placeholder {
-        font: text.$placeholder;
+      &:focus {
+        background-color: colors.$accentBg;
+      }
 
+      &::placeholder {
         color: colors.$placeholder;
       }
     }
 
-    .input:nth-of-type(n + 1) {
-      margin-bottom: 32px;
+    .descRoles {
+      width: 100%;
     }
 
-    .submit {
-      align-self: center;
-      width: 300px;
-      height: 50px;
-      margin: 40px 0 64px 0;
-      padding: 16px 24px;
+    .radioWrp {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 40px;
+      width: 100%;
 
-      font: text.$buttonText;
-      text-align: center;
+      font: text.$textP;
 
-      background-color: colors.$button1;
-      box-shadow: buttons.$btn-shadow;
-      vertical-align: middle;
-      border-radius: 16px;
+      .label {
+        cursor: pointer;
+
+        .desc {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+
+          &::before {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+
+            background-image: url("../../../../assets/icons/radio/circle/default.svg");
+            background-repeat: no-repeat;
+            background-size: 30px;
+            background-position: center;
+
+            content: "";
+          }
+        }
+
+        .inputRadio {
+          position: fixed;
+          transform: scale(0);
+
+          &:checked ~ .desc::before {
+            background-image: url("../../../../assets/icons/radio/circle/checked.svg");
+          }
+        }
+      }
+    }
       
-      cursor: pointer;
+    .btnsWrp {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 32px;
+      width: 100%;
+      margin-top: 8px;
+
+      .btn {
+        align-self: center;
+        width: 300px;
+        height: 50px;
+        padding: 16px 24px;
+
+        font: text.$buttonText;
+        text-align: center;
+
+        background-color: colors.$button1;
+        box-shadow: buttons.$btn-shadow;
+        vertical-align: middle;
+        border-radius: 16px;
+        
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: none;
+        }
+
+        &:active {
+          background-color: colors.$button1Pressed;
+          box-shadow: none;
+        }
+
+        &:disabled {
+          background-color: colors.$disabled;
+          box-shadow: none;
+          color: colors.$disabled;
+        }
+      }
+
+      .submit {
+        background-color: colors.$button2;
+
+        &:active {
+          background-color: colors.$button2Pressed;
+          box-shadow: none;
+        }
+      }
     }
 
-    .submit:hover {
-      box-shadow: none;
-    }
-
-    .submit:active {
-      background-color: colors.$button1Pressed;
-      box-shadow: none;
-    }
-
-    .submit:disabled {
-      background-color: colors.$disabled;
-      box-shadow: none;
-      color: colors.$disabled;
-    }
-  }
-
-  .login {
-    width: 100%;
-
-    .loginBtn {
-      font: inherit;
-
-      background-color: transparent;
-
-      cursor: pointer;
-    }
+    
   }
 }

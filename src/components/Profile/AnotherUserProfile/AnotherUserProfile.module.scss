@@ -1,0 +1,385 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 868px;
+  // flex-grow: 1;
+  margin-left: 80px;
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    font: text.$h1h2;
+
+    .back {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 115px;
+      height: 40px;
+      padding: 8px 16px;
+
+      font: text.$buttonText;
+      text-align: center;
+
+      background-color: colors.$button1;
+      box-shadow: buttons.$btn-shadow;
+      vertical-align: middle;
+      border-radius: 16px;
+
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: none;
+      }
+        
+      &:active {
+        background-color: colors.$button1Pressed;
+        box-shadow: none;
+      }
+        
+      &:disabled {
+        background-color: colors.$disabled;
+        box-shadow: none;
+        color: colors.$disabled;
+      }
+    }
+  }
+
+  .card {
+    width: 515px;
+    padding: 32px;
+    margin-top: 64px;
+
+    text-align: left;
+
+    background-color: colors.$accentBg;
+    border-radius: 32px;
+    border: 1px solid colors.$textAndBorder;
+
+    .cardHeader {
+      font: text.$h1h2v2;
+    }
+
+    .dataWrp {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      align-items: center;
+      column-gap: 24px;
+      row-gap: 16px;
+      margin-top: 24px;
+
+      word-break: break-all;
+
+      .desc {
+        font: text.$buttonText;
+
+        color: colors.$placeholder;
+      }
+
+      .content {
+        font: text.$textP;
+
+        color: colors.$textAndBorder;
+      }
+    }
+
+    .btnsWrp {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      
+      width: 100%;
+      margin-top: 40px;
+
+      .btn {
+        align-self: center;
+        width: max-content;
+        height: 50px;
+        padding: 16px 24px;
+
+        font: text.$buttonText;
+        text-align: center;
+
+        background-color: colors.$button1;
+        box-shadow: buttons.$btn-shadow;
+        vertical-align: middle;
+        border-radius: 16px;
+        
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: none;
+        }
+
+        &:active {
+          background-color: colors.$button1Pressed;
+          box-shadow: none;
+        }
+
+        &:disabled {
+          background-color: colors.$disabled;
+          box-shadow: none;
+          color: colors.$disabled;
+        }
+      }
+
+      .delete {
+        background-color: colors.$button3;
+
+        &:active {
+          background-color: colors.$error;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  .rents {
+    margin-top: 40px;
+
+    .rentsHeader {
+      font: text.$h1h2v2;
+      text-align: left;
+    }
+
+    .rentsStatusWrp {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 30px;
+
+      margin-top: 24px;
+
+      .label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+
+        cursor: pointer;
+
+        .desc:has(~ .radio:checked) {
+          color: colors.$button1Pressed;
+
+          border-bottom: 1px solid colors.$button1Pressed;
+        }
+
+        &:has(.radio:checked) {
+          color: colors.$button1Pressed;
+        }
+        
+        .radio {
+          position: fixed;
+          transform: scale(0);
+        }
+      }
+    }
+
+    .table {
+      margin-top: 16px;
+      width: 100%;
+
+      background-color: colors.$cardBg;
+      border: 1px solid colors.$textAndBorder;
+      border-radius: 32px;
+
+      .noResults {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 16px;
+      }
+
+      .row, .headerRow {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+
+        .cell {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          padding: 16px 1px;
+
+          color: colors.$textAndBorder;
+        }
+
+        .id {
+          width: 5%;
+        }
+
+        .book {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          width: 29%;
+
+          word-break: break-all;
+          overflow-wrap: break-word;
+
+          .contactPhone {
+            color: colors.$placeholder;
+          }
+
+          .email {
+            color: colors.$placeholder;
+          }
+        }
+
+        .library {
+          width: 24%;
+        }
+
+        .dateStart {
+          width: 14%;
+        }
+
+        .dateEnd {
+          width: 14%;
+        }
+
+        .status {
+          width: 14%;
+        }
+      }
+
+      .headerRow {
+        font: text.$buttonText;
+
+        border-radius: 32px 32px 0 0;
+        background-color: colors.$formBg;
+
+        .cell {
+          color: colors.$placeholder;
+        }
+      }
+
+      .row {
+        font: text.$tableText;
+
+        border-top: 1px solid colors.$textAndBorder;
+
+        &:nth-child(odd) {
+          background-color: colors.$accentBg;
+        }
+
+        &:last-child {
+          border-radius: 0 0 32px 32px;
+        }
+      }
+    }
+  }
+
+  
+  // .table {
+  //   // display: grid;
+  //   // grid-template-columns: 5% 31% 24% 19% 7% 14%;
+  //   margin-top: 16px;
+  //   width: 100%;
+
+  //   background-color: colors.$cardBg;
+  //   border: 1px solid colors.$textAndBorder;
+  //   border-radius: 32px;
+
+  //   .noResults {
+  //     display: flex;
+  //     flex-direction: row;
+  //     justify-content: center;
+  //     align-items: center;
+  //     width: 100%;
+  //     padding: 16px;
+  //   }
+
+  //   .row, .headerRow {
+  //     display: flex;
+  //     flex-direction: row;
+  //     width: 100%;
+
+  //     .cell {
+  //       display: flex;
+  //       flex-direction: row;
+  //       justify-content: center;
+  //       align-items: center;
+  //       padding: 16px 12px;
+
+  //       color: colors.$textAndBorder;
+  //     }
+
+  //     .id {
+  //       width: 5%;
+  //     }
+
+  //     .contacts {
+  //       display: flex;
+  //       flex-direction: column;
+  //       align-items: flex-start;
+  //       width: 31%;
+
+  //       word-break: break-all;
+  //       overflow-wrap: break-word;
+
+  //       .contactPhone {
+  //         color: colors.$placeholder;
+  //       }
+        
+  //       .email {
+  //         color: colors.$placeholder;
+  //       }
+  //     }
+
+  //     .activity {
+  //       width: 24%;
+  //     }
+
+  //     .rents {
+  //       width: 19%;
+  //     }
+
+  //     .role {
+  //       width: 7%;
+  //     }
+
+  //     .chat {
+  //       width: 14%;
+  //     }
+  //   }
+
+  //   .headerRow {
+  //     font: text.$buttonText;
+
+  //     border-radius: 32px 32px 0 0;
+  //     background-color: colors.$formBg;
+  //   }
+
+  //   .row {
+  //     font: text.$tableText;
+
+  //     border-top: 1px solid colors.$textAndBorder;
+
+  //     &:hover {
+  //       background-color: colors.$button2;
+  //     }
+
+  //     &:nth-child(odd) {
+  //       background-color: colors.$accentBg;
+
+  //       &:hover {
+  //         background-color: colors.$button2;
+  //       }
+  //     }
+
+  //     &:last-child {
+  //       border-radius: 0 0 32px 32px;
+  //     }
+  //   }
+
+    
+  // }
+}

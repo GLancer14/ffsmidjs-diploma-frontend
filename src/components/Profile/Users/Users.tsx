@@ -1,34 +1,52 @@
 import { useContext, useEffect, useRef, useState, type ChangeEvent } from "react";
 import styles from "./Users.module.scss";
-import { findUsers } from "../../../api/users";
+import { findUsers, getUsersCount } from "../../../api/users";
 import { AddUser } from "../Actions/AddUser/AddUser";
 import { ActionModalContext } from "../../../context/ActionModalContext";
 import { BookOpen, ChevronsLeft, ChevronsRight, ContactRound, MessageSquare, UserRound } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
 import type { User } from "../../../types/users";
 import classNames from "classnames";
+import { Link } from "react-router";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
+import { findUserBookRents } from "../../../api/bookRent";
+import { updateUsersRents, type BookRentalResponseDto } from "../../../store/reducers/usersRentsSlice";
+import { updateFoundUsers } from "../../../store/reducers/foundUsers";
 
 export function Users() {
+  const dispatch = useAppDispatch();
+  const usersRents = useAppSelector(state => state.usersRentsReducer);
+  const foundUsers = useAppSelector(state => state.foundUsersReducer);
   const { showActionModal } = useContext(ActionModalContext);
   const [userType, setUserType] = useState("");
   const [searchString, setSearchString] = useState("");
   const [page, setPage] = useState(1);
   const [pagesCount, setPagesCount] = useState(1);
-  const [findedUsers, setFindedUsers] = useState<User[]>([])
+  const limit = 10;
 
   async function handleSearchUsers() {
-    const limit = 10;
-    const users = await findUsers({
+    const users: User[] = await findUsers({
       limit: limit,
       offset: limit * (page - 1),
       searchString,
     });
 
-    setFindedUsers(users);
+    const usersRents: Array<BookRentalResponseDto[]> = await Promise.all(users.map(async (user) => {
+      return await findUserBookRents(user.id);
+    }));
+
+    dispatch(updateUsersRents(usersRents))
+    dispatch(updateFoundUsers(users));
+  }
+
+  async function handleGetPagesCount() {
+    const usersCount = await getUsersCount({searchString});
+
+    setPagesCount(Math.ceil(usersCount / limit));
   }
 
   function handlePageChange(e: React.ChangeEvent<unknown>, page: number) {
-    setPage(page)
+    setPage(page);
   }
 
   function handleUserTypeChange(e: ChangeEvent<HTMLInputElement>) {
@@ -36,8 +54,12 @@ export function Users() {
   }
 
   useEffect(() => {
+    console.log(pagesCount)
+    handleGetPagesCount();
+  }, [searchString]);
+
+  useEffect(() => {
     handleSearchUsers();
-    console.log(findedUsers)
   }, [searchString, page]);
 
   return (
@@ -118,34 +140,64 @@ export function Users() {
           <div className={classNames(styles.role, styles.cell)}>Роль</div>
           <div className={classNames(styles.chat, styles.cell)}>Чат</div>
         </div>
-        
-        {findedUsers.map(user => {
-          return (
-            <div className={styles.row}>
-              <div className={classNames(styles.id, styles.cell)}>{user.id}</div>
-              <div className={classNames(styles.contacts, styles.cell)}>
-                <div>{user.name}</div>
-                <div>{user.contactPhone}</div>
-                <div className={styles.email}>{user.email}</div>
-              </div>
-              <div className={classNames(styles.activity, styles.cell)}>{user.id}</div>
-              <div className={classNames(styles.rents, styles.cell)}>{user.id}</div>
-              <div className={classNames(styles.role, styles.cell)}>{user.role}</div>
-              <div className={classNames(styles.chat, styles.cell)}>
-                <MessageSquare />
-              </div>
-            </div>
-          );
-        })}
+        {
+          foundUsers.length === 0
+            ? (<div className={styles.noResults}>Результаты не найдены</div>)
+            : (foundUsers.map(user => {
+              let activeRentsCount = 0;
+              const activeRents = usersRents.find(rents => {
+                return rents.length > 0 && rents[0].userId === user.id;
+              });
+
+              if (activeRents) {
+                activeRentsCount = activeRents.filter(rent => rent.status === "active").length;
+              }
+
+              return (
+                <Link className={styles.row} to={`/profile/users/${user.id}`} key={user.id}>
+                  <div className={classNames(styles.id, styles.cell)}>{user.id}</div>
+                  <div className={classNames(styles.contacts, styles.cell)}>
+                    <div className={styles.name}>{user.name}</div>
+                    <div className={styles.contactPhone}>{user.contactPhone}</div>
+                    <div className={styles.email}>{user.email}</div>
+                  </div>
+                  <div className={classNames(styles.activity, styles.cell)}>{user.id}</div>
+                  <div className={classNames(styles.rents, styles.cell)}>
+                    {
+                    user.role !== "client"
+                      ? "-"
+                      : activeRentsCount
+                    }
+                  </div>
+                  <div
+                    className={classNames(styles.role, styles.cell)}
+                  >
+                    {
+                      user.role === "admin"
+                      ? <ContactRound size={24} />
+                      : user.role === "manager" 
+                        ? <BookOpen size={24} />
+                        : <UserRound size={24} />
+                    }
+                  </div>
+                  <div className={classNames(styles.chat, styles.cell)}>
+                    <MessageSquare />
+                  </div>
+                </Link>
+              );
+            }))
+        }
       </div>
       <div className={styles.pagination}>
         <button className={styles.navBtn} onClick={() => {
-          setPage(prev => prev - 1);
+          if (page > 1) {
+            setPage(prev => prev - 1);
+          }
         }}>
           <ChevronsLeft />
         </button>
         <Pagination
-          count={10}
+          count={pagesCount}
           page={page}
           onChange={handlePageChange}
           hideNextButton
@@ -171,9 +223,6 @@ export function Users() {
             "& .MuiPaginationItem-icon": {
               width: "36px",
               height: "36px",
-              // backgroundColor: "rgb(106, 163, 120)",
-              borderRadius: "50%",
-              // boxShadow: "rgb(0, 0, 0) 4px 4px",
             },
             "& .MuiPaginationItem-icon:hover": {
               boxShadow: "none",
@@ -188,7 +237,9 @@ export function Users() {
           }}
         />
         <button className={styles.navBtn} onClick={() => {
-          setPage(prev => prev + 1);
+          if (page < pagesCount) {
+            setPage(prev => prev + 1);
+          }
         }}>
           <ChevronsRight />
         </button>
