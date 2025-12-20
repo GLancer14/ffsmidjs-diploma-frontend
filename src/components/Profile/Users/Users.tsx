@@ -14,9 +14,8 @@ import { updateUsersRents, type BookRentalResponseDto } from "../../../store/red
 import { updateFoundUsers } from "../../../store/reducers/foundUsers";
 
 export function Users() {
-  const dispatch = useAppDispatch();
-  const usersRents = useAppSelector(state => state.usersRentsReducer);
-  const foundUsers = useAppSelector(state => state.foundUsersReducer);
+  const [usersRents, setUserRents] = useState<BookRentalResponseDto[][]>([]);
+  const [foundUsers, setFoundUserRents] = useState<User[]>([]);
   const { showActionModal } = useContext(ActionModalContext);
   const [userType, setUserType] = useState("");
   const [searchString, setSearchString] = useState("");
@@ -35,8 +34,8 @@ export function Users() {
       return await findUserBookRents(user.id);
     }));
 
-    dispatch(updateUsersRents(usersRents))
-    dispatch(updateFoundUsers(users));
+    setUserRents(usersRents);
+    setFoundUserRents(users);
   }
 
   async function handleGetPagesCount() {

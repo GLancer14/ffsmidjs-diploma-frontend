@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState, type ChangeEvent } from "react";
 import styles from "./AnotherUserProfile.module.scss";
-import { findUsers, getUsersCount } from "../../../api/users";
+import { findUsers, getUserById, getUsersCount } from "../../../api/users";
 import { AddUser } from "../Actions/AddUser/AddUser";
 import { ActionModalContext } from "../../../context/ActionModalContext";
 import { ArrowBigLeft, BookMarked, BookOpen, ChevronsLeft, ChevronsRight, ContactRound, MessageSquare, SquareCheck, UserRound } from "lucide-react";
@@ -17,16 +17,19 @@ export function AnotherUserProfile() {
   const params = useParams();
   const dispatch = useAppDispatch();
   const { showActionModal } = useContext(ActionModalContext);
-  const foundUsers = useAppSelector(state => state.foundUsersReducer);
+  // const foundUsers = useAppSelector(state => state.foundUsersReducer);
   const navigation = useNavigate();
   const [userRents, setUserRents] = useState<BookRentalResponseDto[]>([]);
-  const [rentType, setRentType] = useState("all")
+  const [rentType, setRentType] = useState("all");
+  const [userData, setUserData] = useState<User>();
 
-  const userData = foundUsers.find(user => {
+  async function handleGetUserData() {
     if (params.id) {
-      return user.id === +params.id
+      const user = await getUserById(params.id);
+
+      setUserData(user)
     }
-  });
+  }
 
   async function handleSetUserRents() {
     if (params.id) {
@@ -37,53 +40,12 @@ export function AnotherUserProfile() {
 
   useEffect(() => {
     handleSetUserRents();
+    handleGetUserData();
   }, []);
-  // const usersRents = useAppSelector(state => state.usersRentsReducer);
-  // const { showActionModal } = useContext(ActionModalContext);
-  // const [userType, setUserType] = useState("");
-  // const [searchString, setSearchString] = useState("");
-  // const [page, setPage] = useState(1);
-  // const [pagesCount, setPagesCount] = useState(1);
-  // const [findedUsers, setFindedUsers] = useState<User[]>([]);
-  // const limit = 10;
-
-  // async function handleSearchUsers() {
-  //   const users: User[] = await findUsers({
-  //     limit: limit,
-  //     offset: limit * (page - 1),
-  //     searchString,
-  //   });
-
-  //   const usersRents: Array<BookRentalResponseDto[]> = await Promise.all(users.map(async (user) => {
-  //     return await findUserBookRents(user.id);
-  //   }));
-
-  //   dispatch(updateUsersRents(usersRents))
-  //   setFindedUsers(users);
-  // }
-
-  // async function handleGetUserPersonalData() {
-  //   const usersCount = await getUsersCount({searchString});
-
-  //   setPagesCount(Math.ceil(usersCount / limit));
-  // }
-
-  // function handlePageChange(e: React.ChangeEvent<unknown>, page: number) {
-  //   setPage(page);
-  // }
 
   function handleRentTypeChange(e: ChangeEvent<HTMLInputElement>) {
     setRentType(e.currentTarget.value);
   }
-
-  // useEffect(() => {
-  //   console.log(pagesCount)
-  //   handleGetPagesCount();
-  // }, [searchString]);
-
-  // useEffect(() => {
-  //   handleSearchUsers();
-  // }, [searchString, page]);
 
   return (
     <div className={styles.profile}>
@@ -115,7 +77,6 @@ export function AnotherUserProfile() {
             <button
               className={classNames(styles.btn, styles.edit)}
               type="button"
-              // onClick={() => closeActionModal!()}
             >
               Редактировать
             </button>
@@ -208,65 +169,5 @@ export function AnotherUserProfile() {
           </div>
         </div>
       </div>
-      
-    
- 
-    //   <div className={styles.searchResults}>
-    //     <div className={styles.headerRow}>
-    //       <div className={classNames(styles.id, styles.cell)}>ID</div>
-    //       <div className={classNames(styles.contacts, styles.cell)}>ФИО / Контакты</div>
-    //       <div className={classNames(styles.activity, styles.cell)}>Последняя активность</div>
-    //       <div className={classNames(styles.rents, styles.cell)}>Активные брони</div>
-    //       <div className={classNames(styles.role, styles.cell)}>Роль</div>
-    //       <div className={classNames(styles.chat, styles.cell)}>Чат</div>
-    //     </div>
-    //     {
-    //       findedUsers.length === 0
-    //         ? (<div className={styles.noResults}>Результаты не найдены</div>)
-    //         : (findedUsers.map(user => {
-    //           let activeRentsCount = 0;
-    //           const activeRents = usersRents.find(rents => {
-    //             return rents.length > 0 && rents[0].userId === user.id;
-    //           });
-
-    //           if (activeRents) {
-    //             activeRentsCount = activeRents.filter(rent => rent.status === "active").length;
-    //           }
-
-    //           return (
-    //             <Link className={styles.row} to={`/users/${user.id}`} key={user.id}>
-    //               <div className={classNames(styles.id, styles.cell)}>{user.id}</div>
-    //               <div className={classNames(styles.contacts, styles.cell)}>
-    //                 <div className={styles.name}>{user.name}</div>
-    //                 <div className={styles.contactPhone}>{user.contactPhone}</div>
-    //                 <div className={styles.email}>{user.email}</div>
-    //               </div>
-    //               <div className={classNames(styles.activity, styles.cell)}>{user.id}</div>
-    //               <div className={classNames(styles.rents, styles.cell)}>
-    //                 {
-    //                 user.role !== "client"
-    //                   ? "-"
-    //                   : activeRentsCount
-    //                 }
-    //               </div>
-    //               <div
-    //                 className={classNames(styles.role, styles.cell)}
-    //               >
-    //                 {
-    //                   user.role === "admin"
-    //                   ? <ContactRound size={24} />
-    //                   : user.role === "manager" 
-    //                     ? <BookOpen size={24} />
-    //                     : <UserRound size={24} />
-    //                 }
-    //               </div>
-    //               <div className={classNames(styles.chat, styles.cell)}>
-    //                 <MessageSquare />
-    //               </div>
-    //             </Link>
-    //           );
-    //         }))
-    //     }
-    //   </div>
-  );
+    );
 }

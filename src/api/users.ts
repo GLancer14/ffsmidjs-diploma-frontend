@@ -70,7 +70,7 @@ export const findUsers = async (params: SearchUserParams) => {
 
 export const getUsersCount = async (params: { searchString: string }) => {
   try {
-    const usersData = await connection.get("/api/common/users", {
+    const usersData = await connection.get("/api/common/users-count", {
       params: { 
         searchString: params.searchString
       }
@@ -97,6 +97,22 @@ export const createUser = async (params: CreateUserParams) => {
       password: params.password,
       role: params.role,
     });
+
+    return usersData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
+export const getUserById = async (id: string) => {
+  try {
+    const usersData = await connection.get(`/api/common/users/${id}`);
 
     return usersData.data;
   } catch(e) {
