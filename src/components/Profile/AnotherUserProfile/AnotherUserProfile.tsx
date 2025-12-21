@@ -12,22 +12,31 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
 import { findUserBookRents } from "../../../api/bookRent";
 import { updateUsersRents, type BookRentalResponseDto } from "../../../store/reducers/usersRentsSlice";
 import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
+import { EditProfile } from "../Actions/EditProfile/EditProfile";
+import { updateObservedUserProfile } from "../../../store/reducers/observeduserProfileSlice";
 
 export function AnotherUserProfile() {
   const params = useParams();
   const dispatch = useAppDispatch();
   const { showActionModal } = useContext(ActionModalContext);
-  // const foundUsers = useAppSelector(state => state.foundUsersReducer);
+  const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
   const navigation = useNavigate();
   const [userRents, setUserRents] = useState<BookRentalResponseDto[]>([]);
   const [rentType, setRentType] = useState("all");
-  const [userData, setUserData] = useState<User>();
+  // const [userData, setUserData] = useState<User>();
 
   async function handleGetUserData() {
     if (params.id) {
       const user = await getUserById(params.id);
 
-      setUserData(user)
+      dispatch(updateObservedUserProfile({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        contactPhone: user.contactPhone,
+        role: user.role,
+      }))
+      // setUserData(user);
     }
   }
 
@@ -50,7 +59,7 @@ export function AnotherUserProfile() {
   return (
     <div className={styles.profile}>
       <header className={styles.header}>
-        <span>Имя пользователя</span>
+        <span>{observedUserProfile.name}</span>
         <button
           className={styles.back}
           onClick={() => {
@@ -65,18 +74,23 @@ export function AnotherUserProfile() {
         <header className={styles.cardHeader}>Личная информация</header>
         <div className={styles.dataWrp}>
           <div className={styles.desc}>Имя:</div>
-          <div className={styles.content}>{userData?.name}</div>
+          <div className={styles.content}>{observedUserProfile.name}</div>
           <div className={styles.desc}>Телефон:</div>
-          <div className={styles.content}>{userData?.contactPhone}</div>
+          <div className={styles.content}>{observedUserProfile.contactPhone}</div>
           <div className={styles.desc}>Почта:</div>
-          <div className={styles.content}>{userData?.email}</div>
+          <div className={styles.content}>{observedUserProfile.email}</div>
           <div className={styles.desc}>Роль:</div>
-          <div className={styles.content}>{userData?.role}</div>
+          <div className={styles.content}>{observedUserProfile.role}</div>
         </div>
         <div className={styles.btnsWrp}>
             <button
               className={classNames(styles.btn, styles.edit)}
               type="button"
+              onClick={() => {
+                showActionModal!(
+                  <EditProfile />
+                );
+              }}
             >
               Редактировать
             </button>

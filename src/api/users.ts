@@ -10,6 +10,8 @@ export interface UserUpdateParams {
   password?: string;
 }
 
+export type AnotherUserUpdateParams = UserUpdateParams & { id: number, role?: string };
+
 export interface SearchUserParams {
   limit?: number;
   offset?: number;
@@ -27,6 +29,28 @@ export interface CreateUserParams {
 export const updateSelf = async (params: UserUpdateParams) => {
   try {
     const projectData = await connection.put("/api/self/users", {
+      email: params.email,
+      name: params.name,
+      contactPhone: params.contactPhone,
+      password: params.password,
+    });
+
+    return projectData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
+export const updateAnotherUser = async (params: AnotherUserUpdateParams) => {
+  try {
+    const projectData = await connection.put("/api/admin/users", {
+      id: params.id,
       email: params.email,
       name: params.name,
       contactPhone: params.contactPhone,

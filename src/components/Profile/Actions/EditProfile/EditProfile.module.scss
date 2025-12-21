@@ -1,0 +1,214 @@
+.users {
+  width: 100%;
+
+  .header {
+    margin-bottom: 40px;
+
+    font: text.$h1h2;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 32px;
+
+    font: text.$label;
+    text-align: left;
+
+    .labelName {
+      width: 100%;
+
+      cursor: pointer;
+    }
+
+    .labelContact {
+      width: calc(50% - 16px);
+
+      cursor: pointer;
+    }
+
+    .labelEmail {
+      width: calc(50% - 16px);
+
+      cursor: pointer;
+    }
+
+    .labelPassword {
+      width: calc(50% - 16px);
+
+      cursor: pointer;
+    }
+
+    .inputText {
+      width: 100%;
+      margin-top: 8px;
+      padding: 16px 24px;
+
+      font: text.$placeholder;
+
+      border-radius: 16px;
+      border: 1px solid colors.$textAndBorder;
+      background-color: colors.$cardBg;
+
+      &:focus {
+        background-color: colors.$accentBg;
+      }
+
+      &::placeholder {
+        color: colors.$placeholder;
+      }
+    }
+
+    .descRoles {
+      width: 100%;
+    }
+
+    .rolesWrp {
+      position: relative;
+      
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 40px;
+      width: calc(50% - 16px);
+
+      font: text.$textP;
+
+      cursor: pointer;
+
+      .descRoles {
+        font: text.$label;
+
+        cursor: pointer;
+
+        .select {
+          position: relative;
+
+          width: 100%;
+          height: 53px;
+          margin-top: 8px;
+          padding: 16px 24px;
+
+          font: text.$placeholder;
+          text-align: left;
+
+          border-radius: 16px;
+          border: 1px solid colors.$textAndBorder;
+          background-color: colors.$cardBg;
+
+          cursor: pointer;
+
+          &:focus {
+            background-color: colors.$accentBg;
+          }
+        
+          &::placeholder {
+            color: colors.$placeholder;
+          }
+
+          .arrow {
+            position: absolute;
+            right: 24px;
+          }
+
+          
+
+          .rotatedArrow {
+            transform: rotate(180deg);
+          }
+        }
+
+        .placeholder {
+          color: colors.$placeholder;
+        }
+      }
+
+      .roles {
+        position: absolute;
+        bottom: -170px;
+        left: 0;
+
+        display: none;
+        flex-direction: column;
+        width: 100%;
+
+        background-color: colors.$cardBg;
+        border: 1px solid colors.$textAndBorder;
+        border-radius: 16px;
+
+        .roleItem {
+          padding: 16px 24px;
+
+          &:hover {
+            background-color: colors.$formBg;
+          }
+
+          &:first-of-type {
+            border-radius: 16px 16px 0 0;
+          }
+
+          &:last-of-type {
+            border-radius: 0 0 16px 16px;
+          }
+        }
+      }
+
+      .visibleRoles {
+        display: flex;
+      }
+    }
+      
+    .btnsWrp {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 32px;
+      width: 100%;
+      margin-top: 8px;
+
+      .btn {
+        align-self: center;
+        width: 300px;
+        height: 50px;
+        padding: 16px 24px;
+
+        font: text.$buttonText;
+        text-align: center;
+
+        background-color: colors.$button1;
+        box-shadow: buttons.$btn-shadow;
+        vertical-align: middle;
+        border-radius: 16px;
+        
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: none;
+        }
+
+        &:active {
+          background-color: colors.$button1Pressed;
+          box-shadow: none;
+        }
+
+        &:disabled {
+          background-color: colors.$disabled;
+          box-shadow: none;
+          color: colors.$disabled;
+        }
+      }
+
+      .submit {
+        background-color: colors.$button2;
+
+        &:active {
+          background-color: colors.$button2Pressed;
+          box-shadow: none;
+        }
+      }
+    }
+
+    
+  }
+}
