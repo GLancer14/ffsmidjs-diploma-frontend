@@ -10,6 +10,29 @@ export interface BookSearchParams {
   availableOnly?: boolean;
 }
 
+export interface SearchLibrariesParams {
+  limit?: number;
+  offset?: number;
+  searchString?: string;
+}
+
+export interface LibrariesSearchResponseDto {
+  id: number;
+  name: string;
+  address: string;
+  description?: string;
+  createdAt: string;
+  updatedAt: string;
+  totalCopies: number;
+  availableCopies: number;
+}
+
+export interface CreateLibraryParams {
+  name: string;
+  address: string;
+  description?: string;
+}
+
 export const getEditorsChoiceBooks = async () => {
   try {
     const projectData = await connection.get("/api/common/books", {
@@ -105,11 +128,57 @@ export const getLibraryById = async (id: string) => {
   }
 };
 
-export const getLibrariesCount = async () => {
+export const getLibrariesCount = async (params: { searchString: string }) => {
   try {
-    const projectData = await connection.get(`/api/common/libraries-count/`);
+    const librariesData = await connection.get(`/api/common/libraries-count/`, {
+      params: {
+        searchString: params.searchString
+      }
+    });
 
-    return projectData.data;
+    return librariesData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
+export const getLibraries = async (params: SearchLibrariesParams) => {
+  try {
+    const librariesData = await connection.get(`/api/common/libraries/`, {
+      params: {
+        limit: params.limit,
+        offset: params.offset,
+        searchString: params.searchString,
+      }
+    });
+
+    return librariesData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
+export const createLibrary = async (params: CreateLibraryParams) => {
+  try {
+    const libraryData = await connection.post(`/api/admin/libraries/`, {
+      name: params.name,
+      address: params.address,
+      description: params.description,
+    });
+
+    return libraryData.data;
   } catch(e) {
     if (request.isAxiosError(e)) {
       if (e.response) {

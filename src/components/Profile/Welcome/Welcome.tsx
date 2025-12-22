@@ -9,7 +9,7 @@ export function Welcome() {
   const [librariesCount, setLibrariesCount] = useState<number>(0);
 
   async function getLibrariesCountFromApi() {
-    const count = await getLibrariesCount();
+    const count = await getLibrariesCount({searchString: ""});
     setLibrariesCount(count);
   } 
 

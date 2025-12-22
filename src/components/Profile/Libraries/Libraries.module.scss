@@ -1,0 +1,203 @@
+.libraries {
+  width: 868px;
+  flex-grow: 1;
+  margin-bottom: 40px;
+  margin-left: 80px;
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    font: text.$h1h2;
+
+    .addLibraryBtn {
+      width: 300px;
+      height: 50px;
+      padding: 16px 24px;
+
+      font: text.$buttonText;
+      text-align: center;
+
+      background-color: colors.$button1;
+      box-shadow: buttons.$btn-shadow;
+      vertical-align: middle;
+      border-radius: 16px;
+
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: none;
+      }
+        
+      &:active {
+        background-color: colors.$button1Pressed;
+        box-shadow: none;
+      }
+        
+      &:disabled {
+        background-color: colors.$disabled;
+        box-shadow: none;
+        color: colors.$disabled;
+      }
+    }
+  }
+
+  .form {
+    margin-top: 64px;
+
+    .search {
+      width: 100%;
+      padding: 16px 24px;
+
+      font: text.$placeholder;
+
+      border-radius: 16px;
+      border: 1px solid colors.$textAndBorder;
+      background-color: colors.$cardBg;
+
+      &:focus {
+        background-color: colors.$accentBg;
+        outline: none;
+      }
+
+      &::placeholder {
+        font: text.$placeholder;
+
+        color: colors.$placeholder;
+      }
+    }
+  }
+
+  .searchResults {
+    // display: grid;
+    // grid-template-columns: 5% 31% 24% 19% 7% 14%;
+    margin-top: 16px;
+    width: 100%;
+
+    background-color: colors.$cardBg;
+    border: 1px solid colors.$textAndBorder;
+    border-radius: 32px;
+
+    .noResults {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 16px;
+    }
+
+    .row, .headerRow {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+
+      .cell {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 16px 12px;
+
+        text-align: left;
+
+        color: colors.$textAndBorder;
+      }
+
+      .id {
+        justify-content: center;
+        width: 5%;
+
+        text-align: center;
+      }
+
+      .name {
+        width: 37%;
+
+        // word-break: break-all;
+        // overflow-wrap: break-word;
+      }
+
+      .address {
+        width: 30%;
+      }
+
+      .total {
+        width: 14%;
+      }
+
+      .available {
+        width: 14%;
+      }
+    }
+
+    .headerRow {
+      font: text.$buttonText;
+
+      border-radius: 32px 32px 0 0;
+      background-color: colors.$formBg;
+    }
+
+    .row {
+      font: text.$tableText;
+
+      border-top: 1px solid colors.$textAndBorder;
+
+      &:hover {
+        background-color: colors.$button2;
+      }
+
+      &:nth-child(odd) {
+        background-color: colors.$accentBg;
+
+        &:hover {
+          background-color: colors.$button2;
+        }
+      }
+
+      &:last-child {
+        border-radius: 0 0 32px 32px;
+      }
+    }
+  }
+
+  .pagination {
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+    gap: 40px;
+    padding: 16px;
+    margin: 32px auto 0;
+
+    font: text.$placeholder;
+
+    background-color: colors.$cardBg;
+    border: 1px solid colors.$textAndBorder;
+    border-radius: 32px;
+
+    .navBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 36px;
+      height: 36px;
+
+      background-color: colors.$button2;
+      box-shadow: buttons.$btn-shadow;
+      border: 1px solid colors.$textAndBorder;
+      border-radius: 50%;
+
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: none;
+      }
+    }
+
+    .chevrone {
+      width: 24px;
+    }
+  }
+
+}
