@@ -1,19 +1,17 @@
-import { useContext, useEffect, useRef, useState, type ChangeEvent } from "react";
+import { useContext, useEffect, useState, type ChangeEvent } from "react";
 import styles from "./AnotherUserProfile.module.scss";
-import { findUsers, getUserById, getUsersCount } from "../../../api/users";
-import { AddUser } from "../Actions/AddUser/AddUser";
+import { getUserById } from "../../../api/users";
 import { ActionModalContext } from "../../../context/ActionModalContext";
-import { ArrowBigLeft, BookMarked, BookOpen, ChevronsLeft, ChevronsRight, ContactRound, MessageSquare, SquareCheck, UserRound } from "lucide-react";
-import Pagination from "@mui/material/Pagination";
-import type { User } from "../../../types/users";
+import { ArrowBigLeft, BookMarked, SquareCheck } from "lucide-react";
 import classNames from "classnames";
-import { Link, useLocation, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
 import { findUserBookRents } from "../../../api/bookRent";
-import { updateUsersRents, type BookRentalResponseDto } from "../../../store/reducers/usersRentsSlice";
+import { type BookRentalResponseDto } from "../../../store/reducers/usersRentsSlice";
 import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
 import { EditProfile } from "../Actions/EditProfile/EditProfile";
 import { updateObservedUserProfile } from "../../../store/reducers/observeduserProfileSlice";
+import { DeleteUser } from "../Actions/DeleteUser/DeleteUser";
 
 export function AnotherUserProfile() {
   const params = useParams();
@@ -24,6 +22,37 @@ export function AnotherUserProfile() {
   const [userRents, setUserRents] = useState<BookRentalResponseDto[]>([]);
   const [rentType, setRentType] = useState("all");
   // const [userData, setUserData] = useState<User>();
+
+  const userRentsList = userRents.filter(rent => {
+    if (rentType === "all") {
+      return true;
+    } else if (rentType !== rent.status) {
+      return false;
+    } else {
+      return true;
+    }
+  }).map(rent => {
+    return (
+      <div className={styles.row} key={rent.id}>
+        <div className={classNames(styles.id, styles.cell)}>{rent.id}</div>
+        <div className={classNames(styles.book, styles.cell)}>
+          <div className={styles.title}>{rent.book.title} /</div>
+          <div className={styles.author}>{rent.book.author}</div>
+        </div>
+        <div className={classNames(styles.library, styles.cell)}>{rent.library.name}</div>
+        <div className={classNames(styles.dateStart, styles.cell)}>{parseDateFromUTCToRu(rent.dateStart)}</div>
+        <div className={classNames(styles.dateEnd, styles.cell)}>{parseDateFromUTCToRu(rent.dateEnd)}</div>
+        <div className={classNames(styles.status, styles.cell)}>
+          {
+            rent.status === "reserved"
+            ? <BookMarked size={24} />
+            : <SquareCheck size={24} />
+          }
+        </div>
+      </div>
+    );
+  });
+                
 
   async function handleGetUserData() {
     if (params.id) {
@@ -96,6 +125,12 @@ export function AnotherUserProfile() {
             </button>
             <button
               className={classNames(styles.btn, styles.delete)}
+              type="button"
+              onClick={() => {
+                showActionModal!(
+                  <DeleteUser />
+                );
+              }}
             >
               Удалить пользователя
             </button>
@@ -147,38 +182,9 @@ export function AnotherUserProfile() {
               <div className={classNames(styles.status, styles.cell)}>Статус</div>
             </div>
             {
-              userRents.length === 0
+              userRentsList.length === 0
                 ? (<div className={styles.noResults}>Записи отсутствуют</div>)
-                : (userRents.filter(rent => {
-                    if (rentType === "all") {
-                      return true;
-                    } else if (rentType !== rent.status) {
-                      return false;
-                    } else {
-                      return true;
-                    }
-                  }).map(rent => {
-                    return (
-                      <div className={styles.row} key={rent.id}>
-                        <div className={classNames(styles.id, styles.cell)}>{rent.id}</div>
-                        <div className={classNames(styles.book, styles.cell)}>
-                          <div className={styles.title}>{rent.book.title} /</div>
-                          <div className={styles.author}>{rent.book.author}</div>
-                        </div>
-                        <div className={classNames(styles.library, styles.cell)}>{rent.library.name}</div>
-                        <div className={classNames(styles.dateStart, styles.cell)}>{parseDateFromUTCToRu(rent.dateStart)}</div>
-                        <div className={classNames(styles.dateEnd, styles.cell)}>{parseDateFromUTCToRu(rent.dateEnd)}</div>
-                        <div className={classNames(styles.status, styles.cell)}>
-                          {
-                            rent.status === "reserved"
-                            ? <BookMarked size={24} />
-                            : <SquareCheck size={24} />
-                          }
-                        </div>
-                      </div>
-                    );
-                  })
-                )
+                : userRentsList
             }
           </div>
         </div>

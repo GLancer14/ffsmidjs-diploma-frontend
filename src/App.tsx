@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router';
+import { Route, Routes, useNavigate } from 'react-router';
 import './assets/scss/index.scss';
 import { MainLayout } from './components/Main';
 import { FindBookLayout } from './components/FindBook';
@@ -17,10 +17,12 @@ import { AnotherUserProfile } from './components/Profile/AnotherUserProfile/Anot
 
 function App() {
   const dispatch = useAppDispatch();
+  const navigation = useNavigate();
 
   async function getUserFromSession() {
     const user = await getLoggedUser();
     if (user.status) {
+      navigation("/");
       return;
     }
 

@@ -34,5 +34,5 @@ export const observedUserProfileSlice = createSlice({
   }
 });
 
-export const { updateObservedUserProfile } = observedUserProfileSlice.actions;
+export const { updateObservedUserProfile, resetObservedUserProfile } = observedUserProfileSlice.actions;
 export default observedUserProfileSlice.reducer;

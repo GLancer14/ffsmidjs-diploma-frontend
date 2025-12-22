@@ -2,10 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import styles from "./EditProfile.module.scss";
 import classNames from "classnames";
 import { ActionModalContext } from "../../../../context/ActionModalContext";
-import { getUserById, updateAnotherUser } from "../../../../api/users";
+import { updateAnotherUser } from "../../../../api/users";
 import { AlertContext } from "../../../../context/AlertContext";
 import { ChevronUp } from "lucide-react";
-import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHook";
 import { updateObservedUserProfile } from "../../../../store/reducers/observeduserProfileSlice";
 

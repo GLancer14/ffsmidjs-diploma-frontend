@@ -49,7 +49,7 @@ export const updateSelf = async (params: UserUpdateParams) => {
 
 export const updateAnotherUser = async (params: AnotherUserUpdateParams) => {
   try {
-    const projectData = await connection.put("/api/admin/users", {
+    const userData = await connection.put("/api/admin/users", {
       id: params.id,
       email: params.email,
       name: params.name,
@@ -57,7 +57,7 @@ export const updateAnotherUser = async (params: AnotherUserUpdateParams) => {
       password: params.password,
     });
 
-    return projectData.data;
+    return userData.data;
   } catch(e) {
     if (request.isAxiosError(e)) {
       if (e.response) {
@@ -114,7 +114,7 @@ export const getUsersCount = async (params: { searchString: string }) => {
 
 export const createUser = async (params: CreateUserParams) => {
   try {
-    const usersData = await connection.post("/api/admin/users", {
+    const userData = await connection.post("/api/admin/users", {
       email: params.email,
       name: params.name,
       contactPhone: params.contactPhone,
@@ -122,7 +122,7 @@ export const createUser = async (params: CreateUserParams) => {
       role: params.role,
     });
 
-    return usersData.data;
+    return userData.data;
   } catch(e) {
     if (request.isAxiosError(e)) {
       if (e.response) {
@@ -136,9 +136,29 @@ export const createUser = async (params: CreateUserParams) => {
 
 export const getUserById = async (id: string) => {
   try {
-    const usersData = await connection.get(`/api/common/users/${id}`);
+    const userData = await connection.get(`/api/common/users/${id}`);
 
-    return usersData.data;
+    return userData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
+export const deleteUser = async (id: number) => {
+  try {
+    const userData = await connection.delete(`/api/admin/users`, {
+      data: {
+        id,
+      }
+    });
+
+    return userData.data;
   } catch(e) {
     if (request.isAxiosError(e)) {
       if (e.response) {
