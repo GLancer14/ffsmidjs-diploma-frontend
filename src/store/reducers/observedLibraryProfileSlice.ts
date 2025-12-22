@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import type { CreateLibraryParams, UpdateLibraryParams } from "../../api/libraries";
 
 export interface LibraryState {
-  id?: number;
+  id: number;
   name: string;
   address: string;
   description?: string;
@@ -55,9 +56,19 @@ export const observedLibraryProfileSlice = createSlice({
     },
     resetObservedLibraryProfile: () => {
       return initialState;
-    }
+    },
+    updateLibraryInfo: (state, action: PayloadAction<CreateLibraryParams>) => {
+      return {
+        ...state,
+        ...action.payload,
+      }
+    },
   }
 });
 
-export const { updateObservedLibraryProfile, resetObservedLibraryProfile } = observedLibraryProfileSlice.actions;
+export const {
+  updateObservedLibraryProfile,
+  resetObservedLibraryProfile,
+  updateLibraryInfo
+} = observedLibraryProfileSlice.actions;
 export default observedLibraryProfileSlice.reducer;

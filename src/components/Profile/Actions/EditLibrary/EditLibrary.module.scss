@@ -1,0 +1,113 @@
+.library {
+  width: 100%;
+
+  .header {
+    margin-bottom: 40px;
+
+    font: text.$h1h2;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 32px;
+
+    font: text.$label;
+    text-align: left;
+
+    .labelName {
+      width: 100%;
+
+      cursor: pointer;
+    }
+
+    .labelAddress {
+      width: 100%;
+
+      cursor: pointer;
+    }
+
+    .labelDescription {
+      width: 100%;
+
+      cursor: pointer;
+    }
+
+    .inputText {
+      width: 100%;
+      margin-top: 8px;
+      padding: 16px 24px;
+
+      font: text.$placeholder;
+
+      border-radius: 16px;
+      border: 1px solid colors.$textAndBorder;
+      background-color: colors.$cardBg;
+
+      &:focus {
+        background-color: colors.$accentBg;
+      }
+
+      &::placeholder {
+        color: colors.$placeholder;
+      }
+    }
+
+    .description {
+      height: 84px;
+
+      resize: none;
+    }
+      
+    .btnsWrp {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 32px;
+      width: 100%;
+      margin-top: 32px;
+
+      .btn {
+        align-self: center;
+        width: 300px;
+        height: 50px;
+        padding: 16px 24px;
+
+        font: text.$buttonText;
+        text-align: center;
+
+        background-color: colors.$button1;
+        box-shadow: buttons.$btn-shadow;
+        vertical-align: middle;
+        border-radius: 16px;
+        
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: none;
+        }
+
+        &:active {
+          background-color: colors.$button1Pressed;
+          box-shadow: none;
+        }
+
+        &:disabled {
+          background-color: colors.$disabled;
+          box-shadow: none;
+          color: colors.$disabled;
+        }
+      }
+
+      .submit {
+        background-color: colors.$button2;
+
+        &:active {
+          background-color: colors.$button2Pressed;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}

@@ -6,7 +6,7 @@ import { updateAnotherUser } from "../../../../api/users";
 import { AlertContext } from "../../../../context/AlertContext";
 import { ChevronUp } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHook";
-import { updateObservedUserProfile } from "../../../../store/reducers/observeduserProfileSlice";
+import { updateObservedUserProfile } from "../../../../store/reducers/observedUserProfileSlice";
 
 // export interface UserDataProp {
 //   id?: number;

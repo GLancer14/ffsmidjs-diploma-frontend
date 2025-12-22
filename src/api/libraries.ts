@@ -33,6 +33,13 @@ export interface CreateLibraryParams {
   description?: string;
 }
 
+export interface UpdateLibraryParams {
+  id: number;
+  name?: string;
+  address?: string;
+  description?: string;
+}
+
 export const getEditorsChoiceBooks = async () => {
   try {
     const projectData = await connection.get("/api/common/books", {
@@ -173,6 +180,27 @@ export const getLibraries = async (params: SearchLibrariesParams) => {
 export const createLibrary = async (params: CreateLibraryParams) => {
   try {
     const libraryData = await connection.post(`/api/admin/libraries/`, {
+      name: params.name,
+      address: params.address,
+      description: params.description,
+    });
+
+    return libraryData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
+export const updateLibrary = async (params: UpdateLibraryParams) => {
+  try {
+    const libraryData = await connection.put(`/api/admin/libraries/`, {
+      id: params.id,
       name: params.name,
       address: params.address,
       description: params.description,

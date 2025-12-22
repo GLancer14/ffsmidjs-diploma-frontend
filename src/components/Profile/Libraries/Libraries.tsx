@@ -1,17 +1,11 @@
-import { useContext, useEffect, useRef, useState, type ChangeEvent } from "react";
+import { useContext, useEffect, useState, type ChangeEvent } from "react";
 import styles from "./Libraries.module.scss";
-import { findUsers, getUsersCount } from "../../../api/users";
-import { AddUser } from "../Actions/AddUser/AddUser";
 import { ActionModalContext } from "../../../context/ActionModalContext";
-import { BookOpen, ChevronsLeft, ChevronsRight, ContactRound, MessageSquare, UserRound } from "lucide-react";
+import { ChevronsLeft, ChevronsRight } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
 import type { User } from "../../../types/users";
 import classNames from "classnames";
 import { Link } from "react-router";
-import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
-import { findUserBookRents } from "../../../api/bookRent";
-import { updateUsersRents, type BookRentalResponseDto } from "../../../store/reducers/usersRentsSlice";
-import { updateFoundUsers } from "../../../store/reducers/foundUsers";
 import { getLibraries, getLibrariesCount, type LibrariesSearchResponseDto } from "../../../api/libraries";
 import { AddLibrary } from "../Actions/AddLibrary/AddLibrary";
 
@@ -38,9 +32,9 @@ export function Libraries() {
   }
 
   async function handleGetPagesCount() {
-    const usersCount = await getLibrariesCount({searchString});
+    const librariesCount = await getLibrariesCount({searchString});
 
-    setPagesCount(Math.ceil(usersCount / limit));
+    setPagesCount(Math.ceil(librariesCount / limit));
   }
 
   function handlePageChange(e: React.ChangeEvent<unknown>, page: number) {

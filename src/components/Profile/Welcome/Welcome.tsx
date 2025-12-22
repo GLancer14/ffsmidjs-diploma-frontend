@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./Welcome.module.scss";
 import { useAppSelector } from "../../../hooks/reduxHook";
 import { getLibrariesCount } from "../../../api/libraries";
+import { ActionModalContext } from "../../../context/ActionModalContext";
+import { AddLibrary } from "../Actions/AddLibrary/AddLibrary";
+import { useNavigate } from "react-router";
 
 
 export function Welcome() {
+  const navigation = useNavigate();
+  const { showActionModal } = useContext(ActionModalContext);
   const user = useAppSelector(state => state.userReducer);
   const [librariesCount, setLibrariesCount] = useState<number>(0);
 
@@ -29,7 +34,12 @@ export function Welcome() {
               </div>
             </div>
             <div className={styles.actionWrp}>
-              <button className={styles.action}>Добавить библиотеку</button>
+              <button
+                className={styles.action}
+                onClick={() => {showActionModal!(<AddLibrary />)}}
+              >
+                Добавить библиотеку
+              </button>
             </div>
           </div>)
         }
@@ -61,7 +71,12 @@ export function Welcome() {
                 </div>
               </div>
               <div className={styles.actionWrp}>
-                <button className={styles.action}>Открыть список</button>
+                <button
+                  className={styles.action}
+                  onClick={() => navigation("/profile/users")}
+                >
+                  Открыть список
+                  </button>
               </div>
             </div>
           </>)
