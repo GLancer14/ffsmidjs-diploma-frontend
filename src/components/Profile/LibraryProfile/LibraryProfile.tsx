@@ -13,6 +13,7 @@ import { EditLibrary } from "../Actions/EditLibrary/EditLibrary";
 import { DeleteLibrary } from "../Actions/DeleteLibrary/DeleteLibrary";
 import { AddBook } from "../Actions/AddBook/AddBook";
 import { EditBook } from "../Actions/EditBook/EditBook";
+import { DeleteBook } from "../Actions/DeleteBook/DeleteBook";
 
 export function LibraryProfile() {
   const params = useParams();
@@ -47,7 +48,9 @@ export function LibraryProfile() {
           <button
             className={styles.action}
             type="button"
-            onClick={() => {}}
+            onClick={() => {
+              showActionModal!(<DeleteBook />)
+            }}
           >
             <Trash2 className={styles.trash} />
           </button>
@@ -78,7 +81,7 @@ export function LibraryProfile() {
   useEffect(() => {
     handleGetPagesCount();
     handleGetLibraryData();
-  }, [observedLibraryProfile]);
+  }, [observedLibraryProfile.book.length]);
 
   function handleRentTypeChange(e: ChangeEvent<HTMLInputElement>) {
     setSortType(e.currentTarget.value);

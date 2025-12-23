@@ -151,6 +151,28 @@ export const addBook = async (form: FormData) => {
   }
 };
 
+export const updateBook = async (form: FormData) => {
+  try {
+    const bookData = await connection.put(`/api/admin/books/`, form, 
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
+      }
+    );
+
+    return bookData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
 export const getLibraryById = async (id: string) => {
   try {
     const projectData = await connection.get(`/api/common/libraries/${id}`);

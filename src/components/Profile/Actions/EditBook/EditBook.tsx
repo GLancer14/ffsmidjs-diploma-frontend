@@ -5,9 +5,9 @@ import { ActionModalContext } from "../../../../context/ActionModalContext";
 import { AlertContext } from "../../../../context/AlertContext";
 import { Minus, Paperclip, Plus, X } from "lucide-react";
 import { fileToDataUrl } from "../../../../utils/fileToDataUrl";
-import { addBook } from "../../../../api/libraries";
+import { addBook, updateBook, updateLibrary } from "../../../../api/libraries";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHook";
-import { addBookToLibrary } from "../../../../store/reducers/observedLibraryProfileSlice";
+import { addBookToLibrary, updateLibraryBook } from "../../../../store/reducers/observedLibraryProfileSlice";
 
 export function EditBook({ bookId }: { bookId: number }) {
   const dispatch = useAppDispatch();
@@ -45,22 +45,23 @@ export function EditBook({ bookId }: { bookId: number }) {
       const formForSending = new FormData(formRef.current);
       formForSending.append("availableCopies", copies);
       formForSending.append("libraryId", String(observedLibraryProfile.id));
-      const addedBook = await addBook(formForSending);
+      formForSending.append("id", String(bookId));
+      const updatedBook = await updateBook(formForSending);
 
-      if (!addedBook.status) {
-        showAlert!("Книга успешно добавлена!", "success");
+      if (!updatedBook.status) {
+        showAlert!("Книга успешно обновлена!", "success");
         closeActionModal!();
 
-        dispatch(addBookToLibrary({
+        dispatch(updateLibraryBook({
           totalCopies: +copies,
           availableCopies: +copies,
           book: {
-            id: addedBook.id,
+            id: updatedBook.id,
             title: title,
             author: author,
             description: description,
             year: +year,
-            coverImage: addedBook.coverImage,
+            coverImage: updatedBook.coverImage,
           },
         }));
         setTitle("");
@@ -71,23 +72,6 @@ export function EditBook({ bookId }: { bookId: number }) {
         setCover(null);
       }
     }
-    // const createdUser = await createUser({
-    //   name,
-    //   email,
-    //   contactPhone,
-    //   password,
-    //   role: selectedRole,
-    // });
-
-    // if (createdUser) {
-    //   showAlert!("Пользователь успешно создан!", "success");
-    //   closeActionModal!();
-    //   setName("");
-    //   setEmail("");
-    //   setContactPhone("");
-    //   setPassword("");
-    //   setSelectedRole("client");
-    // }
   }
 
   useEffect(() => {
@@ -98,7 +82,11 @@ export function EditBook({ bookId }: { bookId: number }) {
       setYear(String(editedBookData.book.year));
       setDescription(editedBookData.book.description);
       setCopies(String(editedBookData.totalCopies));
-      setCover(`${import.meta.env.VITE_SERVER_URL}/public/images/${editedBookData.book.coverImage}`);
+      if (editedBookData.book.coverImage !== null) {
+        setCover(`${import.meta.env.VITE_SERVER_URL}/public/images/${editedBookData.book.coverImage}`);
+      } else {
+        setCover(null)
+      }
     }
   }, [bookId]);
 
