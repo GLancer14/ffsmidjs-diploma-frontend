@@ -39,7 +39,7 @@
       border: 1px solid colors.$textAndBorder;
       border-radius: 32px;
 
-      box-shadow: buttons.$btn-shadow;
+      box-shadow: buttons.$btnShadow;
       cursor: pointer;
 
       .radio {
@@ -102,7 +102,7 @@
     text-align: center;
 
     background-color: colors.$button1;
-    box-shadow: buttons.$btn-shadow;
+    box-shadow: buttons.$btnShadow;
     vertical-align: middle;
     border-radius: 16px;
     

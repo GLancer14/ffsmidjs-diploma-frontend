@@ -3,6 +3,16 @@ import request from "axios";
 
 // import type { ProjectDataDTO } from "../types/ProjectDataDTO";
 // import type { ErrorResponse } from "../types/ErrorResponse";
+export interface AddBookParams {
+  id: string;
+  title: string;
+  author: string;
+  year?: number;
+  description?: string;
+  totalCopies: number;
+  availableCopies: number;
+}
+
 export interface BookSearchParams {
   library: number;
   author?: string;
@@ -108,6 +118,28 @@ export const getBookById = async (id: string) => {
     const projectData = await connection.get(`/api/common/books/${id}`);
 
     return projectData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
+export const addBook = async (form: FormData) => {
+  try {
+    const bookData = await connection.post(`/api/admin/books/`, form, 
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
+      }
+    );
+
+    return bookData.data;
   } catch(e) {
     if (request.isAxiosError(e)) {
       if (e.response) {

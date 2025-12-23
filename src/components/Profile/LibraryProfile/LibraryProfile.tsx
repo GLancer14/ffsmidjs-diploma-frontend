@@ -11,6 +11,7 @@ import { updateObservedLibraryProfile } from "../../../store/reducers/observedLi
 import Pagination from "@mui/material/Pagination";
 import { EditLibrary } from "../Actions/EditLibrary/EditLibrary";
 import { DeleteLibrary } from "../Actions/DeleteLibrary/DeleteLibrary";
+import { AddBook } from "../Actions/AddBook/AddBook";
 
 export function LibraryProfile() {
   const params = useParams();
@@ -74,7 +75,7 @@ export function LibraryProfile() {
   useEffect(() => {
     handleGetPagesCount();
     handleGetLibraryData();
-  }, []);
+  }, [observedLibraryProfile]);
 
   function handleRentTypeChange(e: ChangeEvent<HTMLInputElement>) {
     setSortType(e.currentTarget.value);
@@ -166,8 +167,9 @@ export function LibraryProfile() {
           </label>
           <button
             className={styles.addBookBtn}
+            type="button"
             onClick={() => {
-              // showActionModal!(<AddLibrary />);
+              showActionModal!(<AddBook />);
             }}
           >
             Добавить книгу

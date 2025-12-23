@@ -12,6 +12,14 @@ export interface LibraryState {
   book: BookDataForLibrary[];
 }
 
+export interface Book {
+    id: number;
+    title: string;
+    author: string;
+    year?: number;
+    description?: string;
+  }
+
 export interface BookDataForLibrary {
   totalCopies: number;
   availableCopies: number;
@@ -63,12 +71,22 @@ export const observedLibraryProfileSlice = createSlice({
         ...action.payload,
       }
     },
+    updateLibraryBook: (state, action: PayloadAction<CreateLibraryParams>) => {
+      return {
+        ...state,
+        ...action.payload,
+      }
+    },
+    addBookToLibrary : (state, action: PayloadAction<BookDataForLibrary>) => {
+      state.book.push(action.payload);
+    },
   }
 });
 
 export const {
   updateObservedLibraryProfile,
   resetObservedLibraryProfile,
-  updateLibraryInfo
+  updateLibraryInfo,
+  addBookToLibrary,
 } = observedLibraryProfileSlice.actions;
 export default observedLibraryProfileSlice.reducer;

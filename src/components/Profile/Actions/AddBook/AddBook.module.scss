@@ -1,0 +1,257 @@
+.addBook {
+  width: 100%;
+
+  .header {
+    margin-bottom: 40px;
+
+    font: text.$h1h2v2;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 32px;
+
+    font: text.$label;
+    text-align: left;
+
+    .labelTitle {
+      width: 100%;
+
+      cursor: pointer;
+    }
+
+    .labelAuthor {
+      width: calc(50% - 16px);
+
+      cursor: pointer;
+    }
+
+    .labelYear {
+      width: calc(50% - 16px);
+
+      cursor: pointer;
+    }
+
+    .labelDescription {
+      width: 100%;
+
+      cursor: pointer;
+    }
+
+    .labelCopies {
+      cursor: pointer;
+    }
+
+    .inputText {
+      width: 100%;
+      margin-top: 8px;
+      padding: 16px 24px;
+
+      font: text.$placeholder;
+
+      border-radius: 16px;
+      border: 1px solid colors.$textAndBorder;
+      background-color: colors.$cardBg;
+
+      &:focus {
+        background-color: colors.$accentBg;
+      }
+
+      &::placeholder {
+        color: colors.$placeholder;
+      }
+    }
+
+    .textarea {
+      height: 84px;
+
+      resize: none;
+    }
+
+    .copies {
+      align-self: flex-end;
+      width: calc(50% - 16px);
+      
+      .amountWrp {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 70px;
+        width: min-content;
+        height: 64px;
+        padding: 16px;
+        margin-top: 8px;
+
+        background-color: colors.$cardBg;
+        border-radius: 32px;
+        border: 1px solid colors.$textAndBorder;
+
+        .changeBtn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 34px;
+          height: 34px;
+
+          background-color: colors.$button2;
+          border-radius: 50%;
+          box-shadow: buttons.$btnShadowSmall;
+          border: 1px solid colors.$textAndBorder;
+
+          cursor: pointer;
+
+          &:hover {
+            box-shadow: none;
+          }
+
+          &:active {
+            background-color: colors.$button2Pressed;
+            box-shadow: none;
+          }
+
+          &:disabled {
+            background-color: colors.$disabled;
+            box-shadow: none;
+            color: colors.$disabled;
+          }
+        }
+
+        .amount {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 27px;
+          padding: 0;
+
+          font: text.$textP;
+
+          border: none;
+          background-color: transparent;
+
+          &:focus-visible {
+            outline: none;
+          }
+        }
+      }
+    }
+
+    .coverWrp {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-self: flex-end;
+      width: calc(50% - 16px);
+      
+      .coverActions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        margin-top: -22px;
+        margin-left: auto;
+
+        font: text.$textP;
+
+        cursor: pointer;
+
+        .fileInput {
+          position: fixed;
+          transform: scale(0);
+        }
+
+        .fileActionWrp {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          justify-content: center;
+          gap: 8px;
+
+          .icon {
+            width: 20px;
+          }
+
+          .btn {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 4px;
+
+            font: text.$label;
+
+            background-color: transparent;
+
+            cursor: pointer;
+          }
+        }
+      }
+
+      .cover {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 38px;
+        margin-left: auto;
+
+        background-color: colors.$cardBg;
+        border-radius: 16px;
+        border: 1px solid colors.$textAndBorder;
+
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+      
+    .btnsWrp {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 32px;
+      width: 100%;
+      margin-top: 8px;
+
+      .btn {
+        align-self: center;
+        width: 300px;
+        height: 50px;
+        padding: 16px 24px;
+
+        font: text.$buttonText;
+        text-align: center;
+
+        background-color: colors.$button1;
+        box-shadow: buttons.$btnShadow;
+        vertical-align: middle;
+        border-radius: 16px;
+        
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: none;
+        }
+
+        &:active {
+          background-color: colors.$button1Pressed;
+          box-shadow: none;
+        }
+
+        &:disabled {
+          background-color: colors.$disabled;
+          box-shadow: none;
+          color: colors.$disabled;
+        }
+      }
+
+      .submit {
+        background-color: colors.$button2;
+
+        &:active {
+          background-color: colors.$button2Pressed;
+          box-shadow: none;
+        }
+      }
+    }
+
+    
+  }
+}
