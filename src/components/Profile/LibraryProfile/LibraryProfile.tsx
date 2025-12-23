@@ -81,7 +81,7 @@ export function LibraryProfile() {
   useEffect(() => {
     handleGetPagesCount();
     handleGetLibraryData();
-  }, [observedLibraryProfile.book.length]);
+  }, [observedLibraryProfile]);
 
   function handleRentTypeChange(e: ChangeEvent<HTMLInputElement>) {
     setSortType(e.currentTarget.value);

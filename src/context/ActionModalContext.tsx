@@ -6,6 +6,7 @@ type ActionModalStateProps = {
     children?: React.ReactNode;
     showActionModal?: (
         content: React.ReactNode | string,
+        type?: "action" | "chat"
     ) => void;
     closeActionModal?: () => void;
 };
@@ -15,10 +16,13 @@ export const ActionModalContext = createContext<ActionModalStateProps>({} as Act
 export function ActionModalState ({ children }: ActionModalStateProps) {
     const [isOpened, setIsOpened] = useState<boolean>(false);
     const [currContent, setCurrContent] = useState<React.ReactNode>("");
+    const [type, setType] = useState<"action" | "chat">("action");
 
     const showActionModal = (
         content: React.ReactNode | string,
+        type?: "action" | "chat"
     ) => {
+        setType(type || "action");
         setIsOpened(true);
         setCurrContent(content);
     };
@@ -33,6 +37,7 @@ export function ActionModalState ({ children }: ActionModalStateProps) {
           <ActionModal
               children={currContent}
               isOpen={isOpened}
+              type={type}
               handleClose={() => setIsOpened(false)}
           />
           {children}

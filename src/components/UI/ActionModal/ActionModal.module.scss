@@ -49,6 +49,52 @@
   }
 }
 
+.chatWrp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.7);
+
+  animation: none;
+
+  .content {
+    position: fixed;
+    bottom: 108px;
+    right: 40px;
+
+    width: 500px;
+    height: 650px;
+
+    border-radius: 16px;
+    border: 1px solid colors.$textAndBorder;
+    background-color: colors.$cardBg;
+
+    animation: none;
+
+    .close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+
+      width: 24px;
+      height: 24px;
+
+      cursor: pointer;
+    }
+  }
+
+  &.notVisible {
+    display: none;
+
+  }
+}
+
 @keyframes rollout {
   0% {
     position: absolute;

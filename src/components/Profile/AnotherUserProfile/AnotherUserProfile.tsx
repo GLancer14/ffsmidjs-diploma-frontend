@@ -2,7 +2,7 @@ import { useContext, useEffect, useState, type ChangeEvent } from "react";
 import styles from "./AnotherUserProfile.module.scss";
 import { getUserById } from "../../../api/users";
 import { ActionModalContext } from "../../../context/ActionModalContext";
-import { ArrowBigLeft, BookMarked, SquareCheck } from "lucide-react";
+import { ArrowBigLeft, BookMarked, MessageSquare, SquareCheck, X } from "lucide-react";
 import classNames from "classnames";
 import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
@@ -12,15 +12,17 @@ import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
 import { EditProfile } from "../Actions/EditProfile/EditProfile";
 import { updateObservedUserProfile } from "../../../store/reducers/observedUserProfileSlice";
 import { DeleteUser } from "../Actions/DeleteUser/DeleteUser";
+import { Chat } from "../Chat/Chat";
 
 export function AnotherUserProfile() {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const { showActionModal } = useContext(ActionModalContext);
+  const { closeActionModal, showActionModal } = useContext(ActionModalContext);
   const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
   const navigation = useNavigate();
   const [userRents, setUserRents] = useState<BookRentalResponseDto[]>([]);
   const [rentType, setRentType] = useState("all");
+  const [chatBtnVisibility, setChatBtnVisibility] = useState(false);
   // const [userData, setUserData] = useState<User>();
 
   const userRentsList = userRents.filter(rent => {
@@ -188,6 +190,22 @@ export function AnotherUserProfile() {
             }
           </div>
         </div>
+        <button 
+          className={styles.chatBtn}
+          type="button"
+          onClick={() => {
+            chatBtnVisibility
+              ? closeActionModal!()
+              : showActionModal!(<Chat />, "chat");
+            setChatBtnVisibility(!chatBtnVisibility);
+          }}
+        >
+          {
+            chatBtnVisibility
+              ? <X />
+              : <MessageSquare />
+          }
+        </button>
       </div>
     );
 }

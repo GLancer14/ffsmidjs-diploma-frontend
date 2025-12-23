@@ -5,32 +5,39 @@ import { motion } from "motion/react";
 
 export interface ActionModalProps {
   isOpen: boolean;
+  type: "action" | "chat";
   handleClose: () => void;
   children: React.ReactNode;
 }
 
-export function ActionModal({ isOpen, handleClose, children }: ActionModalProps) {
+export function ActionModal({ isOpen, handleClose, type = "action", children }: ActionModalProps) {
   function handleCloseModal() {
     handleClose();
   }
 
+  console.log(type)
+
   return (
     <motion.div
       className={classNames(styles.wrp, {
-        [styles.notVisible]: !isOpen
+        [styles.notVisible]: !isOpen,
+        [styles.chatWrp]: type === "chat",
       })}
       transition={{
-        duration: 1
+        duration: type !== "chat" ? 1 : 0
       }}
       animate={{
         display: isOpen ? "flex" : "none",
       }}
     >
       <div className={styles.content}>
-        <X 
-          className={styles.close}
-          onClick={handleCloseModal}
-        />
+        {
+          type !== "chat" && 
+            <X 
+              className={styles.close}
+              onClick={handleCloseModal}
+            />
+        }
         {children}
       </div>
     </motion.div>
