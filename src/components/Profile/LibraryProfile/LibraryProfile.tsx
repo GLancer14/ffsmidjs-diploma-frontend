@@ -12,6 +12,7 @@ import Pagination from "@mui/material/Pagination";
 import { EditLibrary } from "../Actions/EditLibrary/EditLibrary";
 import { DeleteLibrary } from "../Actions/DeleteLibrary/DeleteLibrary";
 import { AddBook } from "../Actions/AddBook/AddBook";
+import { EditBook } from "../Actions/EditBook/EditBook";
 
 export function LibraryProfile() {
   const params = useParams();
@@ -37,7 +38,9 @@ export function LibraryProfile() {
           <button
             className={styles.action}
             type="button"
-            onClick={() => {}}
+            onClick={() => {
+              showActionModal!(<EditBook bookId={book.book.id} />)
+            }}
           >
             <Pencil className={styles.pencil} />
           </button>

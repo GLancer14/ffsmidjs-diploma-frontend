@@ -52,7 +52,7 @@ export function EditLibrary() {
     setName(observedLibraryProfile.name || "");
     setAddress(observedLibraryProfile.address || "");
     setDescription(observedLibraryProfile.description || "");
-  }, [observedLibraryProfile]);
+  }, []);
 
   return (
     <div className={styles.library}>

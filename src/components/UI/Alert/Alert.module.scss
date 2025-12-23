@@ -1,7 +1,7 @@
 .container {
   min-width: 200px;
   height: 40px;
-  transform: translateY(-40px);
+  transform: translateY(-80px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,7 +15,7 @@
   }
 
   &.active {
-      transform: translateY(40px);
+      transform: translateY(80px);
   }
 
   &.error {

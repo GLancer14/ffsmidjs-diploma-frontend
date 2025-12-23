@@ -12,13 +12,13 @@ export interface LibraryState {
   book: BookDataForLibrary[];
 }
 
-export interface Book {
-    id: number;
-    title: string;
-    author: string;
-    year?: number;
-    description?: string;
-  }
+// export interface Book {
+//     id: number;
+//     title: string;
+//     author: string;
+//     year?: number;
+//     description?: string;
+//   }
 
 export interface BookDataForLibrary {
   totalCopies: number;
@@ -29,6 +29,7 @@ export interface BookDataForLibrary {
     author: string;
     year: number;
     description: string;
+    coverImage: string | null,
   }
 }
 
@@ -48,6 +49,7 @@ const initialState: LibraryState = {
       author: "",
       year: 0,
       description: "",
+      coverImage: null,
     }
   }]
 };
