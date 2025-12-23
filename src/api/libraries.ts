@@ -217,3 +217,20 @@ export const updateLibrary = async (params: UpdateLibraryParams) => {
     return { message: "error", status: "error" };
   }
 };
+
+export const deleteLibrary = async (libraryId: number) => {
+  try {
+    const libraryData = await connection.delete(`/api/admin/libraries/${libraryId}`);
+
+    return libraryData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        console.log(e.response.data);
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};

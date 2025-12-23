@@ -10,6 +10,7 @@ import { getLibraryById } from "../../../api/libraries";
 import { updateObservedLibraryProfile } from "../../../store/reducers/observedLibraryProfileSlice";
 import Pagination from "@mui/material/Pagination";
 import { EditLibrary } from "../Actions/EditLibrary/EditLibrary";
+import { DeleteLibrary } from "../Actions/DeleteLibrary/DeleteLibrary";
 
 export function LibraryProfile() {
   const params = useParams();
@@ -82,7 +83,7 @@ export function LibraryProfile() {
   return (
     <div className={styles.libraryProfile}>
       <header className={styles.header}>
-        <span>{observedLibraryProfile.name}</span>
+        <span className={styles.name}>{observedLibraryProfile.name}</span>
         <button
           className={styles.back}
           onClick={() => {
@@ -123,7 +124,7 @@ export function LibraryProfile() {
             type="button"
             onClick={() => {
               showActionModal!(
-                <DeleteUser />
+                <DeleteLibrary />
               );
             }}
           >

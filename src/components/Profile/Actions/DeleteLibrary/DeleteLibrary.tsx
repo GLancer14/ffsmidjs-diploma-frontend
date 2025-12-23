@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import styles from "./DeleteUser.module.scss";
+import styles from "./DeleteLibrary.module.scss";
 import classNames from "classnames";
 import { ActionModalContext } from "../../../../context/ActionModalContext";
 import { deleteUser } from "../../../../api/users";
@@ -7,32 +7,39 @@ import { AlertContext } from "../../../../context/AlertContext";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHook";
 import { resetObservedUserProfile } from "../../../../store/reducers/observedUserProfileSlice";
 import { useNavigate } from "react-router";
+import { deleteLibrary } from "../../../../api/libraries";
+import { resetObservedLibraryProfile } from "../../../../store/reducers/observedLibraryProfileSlice";
 
-export function DeleteUser() {
+export function DeleteLibrary() {
   const navigation = useNavigate();
   const dispatch = useAppDispatch();
   const { showAlert } = useContext(AlertContext);
   const { closeActionModal } = useContext(ActionModalContext);
-  const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
+  const observedLibraryProfile = useAppSelector(state => state.observedLibraryProfileReducer);
 
   async function hanldeSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (observedUserProfile.id) {
-      const deletedUser = await deleteUser(+observedUserProfile.id);
+    if (observedLibraryProfile.id) {
+      const deletedUser = await deleteLibrary(observedLibraryProfile.id);
 
       if (!deletedUser.status) {
-        showAlert!("Пользователь успешно удалён!", "success");
+        showAlert!("Библиотека успешно удалёна!", "success");
         closeActionModal!();
-        dispatch(resetObservedUserProfile());
-        navigation("/profile/users");
+        dispatch(resetObservedLibraryProfile());
+        navigation("/profile/libraries");
       }
     }
   }
 
   return (
-    <div className={styles.deleteUser}>
+    <div className={styles.deleteLibrary}>
       <header className={styles.header}>
-        Вы действительно хотите удалить пользователя?
+        Вы действительно хотите удалить библиотеку?
+        <div className={styles.clarification}>
+          Вместе с библиотекой будут удалены все книги
+          <br />
+          и бронирования, относящиеся к ней.
+        </div>
       </header>
       <form className={styles.form} onSubmit={hanldeSubmit}>
         <div className={styles.btnsWrp}>
@@ -41,12 +48,12 @@ export function DeleteUser() {
             type="button"
             onClick={() => closeActionModal!()}
           >
-            Вернуться назад
+            Нет, вернуться назад
           </button>
           <button
             className={classNames(styles.btn, styles.submit)}
           >
-            Да, удалить пользователя
+            Да, удалить библиотеку
           </button>
         </div>
       </form>
