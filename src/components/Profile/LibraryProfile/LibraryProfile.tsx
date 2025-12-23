@@ -49,7 +49,7 @@ export function LibraryProfile() {
             className={styles.action}
             type="button"
             onClick={() => {
-              showActionModal!(<DeleteBook />)
+              showActionModal!(<DeleteBook bookId={book.book.id} />)
             }}
           >
             <Trash2 className={styles.trash} />

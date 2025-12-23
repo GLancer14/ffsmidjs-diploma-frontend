@@ -2,31 +2,25 @@ import { useContext } from "react";
 import styles from "./DeleteBook.module.scss";
 import classNames from "classnames";
 import { ActionModalContext } from "../../../../context/ActionModalContext";
-import { deleteUser } from "../../../../api/users";
 import { AlertContext } from "../../../../context/AlertContext";
-import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHook";
-import { resetObservedUserProfile } from "../../../../store/reducers/observedUserProfileSlice";
-import { useNavigate } from "react-router";
-import { deleteLibrary } from "../../../../api/libraries";
-import { resetObservedLibraryProfile } from "../../../../store/reducers/observedLibraryProfileSlice";
+import { useAppDispatch } from "../../../../hooks/reduxHook";
+import { deleteBook } from "../../../../api/libraries";
+import { deleteBookFromLibrary } from "../../../../store/reducers/observedLibraryProfileSlice";
 
-export function DeleteBook() {
-  const navigation = useNavigate();
+export function DeleteBook({ bookId }: { bookId: number }) {
   const dispatch = useAppDispatch();
   const { showAlert } = useContext(AlertContext);
   const { closeActionModal } = useContext(ActionModalContext);
-  const observedLibraryProfile = useAppSelector(state => state.observedLibraryProfileReducer);
 
   async function hanldeSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (observedLibraryProfile.id) {
-      const deletedUser = await deleteLibrary(observedLibraryProfile.id);
+    if (bookId) {
+      const deletedBook = await deleteBook(bookId);
 
-      if (!deletedUser.status) {
-        showAlert!("Библиотека успешно удалёна!", "success");
+      if (!deletedBook.status) {
+        showAlert!("Книга успешно удалена!", "success");
         closeActionModal!();
-        dispatch(resetObservedLibraryProfile());
-        navigation("/profile/libraries");
+        dispatch(deleteBookFromLibrary({bookId}));
       }
     }
   }
@@ -34,12 +28,7 @@ export function DeleteBook() {
   return (
     <div className={styles.deleteBook}>
       <header className={styles.header}>
-        Вы действительно хотите удалить библиотеку?
-        <div className={styles.clarification}>
-          Вместе с библиотекой будут удалены все книги
-          <br />
-          и бронирования, относящиеся к ней.
-        </div>
+        Вы действительно хотите удалить эту книгу?
       </header>
       <form className={styles.form} onSubmit={hanldeSubmit}>
         <div className={styles.btnsWrp}>
@@ -53,7 +42,7 @@ export function DeleteBook() {
           <button
             className={classNames(styles.btn, styles.submit)}
           >
-            Да, удалить библиотеку
+            Да, удалить книгу
           </button>
         </div>
       </form>

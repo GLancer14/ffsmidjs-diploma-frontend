@@ -21,7 +21,7 @@ export function AddBook() {
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState("");
   const [description, setDescription] = useState("");
-  const [copies, setCopies] = useState("0");
+  const [copies, setCopies] = useState("1");
   const [cover, setCover] = useState<string | null>(null);
   const coverFileInput = useRef<HTMLInputElement>(null);
 
@@ -62,13 +62,14 @@ export function AddBook() {
             author: author,
             description: description,
             year: +year,
+            coverImage: addedBook.coverImage,
           },
         }));
         setTitle("");
         setAuthor("");
         setDescription("");
         setYear("");
-        setCopies("0");
+        setCopies("1");
         setCover(null);
       }
     }

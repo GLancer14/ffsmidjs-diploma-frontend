@@ -10,7 +10,7 @@ import { findUserBookRents } from "../../../api/bookRent";
 import { type BookRentalResponseDto } from "../../../store/reducers/usersRentsSlice";
 import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
 import { EditProfile } from "../Actions/EditProfile/EditProfile";
-import { updateObservedUserProfile } from "../../../store/reducers/observeduserProfileSlice";
+import { updateObservedUserProfile } from "../../../store/reducers/observedUserProfileSlice";
 import { DeleteUser } from "../Actions/DeleteUser/DeleteUser";
 
 export function AnotherUserProfile() {

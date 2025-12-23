@@ -173,6 +173,22 @@ export const updateBook = async (form: FormData) => {
   }
 };
 
+export const deleteBook = async (bookId: number) => {
+  try {
+    const bookData = await connection.delete(`/api/admin/books/${bookId}`);
+
+    return bookData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
 export const getLibraryById = async (id: string) => {
   try {
     const projectData = await connection.get(`/api/common/libraries/${id}`);
