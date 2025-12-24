@@ -1,3 +1,95 @@
 .chat {
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 48px;
+    padding: 14px;
 
+    font-weight: 600;
+
+    background-color: colors.$formBg;
+    border-radius: 16px 16px 0 0;
+
+    .logo {
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .btnsWrp {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 11px;
+
+      .btn {
+        color: colors.$button2;
+
+        background-color: transparent;
+
+        cursor: pointer;
+      }
+    }
+  }
+
+  .messages {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 550px;
+    padding: 24px 16px;
+
+    border-top: 1px solid colors.$textAndBorder;
+    border-bottom: 1px solid colors.$textAndBorder;
+
+    overflow-y: scroll;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    height: 52px;
+    padding: 17px;
+
+    border-radius: 0 0 16px 16px;
+    color: colors.$button2;
+
+    .attachFile {
+      cursor: pointer;
+
+      .inputFile {
+        position: fixed;
+        transform: scale(0);
+      }
+    }
+
+    .messageInput {
+      flex-grow: 1;
+
+      font: text.$tableText;
+
+      background-color: transparent;
+      border: none;
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+
+    .btn {
+      background-color: transparent;
+
+      color: colors.$button2;
+
+      cursor: pointer;
+      
+      .send {
+        color: colors.$textAndBorder;
+        fill: colors.$button2;
+      }
+    }
+  }
 }

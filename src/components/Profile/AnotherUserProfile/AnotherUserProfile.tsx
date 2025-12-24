@@ -10,13 +10,16 @@ import { findUserBookRents } from "../../../api/bookRent";
 import { type BookRentalResponseDto } from "../../../store/reducers/usersRentsSlice";
 import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
 import { EditProfile } from "../Actions/EditProfile/EditProfile";
-import { updateObservedUserProfile } from "../../../store/reducers/observedUserProfileSlice";
+import { resetObservedUserProfile, updateObservedUserChat, updateObservedUserProfile } from "../../../store/reducers/observedUserProfileSlice";
 import { DeleteUser } from "../Actions/DeleteUser/DeleteUser";
 import { Chat } from "../Chat/Chat";
+import { SocketContext } from "../../../context/SocketContext";
+import { getChatData } from "../../../api/supportChat";
 
 export function AnotherUserProfile() {
   const params = useParams();
   const dispatch = useAppDispatch();
+  const { socket } = useContext(SocketContext);
   const { closeActionModal, showActionModal } = useContext(ActionModalContext);
   const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
   const navigation = useNavigate();
@@ -54,7 +57,17 @@ export function AnotherUserProfile() {
       </div>
     );
   });
-                
+  
+  async function handleSubscribeToUserMessages() {
+    if (params.id) {
+      const chatData = await getChatData(+params.id);
+      console.log(chatData)
+      if (chatData) {
+        dispatch(updateObservedUserChat(chatData));
+        socket?.emit("subscribeToChat", { chatId: chatData.id });
+      }
+    }
+  }
 
   async function handleGetUserData() {
     if (params.id) {
@@ -79,8 +92,10 @@ export function AnotherUserProfile() {
   }
 
   useEffect(() => {
+    dispatch(resetObservedUserProfile());
     handleSetUserRents();
     handleGetUserData();
+    handleSubscribeToUserMessages();
   }, []);
 
   function handleRentTypeChange(e: ChangeEvent<HTMLInputElement>) {
@@ -196,7 +211,7 @@ export function AnotherUserProfile() {
           onClick={() => {
             chatBtnVisibility
               ? closeActionModal!()
-              : showActionModal!(<Chat />, "chat");
+              : showActionModal!(<Chat chat={observedUserProfile.chat} />, "chat");
             setChatBtnVisibility(!chatBtnVisibility);
           }}
         >

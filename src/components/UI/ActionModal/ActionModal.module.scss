@@ -67,6 +67,7 @@
     position: fixed;
     bottom: 108px;
     right: 40px;
+    padding: 0;
 
     width: 500px;
     height: 650px;
@@ -76,22 +77,10 @@
     background-color: colors.$cardBg;
 
     animation: none;
-
-    .close {
-      position: absolute;
-      top: 24px;
-      right: 24px;
-
-      width: 24px;
-      height: 24px;
-
-      cursor: pointer;
-    }
   }
 
   &.notVisible {
     display: none;
-
   }
 }
 

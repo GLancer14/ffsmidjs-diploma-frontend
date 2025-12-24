@@ -16,3 +16,13 @@ export function parseDateFromUTCToRu(UTCString: string | undefined) {
     });
   }
 }
+
+export function parseDateFromUTCToRuTime(UTCString: string | undefined) {
+  if (UTCString) {
+    return (new Date(UTCString)).toLocaleString("ru-RU", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+}
+
