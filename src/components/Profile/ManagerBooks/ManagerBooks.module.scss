@@ -1,0 +1,116 @@
+.books {
+  width: 868px;
+  margin-left: 80px;
+  margin-bottom: 40px;
+
+  .header {
+    margin-bottom: 64px;
+    
+    text-align: left;
+
+    font: text.$h1h2;
+  }
+
+  .selectDesc {
+    margin-bottom: 32px;
+
+    font: text.$textPv2;
+    text-align: left;
+  }
+
+  .selectWrp {
+    position: relative;
+    
+    .select {
+      position: relative;
+    
+      width: 100%;
+      height: 53px;
+      padding: 16px 24px;
+    
+      font: text.$placeholder;
+      text-align: left;
+    
+      border-radius: 16px;
+      border: 1px solid colors.$textAndBorder;
+      background-color: colors.$cardBg;
+    
+      cursor: pointer;
+    
+      &:focus {
+        background-color: colors.$accentBg;
+      }
+    
+      &::placeholder {
+        color: colors.$placeholder;
+      }
+    
+      .arrow {
+        position: absolute;
+        top: 14px;
+        right: 24px;
+      }
+    
+      .rotatedArrow {
+        transform: rotate(180deg);
+      }
+    }
+    
+    .libraries {
+      position: absolute;
+      top: 69px;
+      left: 0;
+      
+      display: none;
+      flex-direction: column;
+      max-height: 280px;
+      width: 100%;
+      
+      background-color: colors.$cardBg;
+      border: 1px solid colors.$textAndBorder;
+      border-radius: 16px;
+      
+      .libraryItem {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 24px;
+
+        cursor: pointer;
+
+        .number {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 24px;
+          height: 24px;
+
+          font: text.$digitInCircle;
+
+          background-color: colors.$button1;
+          border: 1px solid colors.$textAndBorder;
+          border-radius: 50%;
+        }
+      
+        &:hover {
+          background-color: colors.$formBg;
+        }
+      
+        &:first-of-type {
+          border-radius: 16px 16px 0 0;
+        }
+      
+        &:last-of-type {
+          border-radius: 0 0 16px 16px;
+        }
+      }
+    }
+
+    .visibleLibraries {
+      display: flex;
+    }
+  }
+}
+        
+        

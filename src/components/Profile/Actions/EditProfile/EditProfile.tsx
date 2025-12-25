@@ -137,6 +137,7 @@ export function EditProfile() {
             [styles.visibleRoles]: rolesVisibility
           })}>
             <li
+              tabIndex={0}
               className={styles.roleItem}
               onClick={() => {
                 setSelectedRole("client");
@@ -146,6 +147,7 @@ export function EditProfile() {
               Клиент
             </li>
             <li
+              tabIndex={0}
               className={styles.roleItem}
               onClick={() => {
                 setSelectedRole("manager");
@@ -155,6 +157,7 @@ export function EditProfile() {
               Библиотекарь
             </li>
             <li
+              tabIndex={0}
               className={styles.roleItem}
               onClick={() => {
                 setSelectedRole("admin");

@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./Welcome.module.scss";
 import { useAppSelector } from "../../../hooks/reduxHook";
-import { getLibrariesCount } from "../../../api/libraries";
+import { getBooksCount, getLibrariesCount } from "../../../api/libraries";
 import { ActionModalContext } from "../../../context/ActionModalContext";
 import { AddLibrary } from "../Actions/AddLibrary/AddLibrary";
 import { useNavigate } from "react-router";
+import { getUsersCountForWelcome } from "../../../api/users";
 
 
 export function Welcome() {
@@ -12,19 +13,44 @@ export function Welcome() {
   const { showActionModal } = useContext(ActionModalContext);
   const user = useAppSelector(state => state.userReducer);
   const [librariesCount, setLibrariesCount] = useState<number>(0);
+  const [booksCount, setBooksCount] = useState<{all: number; activeRents: number}>()
+  const [usersCount, setUsersCount] = useState<{allUsers: number;
+    usersWithActiveRents: number;
+    newMessages: number}>()
 
   async function getLibrariesCountFromApi() {
     const count = await getLibrariesCount({searchString: ""});
     setLibrariesCount(count);
-  } 
+  }
+
+  async function getBooksCountFromApi() {
+    const count = await getBooksCount();
+    setBooksCount(count);
+  }
+
+  async function getUsersDataForWelcomeFromApi() {
+    const count = await getUsersCountForWelcome();
+    setUsersCount(count);
+  }
 
   useEffect(() => {
-    getLibrariesCountFromApi();
+    if (user.role !== "client") {
+      getUsersDataForWelcomeFromApi();
+      getBooksCountFromApi();
+      getLibrariesCountFromApi();
+    }
   }, []);
 
   return (
     <div className={styles.welcome}>
-      <header className={styles.header}>Добро пожаловать в админ-панель!</header>
+      <header className={styles.header}>
+        {
+          user.role === "client"
+           ? "Добро пожаловать в личный кабинет!"
+           : "Добро пожаловать в админ-панель!"
+        }
+        
+      </header>
       <div className={styles.services}>
         {user.role === "admin" && 
           (<div className={styles.category}>
@@ -48,26 +74,31 @@ export function Welcome() {
             <div className={styles.category}>
               <div className={styles.stats}>
                 <div className={styles.stat}>
-                  Всего книг в системе: <span className={styles.bold}></span>
+                  Всего книг в системе: <span className={styles.bold}>{booksCount?.all}</span>
                 </div>
                 <div className={styles.stat}>
-                  Активные бронирования: <span className={styles.bold}></span>
+                  Активные бронирования: <span className={styles.bold}>{booksCount?.activeRents}</span>
                 </div>
               </div>
               <div className={styles.actionWrp}>
-                <button className={styles.action}>Добавить книгу</button>
+                <button
+                  className={styles.action}
+                  onClick={() => navigation("/profile/libraries")}
+                >
+                  Добавить книгу
+                </button>
               </div>
             </div>
             <div className={styles.category}>
               <div className={styles.stats}>
                 <div className={styles.stat}>
-                  Всего пользователей: <span className={styles.bold}></span>
+                  Всего пользователей: <span className={styles.bold}>{usersCount?.allUsers}</span>
                 </div>
                 <div className={styles.stat}>
-                  С активным бронированием: <span className={styles.bold}></span>
+                  С активным бронированием: <span className={styles.bold}>{usersCount?.usersWithActiveRents}</span>
                 </div>
                 <div className={styles.stat}>
-                  Новых сообщений: <span className={styles.bold}></span>
+                  Новых сообщений: <span className={styles.bold}>{usersCount?.newMessages}</span>
                 </div>
               </div>
               <div className={styles.actionWrp}>

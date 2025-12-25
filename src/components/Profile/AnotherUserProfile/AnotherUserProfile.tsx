@@ -20,12 +20,14 @@ export function AnotherUserProfile() {
   const params = useParams();
   const dispatch = useAppDispatch();
   const { socket } = useContext(SocketContext);
+  const user = useAppSelector(state => state.userReducer);
   const { closeActionModal, showActionModal } = useContext(ActionModalContext);
   const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
   const navigation = useNavigate();
   const [userRents, setUserRents] = useState<BookRentalResponseDto[]>([]);
   const [rentType, setRentType] = useState("all");
   const [chatBtnVisibility, setChatBtnVisibility] = useState(false);
+  const [chatAvailability, setChatAvailability] = useState(false);
   // const [userData, setUserData] = useState<User>();
 
   const userRentsList = userRents.filter(rent => {
@@ -61,9 +63,10 @@ export function AnotherUserProfile() {
   async function handleSubscribeToUserMessages() {
     if (params.id) {
       const chatData = await getChatData(+params.id);
-      console.log(chatData)
       if (chatData) {
+        setChatAvailability(true);
         dispatch(updateObservedUserChat(chatData));
+        console.log(observedUserProfile)
         socket?.emit("subscribeToChat", { chatId: chatData.id });
       }
     }
@@ -128,7 +131,9 @@ export function AnotherUserProfile() {
           <div className={styles.desc}>Роль:</div>
           <div className={styles.content}>{observedUserProfile.role}</div>
         </div>
-        <div className={styles.btnsWrp}>
+        {
+          user.role === "admin" &&
+          (<div className={styles.btnsWrp}>
             <button
               className={classNames(styles.btn, styles.edit)}
               type="button"
@@ -151,76 +156,78 @@ export function AnotherUserProfile() {
             >
               Удалить пользователя
             </button>
-          </div>
-        </div>
-        <div className={styles.rents}>
-          <header className={styles.rentsHeader}>Книги пользователя</header>
-          <form className={styles.rentsStatusWrp}>
-            <label className={styles.label}>
-              <span className={styles.desc}>Все</span>
-              <input
-                className={styles.radio}
-                type="radio"
-                name="user-type"
-                value="all"
-                onChange={handleRentTypeChange}
-              />
-            </label>
-            <label className={styles.label}>
-              <BookMarked />
-              <span className={styles.desc}>Забронирована</span>
-              <input
-                className={styles.radio}
-                type="radio"
-                name="user-type"
-                value="reserved"
-                onChange={handleRentTypeChange}
-              />
-            </label>
-            <label className={styles.label}>
-              <SquareCheck />
-              <span className={styles.desc}>Возвращена</span>
-              <input
-                className={styles.radio}
-                type="radio"
-                name="user-type"
-                value="complete"
-                onChange={handleRentTypeChange}
-              />
-            </label>
-          </form>
-          <div className={styles.table}>
-            <div className={styles.headerRow}>
-              <div className={classNames(styles.id, styles.cell)}>ID</div>
-              <div className={classNames(styles.book, styles.cell)}>Название книги / автор</div>
-              <div className={classNames(styles.library, styles.cell)}>Библиотека</div>
-              <div className={classNames(styles.dateStart, styles.cell)}>Дата выдачи</div>
-              <div className={classNames(styles.dateEnd, styles.cell)}>Дата возврата</div>
-              <div className={classNames(styles.status, styles.cell)}>Статус</div>
-            </div>
-            {
-              userRentsList.length === 0
-                ? (<div className={styles.noResults}>Записи отсутствуют</div>)
-                : userRentsList
-            }
-          </div>
-        </div>
-        <button 
-          className={styles.chatBtn}
-          type="button"
-          onClick={() => {
-            chatBtnVisibility
-              ? closeActionModal!()
-              : showActionModal!(<Chat chat={observedUserProfile.chat} />, "chat");
-            setChatBtnVisibility(!chatBtnVisibility);
-          }}
-        >
-          {
-            chatBtnVisibility
-              ? <X />
-              : <MessageSquare />
-          }
-        </button>
+          </div>)
+        }
       </div>
-    );
+      <div className={styles.rents}>
+        <header className={styles.rentsHeader}>Книги пользователя</header>
+        <form className={styles.rentsStatusWrp}>
+          <label className={styles.label}>
+            <span className={styles.desc}>Все</span>
+            <input
+              className={styles.radio}
+              type="radio"
+              name="user-type"
+              value="all"
+              onChange={handleRentTypeChange}
+            />
+          </label>
+          <label className={styles.label}>
+            <BookMarked />
+            <span className={styles.desc}>Забронирована</span>
+            <input
+              className={styles.radio}
+              type="radio"
+              name="user-type"
+              value="reserved"
+              onChange={handleRentTypeChange}
+            />
+          </label>
+          <label className={styles.label}>
+            <SquareCheck />
+            <span className={styles.desc}>Возвращена</span>
+            <input
+              className={styles.radio}
+              type="radio"
+              name="user-type"
+              value="complete"
+              onChange={handleRentTypeChange}
+            />
+          </label>
+        </form>
+        <div className={styles.table}>
+          <div className={styles.headerRow}>
+            <div className={classNames(styles.id, styles.cell)}>ID</div>
+            <div className={classNames(styles.book, styles.cell)}>Название книги / автор</div>
+            <div className={classNames(styles.library, styles.cell)}>Библиотека</div>
+            <div className={classNames(styles.dateStart, styles.cell)}>Дата выдачи</div>
+            <div className={classNames(styles.dateEnd, styles.cell)}>Дата возврата</div>
+            <div className={classNames(styles.status, styles.cell)}>Статус</div>
+          </div>
+          {
+            userRentsList.length === 0
+              ? (<div className={styles.noResults}>Записи отсутствуют</div>)
+              : userRentsList
+          }
+        </div>
+      </div>
+      <button 
+        className={styles.chatBtn}
+        type="button"
+        disabled={!chatAvailability}
+        onClick={() => {
+          chatBtnVisibility
+            ? closeActionModal!()
+            : showActionModal!(<Chat chat={observedUserProfile.chat} />, "chat");
+          setChatBtnVisibility(!chatBtnVisibility);
+        }}
+      >
+        {
+          chatBtnVisibility
+            ? <X />
+            : <MessageSquare />
+        }
+      </button>
+    </div>
+  );
 }

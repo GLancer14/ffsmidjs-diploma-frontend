@@ -129,6 +129,22 @@ export const getBookById = async (id: string) => {
   }
 };
 
+export  const getBooksCount = async () => {
+  try {
+    const booksData = await connection.get(`/api/common/books-count/`);
+
+    return booksData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
 export const addBook = async (form: FormData) => {
   try {
     const bookData = await connection.post(`/api/admin/books/`, form, 

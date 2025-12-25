@@ -14,6 +14,7 @@ import { DeleteLibrary } from "../Actions/DeleteLibrary/DeleteLibrary";
 import { AddBook } from "../Actions/AddBook/AddBook";
 import { EditBook } from "../Actions/EditBook/EditBook";
 import { DeleteBook } from "../Actions/DeleteBook/DeleteBook";
+import { LibraryProfileCard } from "../LibraryProfileCard/LibraryProfileCard";
 
 export function LibraryProfile() {
   const params = useParams();
@@ -28,7 +29,7 @@ export function LibraryProfile() {
 
   const booksList = observedLibraryProfile.book.map(book => {
     return (
-      <div className={styles.row} key={book.book.id}>
+      <div className={styles.row} key={`${book.book.id}${book.book.title}`}>
         <div className={classNames(styles.id, styles.cell)}>{book.book.id}</div>
         <div className={classNames(styles.title, styles.cell)}>{book.book.title}</div>
         <div className={classNames(styles.author, styles.cell)}>{book.book.author}</div>
@@ -80,8 +81,11 @@ export function LibraryProfile() {
 
   useEffect(() => {
     handleGetPagesCount();
+  }, [observedLibraryProfile.book.length])
+
+  useEffect(() => {
     handleGetLibraryData();
-  }, [observedLibraryProfile]);
+  }, [observedLibraryProfile.id]);
 
   function handleRentTypeChange(e: ChangeEvent<HTMLInputElement>) {
     setSortType(e.currentTarget.value);
@@ -101,44 +105,13 @@ export function LibraryProfile() {
           Назад
         </button>
       </header>
-      <div className={styles.card}>
-        <header className={styles.cardHeader}>Информация</header>
-        <div className={styles.dataWrp}>
-          <div className={styles.desc}>Название:</div>
-          <div className={styles.content}>{observedLibraryProfile.name}</div>
-          <div className={styles.desc}>Адрес:</div>
-          <div className={styles.content}>{observedLibraryProfile.address}</div>
-          <div className={styles.desc}>Описание:</div>
-          <div className={styles.content}>{observedLibraryProfile.description}</div>
-          <div className={styles.desc}>Всего книг:</div>
-          <div className={styles.content}>{observedLibraryProfile.totalCopies}</div><div className={styles.desc}>Доступно книг:</div>
-          <div className={styles.content}>{observedLibraryProfile.availableCopies}</div>
-        </div>
-        <div className={styles.btnsWrp}>
-          <button
-            className={classNames(styles.btn, styles.edit)}
-            type="button"
-            onClick={() => {
-              showActionModal!(
-                <EditLibrary />
-              );
-            }}
-          >
-            Редактировать
-          </button>
-          <button
-            className={classNames(styles.btn, styles.delete)}
-            type="button"
-            onClick={() => {
-              showActionModal!(
-                <DeleteLibrary />
-              );
-            }}
-          >
-            Удалить библиотеку
-          </button>
-        </div>
-      </div>
+      <LibraryProfileCard
+        name={observedLibraryProfile.name}
+        address={observedLibraryProfile.address}
+        description={observedLibraryProfile.description}
+        totalCopies={observedLibraryProfile.totalCopies}
+        availableCopies={observedLibraryProfile.availableCopies}
+      />
       <div className={styles.books}>
         <form className={styles.booksForm}>
           <label className={styles.label}>

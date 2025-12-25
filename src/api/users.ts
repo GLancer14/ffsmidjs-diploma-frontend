@@ -92,6 +92,22 @@ export const findUsers = async (params: SearchUserParams) => {
   }
 };
 
+export const getUsersCountForWelcome = async () => {
+  try {
+    const usersData = await connection.get("/api/common/users-count/welcome");
+
+    return usersData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
 export const getUsersCount = async (params: { searchString: string }) => {
   try {
     const usersData = await connection.get("/api/common/users-count", {

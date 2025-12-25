@@ -14,6 +14,7 @@ import { updateUsersRents, type BookRentalResponseDto } from "../../../store/red
 import { updateFoundUsers } from "../../../store/reducers/foundUsers";
 
 export function Users() {
+  const user = useAppSelector(state => state.userReducer);
   const [usersRents, setUserRents] = useState<BookRentalResponseDto[][]>([]);
   const [foundUsers, setFoundUserRents] = useState<User[]>([]);
   const { showActionModal } = useContext(ActionModalContext);
@@ -65,14 +66,17 @@ export function Users() {
     <div className={styles.users}>
       <header className={styles.header}>
         <span>Пользователи</span>
-        <button
-          className={styles.addUserBtn}
-          onClick={() => {
-            showActionModal!(<AddUser />);
-          }}
-        >
-          Добавить пользователя
-        </button>
+        {
+          user.role === "admin" &&
+            (<button
+              className={styles.addUserBtn}
+              onClick={() => {
+                showActionModal!(<AddUser />);
+              }}
+            >
+              Добавить пользователя
+            </button>)
+        }
       </header>
       <form className={styles.form}>
         <input

@@ -54,6 +54,7 @@ export function Chat({ chat }: { chat: Chat }) {
               message.author
               return (
                 <Message
+                  key={message.id}
                   authorName={message.author}
                   content={message.text}
                   time={message.sentAt}

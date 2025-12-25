@@ -309,7 +309,7 @@
     &:disabled {
       background-color: colors.$disabled;
       box-shadow: none;
-      color: colors.$disabled;
+      cursor: default;
     }
   }
 }

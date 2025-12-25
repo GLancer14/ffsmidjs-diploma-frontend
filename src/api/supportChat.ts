@@ -1,13 +1,29 @@
 import connection from ".";
 import request from "axios";
 
-export const getChatData = async (companionUserId: number) => {
+export const getChatData = async (clientId: number) => {
   try {
     const chatData = await connection.get("/api/manager/support-requests", {
       params: {
-        user: companionUserId,
+        user: clientId,
       }
     });
+
+    return chatData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
+export const getChatMessages = async (chatId: number) => {
+  try {
+    const chatData = await connection.get(`/api/manager/${chatId}/support-requests`);
 
     return chatData.data;
   } catch(e) {
