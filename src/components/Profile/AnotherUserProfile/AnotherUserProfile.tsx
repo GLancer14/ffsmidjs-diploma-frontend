@@ -28,44 +28,12 @@ export function AnotherUserProfile() {
   const [userRents, setUserRents] = useState<BookRentalResponseDto[]>([]);
   const [rentType, setRentType] = useState("all");
   const [chatBtnVisibility, setChatBtnVisibility] = useState(false);
-  const [chatAvailability, setChatAvailability] = useState(false);
   // const [userData, setUserData] = useState<User>();
-
-  const userRentsList = userRents.filter(rent => {
-    if (rentType === "all") {
-      return true;
-    } else if (rentType !== rent.status) {
-      return false;
-    } else {
-      return true;
-    }
-  }).map(rent => {
-    return (
-      <div className={styles.row} key={rent.id}>
-        <div className={classNames(styles.id, styles.cell)}>{rent.id}</div>
-        <div className={classNames(styles.book, styles.cell)}>
-          <div className={styles.title}>{rent.book.title} /</div>
-          <div className={styles.author}>{rent.book.author}</div>
-        </div>
-        <div className={classNames(styles.library, styles.cell)}>{rent.library.name}</div>
-        <div className={classNames(styles.dateStart, styles.cell)}>{parseDateFromUTCToRu(rent.dateStart)}</div>
-        <div className={classNames(styles.dateEnd, styles.cell)}>{parseDateFromUTCToRu(rent.dateEnd)}</div>
-        <div className={classNames(styles.status, styles.cell)}>
-          {
-            rent.status === "reserved"
-            ? <BookMarked size={24} />
-            : <SquareCheck size={24} />
-          }
-        </div>
-      </div>
-    );
-  });
   
-  async function handleSubscribeToUserMessages() {
+  async function handleSubscribeToChatMessages() {
     if (params.id) {
       const chatData = await getChatData(+params.id);
       if (chatData) {
-        setChatAvailability(true);
         dispatch(updateObservedUserChat(chatData));
         console.log(observedUserProfile)
         socket?.emit("subscribeToChat", { chatId: chatData.id });
@@ -101,7 +69,7 @@ export function AnotherUserProfile() {
     dispatch(resetObservedUserProfile());
     handleSetUserRents();
     handleGetUserData();
-    handleSubscribeToUserMessages();
+    handleSubscribeToChatMessages();
   }, []);
 
   function handleRentTypeChange(e: ChangeEvent<HTMLInputElement>) {
@@ -162,67 +130,15 @@ export function AnotherUserProfile() {
           </div>)
         }
       </div>
-      {/* <div className={styles.rents}>
-        <header className={styles.rentsHeader}>Книги пользователя</header> */}
-        {/* <form className={styles.rentsStatusWrp}>
-          <label className={styles.label}>
-            <span className={styles.desc}>Все</span>
-            <input
-              className={styles.radio}
-              type="radio"
-              name="user-type"
-              value="all"
-              onChange={handleRentTypeChange}
-            />
-          </label>
-          <label className={styles.label}>
-            <BookMarked />
-            <span className={styles.desc}>Забронирована</span>
-            <input
-              className={styles.radio}
-              type="radio"
-              name="user-type"
-              value="reserved"
-              onChange={handleRentTypeChange}
-            />
-          </label>
-          <label className={styles.label}>
-            <SquareCheck />
-            <span className={styles.desc}>Возвращена</span>
-            <input
-              className={styles.radio}
-              type="radio"
-              name="user-type"
-              value="complete"
-              onChange={handleRentTypeChange}
-            />
-          </label>
-        </form> */}
-        <UserRents userRents={userRents}/>
-        {/* <div className={styles.table}>
-          <div className={styles.headerRow}>
-            <div className={classNames(styles.id, styles.cell)}>ID</div>
-            <div className={classNames(styles.book, styles.cell)}>Название книги / автор</div>
-            <div className={classNames(styles.library, styles.cell)}>Библиотека</div>
-            <div className={classNames(styles.dateStart, styles.cell)}>Дата выдачи</div>
-            <div className={classNames(styles.dateEnd, styles.cell)}>Дата возврата</div>
-            <div className={classNames(styles.status, styles.cell)}>Статус</div>
-          </div>
-          {
-            userRentsList.length === 0
-              ? (<div className={styles.noResults}>Записи отсутствуют</div>)
-              : userRentsList
-          }
-        </div> */}
-      {/* </div> */}
+      <UserRents userRents={userRents}/>
       <button 
         className={styles.chatBtn}
         type="button"
-        disabled={!chatAvailability}
         onClick={() => {
           chatBtnVisibility
             ? closeActionModal!()
-            : showActionModal!(<Chat chat={observedUserProfile.chat} />, "chat");
+            : showActionModal!(<Chat />, "chat");
+            // : showActionModal!(<Chat chat={observedUserProfile.chat} />, "chat");
           setChatBtnVisibility(!chatBtnVisibility);
         }}
       >

@@ -7,7 +7,8 @@ import { Message } from "./Message/Message";
 import { useState } from "react";
 import { sendMessage } from "../../../api/supportChat";
 
-export function Chat({ chat }: { chat: Chat }) {
+// export function Chat({ chat }: { chat: Chat }) {
+export function Chat() {
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.userReducer);
   const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
@@ -19,14 +20,14 @@ export function Chat({ chat }: { chat: Chat }) {
 
     console.log(sendedMessage);
     if (!sendedMessage.status) {
-      dispatch(addMessage({
-        id: sendedMessage.id,
-        author: sendedMessage.author,
-        sentAt: sendedMessage.sentAt,
-        text: sendedMessage.textAt,
-        readAt: sendedMessage.readAt,
-        supportRequestId: sendedMessage.supportRequestId,
-      }));
+      // dispatch(addMessage({
+      //   id: sendedMessage.id,
+      //   author: sendedMessage.author,
+      //   sentAt: sendedMessage.sentAt,
+      //   text: sendedMessage.textAt,
+      //   readAt: sendedMessage.readAt,
+      //   supportRequestId: sendedMessage.supportRequestId,
+      // }));
 
       setMessage("");
     }
@@ -48,10 +49,10 @@ export function Chat({ chat }: { chat: Chat }) {
       </header>
       <div className={styles.messages}>
         {
-          chat.messages.length === 1 && chat.id === 0
+          observedUserProfile.chat.messages.length === 1 && observedUserProfile.chat.id === 0
             ? "Здесь пока нет сообщений"
-            : chat.messages.map(message => {
-              message.author
+            : observedUserProfile.chat.messages.map(message => {
+              console.log(message)
               return (
                 <Message
                   key={message.id}

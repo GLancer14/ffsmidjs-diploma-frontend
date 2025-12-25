@@ -54,3 +54,19 @@ export const sendMessage = async (supportChatId: number, message: string) => {
     return { message: "error", status: "error" };
   }
 };
+
+export const getClientChat = async (userId: number) => {
+  try {
+    const chatData = await connection.get(`/api/client/support-requests`);
+
+    return chatData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};

@@ -20,6 +20,7 @@ export interface MessageProps {
 }
 
 export function Message({ authorName, content, time, status, type }: MessageProps) {
+  // console.log(authorName)
   return (
     <div className={classNames(styles.message, {
       [styles.myMessage]: type === "my"
@@ -40,7 +41,6 @@ export function Message({ authorName, content, time, status, type }: MessageProp
                   : <CheckCheck size={18} className={styles.status} />
               )
           }
-          
         </div>
       </div>
     </div>

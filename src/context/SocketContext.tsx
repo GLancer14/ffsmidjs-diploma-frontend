@@ -53,7 +53,6 @@ export function SocketState({ children }: SocketStateProps) {
 
         socket.on("newMessage", (payload) => {
           dispatch(addMessage(payload.message));
-          console.log("newMessage", payload);
         })
 
         return () => {
