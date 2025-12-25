@@ -35,11 +35,16 @@
           font-weight: 600;
         }
         
+        .boldRents {
+          font-size: 22px;
+          font-weight: 600;
+        }
       }
 
       .actionWrp {
         display: flex;
         justify-content: center;
+        gap: 32px;
         margin-top: 40px;
 
         .action {
@@ -70,6 +75,19 @@
             background-color: colors.$disabled;
             box-shadow: none;
             color: colors.$disabled;
+          }
+        }
+
+        .rents {
+          width: 210px;
+        }
+
+        .find {
+          width: 185px;
+          background-color: colors.$button2;
+
+          &:active {
+            background-color: colors.$button2Pressed;
           }
         }
       }

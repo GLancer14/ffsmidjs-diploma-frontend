@@ -61,3 +61,40 @@ export const findUserBookRents = async (userId: number) => {
     return { message: "error", status: "error" };
   }
 };
+
+
+export const getRentsCountForWelcome = async (userId: number) => {
+  try {
+    const rentData = await connection.get(`/api/common/rentals-count`, {
+      params: {
+        userId,
+      }
+    });
+
+    return rentData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
+export const getClientOwnRents = async () => {
+  try {
+    const rentData = await connection.get(`/api/client/rentals`);
+
+    return rentData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};

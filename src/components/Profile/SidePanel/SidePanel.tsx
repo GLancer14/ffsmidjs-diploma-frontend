@@ -18,6 +18,7 @@ export function SidePanel() {
 
   function handleUserLogout() {
     dispatch(updateCurrentUser({
+      id: 0,
       name: "",
       email: "",
       contactPhone: "",
@@ -32,7 +33,7 @@ export function SidePanel() {
       libraryDataLink = (<li className={classNames(styles.link, {
           [styles.active]: currentPage.includes("books")
         })}>
-        <Link to="/profile/books">
+        <Link to="/profile/my-books">
           <LibraryBig className={styles.icon} /> <span>Мои книги</span>
         </Link>
       </li>)

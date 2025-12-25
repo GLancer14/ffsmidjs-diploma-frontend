@@ -15,6 +15,7 @@ import { DeleteUser } from "../Actions/DeleteUser/DeleteUser";
 import { Chat } from "../Chat/Chat";
 import { SocketContext } from "../../../context/SocketContext";
 import { getChatData } from "../../../api/supportChat";
+import { UserRents } from "../UserRents/UserRents";
 
 export function AnotherUserProfile() {
   const params = useParams();
@@ -90,6 +91,8 @@ export function AnotherUserProfile() {
   async function handleSetUserRents() {
     if (params.id) {
       const userRentsRequsetResult = await findUserBookRents(+params.id);
+
+      console.log(userRentsRequsetResult)
       setUserRents(userRentsRequsetResult);
     }
   }
@@ -159,9 +162,9 @@ export function AnotherUserProfile() {
           </div>)
         }
       </div>
-      <div className={styles.rents}>
-        <header className={styles.rentsHeader}>Книги пользователя</header>
-        <form className={styles.rentsStatusWrp}>
+      {/* <div className={styles.rents}>
+        <header className={styles.rentsHeader}>Книги пользователя</header> */}
+        {/* <form className={styles.rentsStatusWrp}>
           <label className={styles.label}>
             <span className={styles.desc}>Все</span>
             <input
@@ -194,8 +197,9 @@ export function AnotherUserProfile() {
               onChange={handleRentTypeChange}
             />
           </label>
-        </form>
-        <div className={styles.table}>
+        </form> */}
+        <UserRents userRents={userRents}/>
+        {/* <div className={styles.table}>
           <div className={styles.headerRow}>
             <div className={classNames(styles.id, styles.cell)}>ID</div>
             <div className={classNames(styles.book, styles.cell)}>Название книги / автор</div>
@@ -209,8 +213,8 @@ export function AnotherUserProfile() {
               ? (<div className={styles.noResults}>Записи отсутствуют</div>)
               : userRentsList
           }
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
       <button 
         className={styles.chatBtn}
         type="button"

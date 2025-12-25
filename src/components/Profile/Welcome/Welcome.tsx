@@ -6,6 +6,8 @@ import { ActionModalContext } from "../../../context/ActionModalContext";
 import { AddLibrary } from "../Actions/AddLibrary/AddLibrary";
 import { useNavigate } from "react-router";
 import { getUsersCountForWelcome } from "../../../api/users";
+import classNames from "classnames";
+import { getRentsCountForWelcome } from "../../../api/bookRent";
 
 
 export function Welcome() {
@@ -14,9 +16,12 @@ export function Welcome() {
   const user = useAppSelector(state => state.userReducer);
   const [librariesCount, setLibrariesCount] = useState<number>(0);
   const [booksCount, setBooksCount] = useState<{all: number; activeRents: number}>()
-  const [usersCount, setUsersCount] = useState<{allUsers: number;
+  const [usersCount, setUsersCount] = useState<{
+    allUsers: number;
     usersWithActiveRents: number;
-    newMessages: number}>()
+    newMessages: number;
+  }>();
+  const [rentsCount, setRentsCount] = useState<{all: number; active: number}>();
 
   async function getLibrariesCountFromApi() {
     const count = await getLibrariesCount({searchString: ""});
@@ -33,11 +38,18 @@ export function Welcome() {
     setUsersCount(count);
   }
 
+  async function getRentsCountForWelcomeFromApi() {
+    const count = await getRentsCountForWelcome(user.id);
+    setRentsCount(count);
+  }
+
   useEffect(() => {
     if (user.role !== "client") {
       getUsersDataForWelcomeFromApi();
       getBooksCountFromApi();
       getLibrariesCountFromApi();
+    } else {
+      getRentsCountForWelcomeFromApi();
     }
   }, []);
 
@@ -107,7 +119,7 @@ export function Welcome() {
                   onClick={() => navigation("/profile/users")}
                 >
                   Открыть список
-                  </button>
+                </button>
               </div>
             </div>
           </>)
@@ -116,13 +128,32 @@ export function Welcome() {
           <div className={styles.category}>
             <div className={styles.stats}>
               <div className={styles.stat}>
-                Вы забронировали <span className={styles.bold}></span> книг
+                Вы забронировали <span className={styles.boldRents}>{rentsCount?.all || 0}</span> книг
               </div>
               <div className={styles.stat}>
-                Сейчас у Вас <span className={styles.bold}></span> активных бронирования
+                {
+                  rentsCount?.active
+                    ? (
+                      <>
+                        Сейчас у Вас <span className={styles.boldRents}>{rentsCount?.active}</span> активных бронирования
+                      </>
+                    )
+                    : "Сейчас у вас нет активных бронирований"
+                }
               </div>
-              <div className={styles.stat}>
-                Новых сообщений: <span className={styles.bold}></span>
+              <div className={styles.actionWrp}>
+                <button
+                  className={classNames(styles.action, styles.rents)}
+                  onClick={() => navigation("/profile/users")}
+                >
+                  Перейти к броням
+                </button>
+                <button
+                  className={classNames(styles.action, styles.find)}
+                  onClick={() => navigation("/")}
+                >
+                  Найти книгу
+                </button>
               </div>
             </div>
           </div>

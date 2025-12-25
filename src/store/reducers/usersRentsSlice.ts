@@ -12,6 +12,7 @@ export interface BookRentalResponseDto {
   book: {
     title?: string;
     author?: string;
+    coverImage?: string;
   };
   dateStart: string;
   dateEnd: string;

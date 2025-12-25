@@ -17,6 +17,7 @@ import { AnotherUserProfile } from './components/Profile/AnotherUserProfile/Anot
 import { Libraries } from './components/Profile/Libraries/Libraries';
 import { LibraryProfile } from './components/Profile/LibraryProfile/LibraryProfile';
 import { ManagerBooks } from './components/Profile/ManagerBooks/ManagerBooks';
+import { MyBooks } from './components/Profile/MyBooks/MyBooks';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -61,6 +62,7 @@ function App() {
             <Route path={":id"} element={<LibraryProfile /> } />
           </Route>
           <Route path={"books"} element={<Settings /> } />
+          <Route path={"my-books"} element={<MyBooks /> } />
         </Route>
       </Routes>
     </>
