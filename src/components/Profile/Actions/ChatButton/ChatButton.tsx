@@ -1,5 +1,5 @@
 import { MessageSquare, X } from "lucide-react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./ChatButton.module.scss";
 import { useAppSelector } from "../../../../hooks/reduxHook";
 import { ActionModalContext } from "../../../../context/ActionModalContext";
@@ -12,6 +12,14 @@ export function ChatButton() {
   const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
   const [chatBtnVisibility, setChatBtnVisibility] = useState(false);
   const [currentChat, setCurrentChat] = useState<ChatType>();
+  const [unreadMessages, setUnreadMessages] = useState(0);
+
+  useEffect(() => {
+    const unreadMessages = observedUserProfile.chat.messages.filter(message => {
+      return message.readAt === null && message.author !== observedUserProfile.id
+    });
+    setUnreadMessages(unreadMessages.length);
+  }, [observedUserProfile.chat.messages])
 
   return (
     <button 
@@ -29,6 +37,9 @@ export function ChatButton() {
           chatBtnVisibility
             ? <X />
             : <MessageSquare />
+        }
+        {unreadMessages !== 0 &&
+          <div className={styles.unreadCount}>{unreadMessages}</div> 
         }
       </button>
   );

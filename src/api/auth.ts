@@ -10,6 +10,27 @@ export interface RentBookDto {
   dateEnd: string;
 }
 
+export const register = async (name: string, email: string, password: string) => {
+  try {
+    console.log("email:", email)
+    const userData = await connection.post("/api/auth/register", {
+      email,
+      name,
+      password,
+    });
+
+    return userData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
 export const login = async (email: string, password: string) => {
   try {
     const userData = await connection.post("/api/auth/login", {

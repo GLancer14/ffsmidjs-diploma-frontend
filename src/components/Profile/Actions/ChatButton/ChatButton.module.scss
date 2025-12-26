@@ -31,4 +31,20 @@
     box-shadow: none;
     cursor: default;
   }
+
+  .unreadCount {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+
+    background-color: colors.$error;
+    border: 1px solid colors.$textAndBorder;
+    border-radius: 50%;
+  }
 }

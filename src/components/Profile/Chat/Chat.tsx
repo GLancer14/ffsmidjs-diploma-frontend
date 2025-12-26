@@ -1,7 +1,7 @@
 // import { useContext, useEffect, useState, type ChangeEvent } from "react";
 import { EllipsisVertical, Paperclip, Search, SendHorizonal, Smile } from "lucide-react";
 import styles from "./Chat.module.scss";
-import { addMessage, type Chat } from "../../../store/reducers/observedUserProfileSlice";
+import { addMessage, readMessage, type Chat } from "../../../store/reducers/observedUserProfileSlice";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
 import { Message } from "./Message/Message";
 import { useEffect, useRef, useState } from "react";
@@ -21,8 +21,6 @@ export function Chat() {
   async function handleSendMessage(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const sendedMessage = await sendMessage(observedUserProfile.chat.id, message);
-
-    console.log(sendedMessage);
     if (!sendedMessage.status) {
       // dispatch(addMessage({
       //   id: sendedMessage.id,
@@ -83,7 +81,10 @@ export function Chat() {
                 <>
                   {dateCloud}
                   <Message
-                    onMessageInView={() => handleReadingMessages(message.supportRequestId, message.sentAt)}
+                    onMessageInView={() => {
+                      handleReadingMessages(message.supportRequestId, message.sentAt);
+                      dispatch(readMessage(message.id));
+                    }}
                     key={message.id}
                     authorName={message.users.name}
                     content={message.text}

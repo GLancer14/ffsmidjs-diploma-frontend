@@ -79,7 +79,20 @@ export const observedUserProfileSlice = createSlice({
     },
     resetObservedUserProfile: () => {
       return initialState;
-    }
+    },
+    readMessage: (state, action: PayloadAction<number>) => {
+      const currentDate = new Date();
+      state.chat.messages = state.chat.messages.map(message => {
+        if (message.id === action.payload) {
+          return {
+            ...message,
+            readAt: currentDate.toISOString(),
+          };
+        }
+
+        return message;
+      })
+    },
   }
 });
 
@@ -88,5 +101,6 @@ export const {
   resetObservedUserProfile,
   updateObservedUserChat,
   addMessage,
+  readMessage,
 } = observedUserProfileSlice.actions;
 export default observedUserProfileSlice.reducer;
