@@ -70,3 +70,21 @@ export const getClientChat = async (userId: number) => {
     return { message: "error", status: "error" };
   }
 };
+
+export const markMessagesAsRead = async (supportRequestId: number, createdBefore: string) => {
+  try {
+    const chatData = await connection.post(`/api/common/support-requests/${supportRequestId}/messages/read`, {
+      createdBefore
+    });
+
+    return chatData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};

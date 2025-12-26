@@ -4,7 +4,8 @@
   justify-content: flex-end;
   align-items: flex-end;
   gap: 8px;
-  width: max-content;
+  // width: min-content;
+  margin-left: auto;
 
   font: text.$message;
 
@@ -22,7 +23,7 @@
     row-gap: 4px;
     padding: 8px;
 
-    background-color: colors.$accentBg;
+    background-color: colors.$button1;
     border-radius: 16px 0 16px 16px;
     border: 1px solid colors.$textAndBorder;
 
@@ -32,6 +33,9 @@
 
     .content {
       align-self: flex-start;
+
+      text-align: right;
+      word-break: break-all;
 
       color: colors.$textAndBorder;
     }
@@ -55,7 +59,9 @@
 .myMessage {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: flex-end;
+  margin-right: auto;
+  margin-left: 0;
   
   font: text.$message;
 
@@ -65,8 +71,8 @@
     align-items: flex-end;
     padding: 8px;
 
-    background-color: colors.$button1;
-    border-radius: 16px 0 16px 16px;
+    background-color: colors.$accentBg;
+    border-radius: 0 16px 16px 16px;
 
     .author {
       color: colors.$button2Pressed;
@@ -74,6 +80,8 @@
 
     .content {
       align-self: flex-start;
+
+      text-align: left;
 
       color: colors.$textAndBorder;
 

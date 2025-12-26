@@ -20,11 +20,14 @@ export interface ProfileData {
 
 export interface Message {
   id: number;
-  author: string;
+  author: number;
   sentAt: string;
   text: string;
   readAt: string | null;
   supportRequestId: number;
+  users: {
+    name: string;
+  }
 }
 
 export interface Chat {
@@ -46,11 +49,14 @@ const initialState: UserState = {
     createdAt: "",
     messages: [{
       id: 0,
-      author: "",
+      author: 0,
       sentAt: "",
       text: "",
       readAt: null,
       supportRequestId: 0,
+      users: {
+        name: "",
+      }
     }]
   }
 };

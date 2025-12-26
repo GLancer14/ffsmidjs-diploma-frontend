@@ -44,6 +44,16 @@
     border-bottom: 1px solid colors.$textAndBorder;
 
     overflow-y: scroll;
+
+    .dateCloud {
+      width: min-content;
+      margin: 0 auto;
+      padding: 4px 8px;
+
+      background-color: colors.$formBg;
+      border-radius: 8px;
+      border: 1px solid colors.$textAndBorder;
+    }
   }
 
   .footer {

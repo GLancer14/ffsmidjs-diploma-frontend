@@ -4,15 +4,19 @@ import styles from "./Chat.module.scss";
 import { addMessage, type Chat } from "../../../store/reducers/observedUserProfileSlice";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
 import { Message } from "./Message/Message";
-import { useState } from "react";
-import { sendMessage } from "../../../api/supportChat";
+import { useEffect, useRef, useState } from "react";
+import { markMessagesAsRead, sendMessage } from "../../../api/supportChat";
+import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
+import { useInView } from "react-intersection-observer";
 
 // export function Chat({ chat }: { chat: Chat }) {
 export function Chat() {
+  
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.userReducer);
   const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
   const [message, setMessage] = useState("");
+  const messagesRef = useRef<HTMLDivElement>(null);
 
   async function handleSendMessage(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -33,6 +37,22 @@ export function Chat() {
     }
   }
 
+  async function handleReadingMessages(supportRequestId: number, sentAt: string) {
+    await markMessagesAsRead(supportRequestId, sentAt);
+  }
+
+  // useEffect(() => {
+  //   if (messagesRef.current) {
+  //     messagesRef.current.scrollTop = messagesRef.current.scrollHeight
+  //   }
+  // }, [observedUserProfile.chat.messages.length])
+
+  // useEffect(() => {
+  //   if (messagesRef.current) {
+  //     messagesRef.current.scrollTop = messagesRef.current.scrollHeight
+  //   }
+  // }, []);
+
   return (
     <div className={styles.chat}>
       <header className={styles.header}>
@@ -51,19 +71,29 @@ export function Chat() {
         {
           observedUserProfile.chat.messages.length === 1 && observedUserProfile.chat.id === 0
             ? "Здесь пока нет сообщений"
-            : observedUserProfile.chat.messages.map(message => {
-              console.log(message)
+            : observedUserProfile.chat.messages.map((message, index, array) => {
+              let dateCloud = null;
+              const prevMessageSendingDay = (new Date(array[index - 1]?.sentAt)).getDate();
+              const currMessageSendingDay = (new Date(message.sentAt)).getDate();
+              if (prevMessageSendingDay !== currMessageSendingDay) {
+                dateCloud = <div className={styles.dateCloud}>{parseDateFromUTCToRu(message.sentAt)}</div>
+              }
+
               return (
-                <Message
-                  key={message.id}
-                  authorName={message.author}
-                  content={message.text}
-                  time={message.sentAt}
-                  status={message.readAt}
-                  type={
-                    message.author === user.name ? "my" : "another"
-                  }
-                />
+                <>
+                  {dateCloud}
+                  <Message
+                    onMessageInView={() => handleReadingMessages(message.supportRequestId, message.sentAt)}
+                    key={message.id}
+                    authorName={message.users.name}
+                    content={message.text}
+                    time={message.sentAt}
+                    status={message.readAt}
+                    type={
+                      message.author === user.id ? "my" : "another"
+                    }
+                  />
+                </>
               );
             })
         }

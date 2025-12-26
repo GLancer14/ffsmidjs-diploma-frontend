@@ -35,7 +35,6 @@ export function AnotherUserProfile() {
       const chatData = await getChatData(+params.id);
       if (chatData) {
         dispatch(updateObservedUserChat(chatData));
-        console.log(observedUserProfile)
         socket?.emit("subscribeToChat", { chatId: chatData.id });
       }
     }
@@ -60,7 +59,6 @@ export function AnotherUserProfile() {
     if (params.id) {
       const userRentsRequsetResult = await findUserBookRents(+params.id);
 
-      console.log(userRentsRequsetResult)
       setUserRents(userRentsRequsetResult);
     }
   }

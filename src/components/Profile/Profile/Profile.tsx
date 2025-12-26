@@ -10,12 +10,11 @@ export function Profile({children}: {children: React.ReactNode}) {
   const dispatch = useAppDispatch();
   const { socket } = useContext(SocketContext);
   const user = useAppSelector(state => state.userReducer);
+  const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
 
   async function handleSubscribeToChatMessages() {
       if (user.id) {
         const chatData = await getClientChat(user.id);
-        console.log("Profile comp: ")
-        console.log(chatData)
         if (!chatData.status) {
           dispatch(updateObservedUserChat(chatData));
           
@@ -41,7 +40,13 @@ export function Profile({children}: {children: React.ReactNode}) {
         handleGetUserData();
         handleSubscribeToChatMessages();
       }
-    }, [])
+
+      return () => {
+        socket?.emit("unSubscribeToChat", {
+          chatId: observedUserProfile.chat.id
+        });
+      }
+    }, []);
   return (
     <div className={styles.wrp}>
       {children}

@@ -3,6 +3,8 @@ import { Check, CheckCheck, EllipsisVertical, Paperclip, Search, SendHorizonal, 
 import styles from "./Message.module.scss";
 import classNames from "classnames";
 import { parseDateFromUTCToRu, parseDateFromUTCToRuTime } from "../../../../utils/parseRuDate";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 // import classNames from "classnames";
 // import { ActionModalContext } from "../../../../context/ActionModalContext";
 // import { AlertContext } from "../../../../context/AlertContext";
@@ -17,14 +19,36 @@ export interface MessageProps {
   time: string;
   status: string | null;
   type: string;
+  onMessageInView?: () => void;
 }
 
-export function Message({ authorName, content, time, status, type }: MessageProps) {
+export function Message({ authorName, content, time, status, type, onMessageInView }: MessageProps) {
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+    delay: 1000,
+  });
+
+  useEffect(() => {
+    if (inView && onMessageInView) {
+      const timer = setTimeout(() => {
+        onMessageInView();
+      }, 1300);
+      
+
+      return () => {
+        clearTimeout(timer);
+      }
+    }
+  }, [inView, onMessageInView]);
+  
   // console.log(authorName)
   return (
     <div className={classNames(styles.message, {
-      [styles.myMessage]: type === "my"
-    })}>
+        [styles.myMessage]: type === "my"
+      })}
+      ref={ref}
+    >
       {/* {
         avatar && 
         <img className={styles.avatar} src={avatar} alt="аватар" />
@@ -34,9 +58,9 @@ export function Message({ authorName, content, time, status, type }: MessageProp
         <div className={styles.content}>{content}</div>
         <div className={styles.messageData}>
           <span className={styles.time}>{parseDateFromUTCToRuTime(time)}</span>
-          {type !== "my" && 
+          {type === "my" && 
               (
-                status === "unread"
+                status === null
                   ? <Check size={18} className={styles.status} />
                   : <CheckCheck size={18} className={styles.status} />
               )
