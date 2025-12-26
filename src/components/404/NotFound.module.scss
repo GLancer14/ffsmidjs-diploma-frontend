@@ -1,0 +1,176 @@
+.notFound {
+  position: relative;
+
+  width: 100%;
+  margin-top: -40px;
+
+  overflow: hidden;
+  overflow-y: hidden;
+
+  .wrp {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: row;;
+    width: 1280px;
+    height: 100vh;
+    margin: 0 auto;
+    
+    background-color: colors.$bg;
+
+    &::after {
+      position: absolute;
+      top: -200px;
+      right: -660px;
+      z-index: -1;
+
+      width: 100%;
+      height: 100%;
+
+      background-color: colors.$bg;
+      background-image: url("../../assets/amorphous-shape-1.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+
+      transform: scale(73%);
+
+      content: "";
+    }
+
+    &::before {
+      position: absolute;
+      bottom: -60px;
+      left: -465px;
+
+      width: 100%;
+      height: 100%;
+
+      background-image: url("../../assets/amorphous-shape-2.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+
+      transform: rotate(36deg);
+
+      content: "";
+    }
+
+    .imagesWrp {
+      height: 100vh;
+      width: 50%;
+    }
+
+    .msgWrp {
+      width: 50%;
+      height: 100vh;
+      margin-top: 158px;
+
+      font-weight: 800;
+      letter-spacing: 6%;
+
+      .paragraph {
+        font-size: 32px;
+      }
+
+      .number {
+        font-size: 300px;
+
+        color: colors.$button2Pressed;
+        text-shadow: 
+          -3px -3px 0 #000,
+           3px -3px 0 #000,
+          -3px  3px 0 #000,
+           3px  3px 0 #000;
+      }
+
+      .btn {
+        align-self: center;
+        width: 300px;
+        height: 50px;
+        margin-top: 62px;
+        padding: 16px 24px;
+
+        font: text.$buttonText;
+        text-align: center;
+
+        background-color: colors.$button1;
+        box-shadow: buttons.$btnShadow;
+        vertical-align: middle;
+        border-radius: 16px;
+        
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: none;
+        }
+
+        &:active {
+          background-color: colors.$button1Pressed;
+          box-shadow: none;
+        }
+
+        &:disabled {
+          background-color: colors.$disabled;
+          box-shadow: none;
+          color: colors.$disabled;
+        }
+      }
+    }
+
+    .imagesWrp {
+      position: relative;
+
+      .book {
+        position: absolute;
+      }
+
+      .book1 {
+        top: 325px;
+        right: 175px;
+
+        transform: rotate(-25deg);
+      }
+
+      .book2 {
+        top: 50px;
+        left: 80px;
+        
+        transform: rotate(-25deg);
+      }
+
+      .book3 {
+        top: 200px;
+        left: 235px;
+        
+        transform: rotate(15deg);
+      }
+
+      .book4 {
+        top: 685px;
+        right: 140px;
+        
+        transform: rotate(-25deg);
+      }
+      
+      .book5 {
+        top: 280px;
+        left: 50px;
+        
+        transform: rotate(343deg);
+      }
+      
+      .book6 {
+        top: 480px;
+        left: 200px;
+        
+        transform: rotate(23deg);
+      }
+      
+      .book7 {
+        top: 500px;
+        right: 100px;
+      }
+      
+    }
+  }
+}

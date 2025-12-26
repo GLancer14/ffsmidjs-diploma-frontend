@@ -18,6 +18,7 @@ import { Libraries } from './components/Profile/Libraries/Libraries';
 import { LibraryProfile } from './components/Profile/LibraryProfile/LibraryProfile';
 import { ManagerBooks } from './components/Profile/ManagerBooks/ManagerBooks';
 import { MyBooks } from './components/Profile/MyBooks/MyBooks';
+import { NotFound } from './components/404/NotFound';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -25,10 +26,11 @@ function App() {
 
   async function getUserFromSession() {
     const user = await getLoggedUser();
-    if (user.status) {
-      navigation("/");
-      return;
-    }
+    // if (user.status) {
+    //   console.log(user)
+    //   navigation("/");
+    //   return;
+    // }
 
     dispatch(updateCurrentUser(user));
   }
@@ -64,6 +66,7 @@ function App() {
           <Route path={"books"} element={<Settings /> } />
           <Route path={"my-books"} element={<MyBooks /> } />
         </Route>
+        <Route path={"*"} element={<NotFound />} />
       </Routes>
     </>
   )

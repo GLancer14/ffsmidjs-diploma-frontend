@@ -1,8 +1,20 @@
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { Profile } from "./Profile/Profile";
 import { SidePanel } from "./SidePanel/SidePanel";
+import { useAppSelector } from "../../hooks/reduxHook";
+import { statsBuffer } from "motion/react";
+import { useEffect } from "react";
 
 export function ProfileLayout() {
+  const navigation = useNavigate();
+  const user = useAppSelector(state => state.userReducer);
+
+  useEffect(() => {
+    if (user.role === "") {
+      navigation("/");
+    }
+  }, []);
+  
   return (
     <main className="main">
       <Profile>
