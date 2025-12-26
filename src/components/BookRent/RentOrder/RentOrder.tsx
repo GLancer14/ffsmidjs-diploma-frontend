@@ -92,7 +92,7 @@ export function RentOrder() {
               className={styles.rents}
               type="button"
               onClick={() => {
-                navigation("/profile/rents");
+                navigation("/profile/my-books");
               }}
             >
               Мои бронирования

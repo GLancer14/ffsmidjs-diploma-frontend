@@ -26,11 +26,11 @@ function App() {
 
   async function getUserFromSession() {
     const user = await getLoggedUser();
-    // if (user.status) {
-    //   console.log(user)
-    //   navigation("/");
-    //   return;
-    // }
+    if (user.status) {
+      console.log(user)
+      navigation("/");
+      return;
+    }
 
     dispatch(updateCurrentUser(user));
   }

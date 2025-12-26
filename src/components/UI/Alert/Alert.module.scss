@@ -1,28 +1,62 @@
 .container {
-  min-width: 200px;
-  height: 40px;
+  position: relative;
+
+  width: 450px;
   transform: translateY(-80px);
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  border-radius: 20px;
+  border-radius: 16px;
   transition: transform 0.5s, color 0.3s;
-  padding: 0 30px;
+  padding: 16px 36px 16px 16px;
   z-index: 2000;
 
+  .check {
+    width: 34px;
+    height: 34px;
+
+    color: colors.$button2Pressed;
+  }
+
+  .alert {
+    width: 34px;
+    height: 34px;
+
+    color: colors.$error;
+  }
+
+  .close {
+    position: absolute;
+    top: 13px;
+    right: 13px;
+
+    width: 20px;
+    height: 20px;
+
+    color: colors.$textAndBorder;
+
+    cursor: pointer;
+  }
+
   p {
-      color: white;
+    margin-left: 16px;
+
+    font: text.$label;
+
+    color: colors.$textAndBorder;
   }
 
   &.active {
-      transform: translateY(80px);
+    transform: translateY(120px);
   }
 
   &.error {
-      background: colors.$button1Pressed;
+    background: colors.$errorToastBg;
+    color: colors.$error;
   }
 
   &.success {
-      background: colors.$button2;
+    background: colors.$formBg;
+    color: colors.$button2Pressed;
   }
 }

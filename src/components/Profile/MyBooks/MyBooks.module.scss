@@ -13,4 +13,61 @@
     font: text.$h1h2;
     text-align: left;
   }
+
+  .category {
+    width: 421px;
+    padding: 32px;
+    margin-bottom: 32px;
+    break-inside: avoid;
+
+    border: 1px solid colors.$textAndBorder;
+    border-radius: 32px;
+    background-color: colors.$accentBg;
+
+    .stats {
+      .stat {
+        text-align: left;
+      }
+    }
+
+    .actionWrp {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 40px;
+    
+      text-align: left;
+    
+      .action {
+        width: 300px;
+        height: 50px;
+        padding: 16px 24px;
+      
+        font: text.$buttonText;
+        text-align: center;
+      
+        background-color: colors.$button2;
+        box-shadow: buttons.$btnShadow;
+        vertical-align: middle;
+        border-radius: 16px;
+      
+        cursor: pointer;
+      
+        &:hover {
+          box-shadow: none;
+        }
+      
+        &:active {
+          background-color: colors.$button2Pressed;
+          box-shadow: none;
+        }
+      
+        &:disabled {
+          background-color: colors.$disabled;
+          box-shadow: none;
+          color: colors.$disabled;
+        }
+      }
+    }
+  }
 }

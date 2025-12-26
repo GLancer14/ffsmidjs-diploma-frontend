@@ -22,26 +22,9 @@ export function MyBooks() {
   const dispatch = useAppDispatch();
   const { socket } = useContext(SocketContext);
   const user = useAppSelector(state => state.userReducer);
-  const { closeActionModal, showActionModal } = useContext(ActionModalContext);
   const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
   const navigation = useNavigate();
   const [userRents, setUserRents] = useState<BookRentalResponseDto[]>([]);
-  const [rentType, setRentType] = useState("all");
-  const [chatBtnVisibility, setChatBtnVisibility] = useState(false);
-  const [chatAvailability, setChatAvailability] = useState(false);
-  // const [userData, setUserData] = useState<User>();
-
-  async function handleSubscribeToUserMessages() {
-    if (params.id) {
-      const chatData = await getChatData(+params.id);
-      if (chatData) {
-        setChatAvailability(true);
-        dispatch(updateObservedUserChat(chatData));
-        console.log(observedUserProfile)
-        socket?.emit("subscribeToChat", { chatId: chatData.id });
-      }
-    }
-  }
 
   async function handleSetUserRents() {
     const userRentsRequsetResult = await getClientOwnRents();
@@ -49,9 +32,7 @@ export function MyBooks() {
   }
 
   useEffect(() => {
-    // dispatch(resetObservedUserProfile());
     handleSetUserRents();
-    handleSubscribeToUserMessages();
   }, []);
 
   return (
@@ -59,24 +40,26 @@ export function MyBooks() {
       <header className={styles.header}>
         Мои книги
       </header>
-      <UserRents userRents={userRents}/>
-      <button 
-        className={styles.chatBtn}
-        type="button"
-        disabled={!chatAvailability}
-        onClick={() => {
-          chatBtnVisibility
-            ? closeActionModal!()
-            : showActionModal!(<Chat chat={observedUserProfile.chat} />, "chat");
-          setChatBtnVisibility(!chatBtnVisibility);
-        }}
-      >
-        {
-          chatBtnVisibility
-            ? <X />
-            : <MessageSquare />
-        }
-      </button>
+      {
+        userRents.length === 0
+          ? (<div className={styles.category}>
+              <div className={styles.stats}>
+                <div className={styles.stat}>
+                  У вас нет активных броней — найдите книгу и забронируйте её!
+                </div>
+              </div>
+              <div className={styles.actionWrp}>
+                <button
+                  className={styles.action}
+                  onClick={() => navigation("/")}
+                >
+                  Найти книгу
+                </button>
+              </div>
+            </div>)
+          : (<UserRents userRents={userRents}/>)
+      }
+      
     </div>
   );
 }
