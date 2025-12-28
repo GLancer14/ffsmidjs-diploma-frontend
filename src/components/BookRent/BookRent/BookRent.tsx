@@ -9,23 +9,30 @@ import type { Book } from "../../../types/library";
 import { RentRange } from "../../RentRange/RentRange";
 import { rentBook } from "../../../api/bookRent";
 import { parseRuDate } from "../../../utils/parseRuDate";
+import { useAppSelector } from "../../../hooks/reduxHook";
 
 export function BookRent() {
   const params = useParams();
   const navigation = useNavigate();
-  const [booksData, setBooksData] = useState<Book[] | null>(null);
+  const booksSearchResults = useAppSelector(state => state.booksSearchReducer);
+  // const [booksData, setBooksData] = useState<Book[] | null>(null);
   const [library, setLibrary] = useState<number>(0);
   const [rentedBook, setRentedBook] = useState<number>(0);
 
-  async function getBookData() {
-    if (params.title && params.author) {
-      const getBookData: Book[] = await findBooks(params.title, params.author);
-      const filteredData = getBookData.filter(bookData => {
-        return bookData.title === params.title;
-      });
-      setBooksData(filteredData);
+  const booksData = booksSearchResults.find(book => {
+    if (params.id) {
+      return book.id === +params?.id;
     }
-  }
+  });
+  // async function getBookData() {
+  //   if (params.title && params.author) {
+  //     const getBookData: Book[] = await findBooks(params.title, params.author);
+  //     const filteredData = getBookData.filter(bookData => {
+  //       return bookData.title === params.title;
+  //     });
+  //     setBooksData(filteredData);
+  //   }
+  // }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -45,29 +52,39 @@ export function BookRent() {
   }
 
   useEffect(() => {
-   getBookData();
+  //  getBookData();
   }, []);
 
   if (booksData) {
     return (
       <form className={styles.form} onSubmit={handleSubmit}>
-        <header className={styles.header}>Бронирование книги "{booksData[0].title}"</header>
+        <header className={styles.header}>Бронирование книги "{booksData.title}"</header>
         <div className={styles.card}>
           <BookCard
-            id={booksData[0].id}
-            key={booksData[0].id}
+            id={booksData.id}
+            key={booksData.id}
             type="rent"
-            title={booksData[0].title}
-            author={booksData[0].author}
-            library={booksData[0].library[0].library.name}
-            cover={booksData[0].coverImage}
-            year={booksData[0].year}
-            description={booksData[0].description}
+            title={booksData.title}
+            author={booksData.author}
+            libraryName={booksData.library[0].library.name}
+            // library={booksData.library[0].library}
+            cover={booksData.coverImage}
+            year={booksData.year}
+            description={booksData.description}
+            // id={booksData.id}
+            // key={booksData[0].id}
+            // type="rent"
+            // title={booksData[0].title}
+            // author={booksData[0].author}
+            // library={booksData[0].library[0].library.name}
+            // cover={booksData[0].coverImage}
+            // year={booksData[0].year}
+            // description={booksData[0].description}
           />
         </div>
         <div className={styles.libraries}>
           <header className={styles.header}>Выберите библиотеку</header>
-          {booksData.map(bookData => {
+          {/* {booksData.map(bookData => {
             return (
               <label className={styles.library} key={bookData.library[0].libraryId}>
                 {bookData.library[0].isAvailable && 
@@ -92,6 +109,36 @@ export function BookRent() {
                     <span>{bookData.library[0].availableCopies}</span>
                     /
                     <span>{bookData.library[0].totalCopies}</span>
+                  </div>
+                </div>
+              </label>
+            );
+          })} */}
+          {booksData.library.map(libraryData => {
+            return (
+              <label className={styles.library} key={libraryData.libraryId}>
+                {libraryData.isAvailable && 
+                  <input
+                    className={styles.radio}
+                    type="radio"
+                    name="library"
+                    value={library}
+                    onClick={() => {
+                      setLibrary(libraryData.libraryId);
+                      setRentedBook(booksData.id);
+                    }}
+                  />
+                }
+                <div className={styles.text}>
+                  <div className={styles.name}>{libraryData.library.name}</div>
+                  <div className={styles.address}>{libraryData.library.address}</div>
+                </div>
+                <div className={styles.copiesWrp}>
+                  <BookCheck size={24} />
+                  <div className={styles.copies}>
+                    <span>{libraryData.availableCopies}</span>
+                    /
+                    <span>{libraryData.totalCopies}</span>
                   </div>
                 </div>
               </label>

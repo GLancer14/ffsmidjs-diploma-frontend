@@ -45,7 +45,7 @@ function App() {
         <Route path="/" element={<MainLayout />} />
         <Route path='find-book' element={<FindBookLayout />} />
         <Route path='rent-book' element={<BookRentLayout />}>
-          <Route path=':title/:author' element={<BookRent />} />
+          <Route path=':id' element={<BookRent />} />
           <Route path='result/:id' element={<RentOrder />} />
         </Route>
         <Route path="/profile" element={<ProfileLayout />}>

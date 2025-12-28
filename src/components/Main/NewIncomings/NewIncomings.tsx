@@ -58,7 +58,8 @@ export function NewIncomings() {
               key={book.id}
               title={book.title}
               author={book.author}
-              library={book.library[0].library.name}
+              libraryName={book.library[0].library.name}
+              // library={book.library[0].library.name}
               cover={book.coverImage}
               year={book.year}
               description={book.description}

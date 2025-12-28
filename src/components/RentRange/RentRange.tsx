@@ -2,7 +2,7 @@ import styles from "./RentRange.module.scss";
 import { useEffect, useState } from "react";
 import { CustomCalendar, type Value } from "../UI/Calendar/CustomCalendar";
 
-export function RentRange() {
+export function RentRange({ onDateChange }: { onDateChange?: () => void}) {
   const [startRentCalendarVisiblility, setStartRentCalendarVisiblility] = useState(false);
   const [endRentCalendarVisiblility, setEndRentCalendarVisiblility] = useState(false);
   const [startBookRent, setStartBookRent] = useState("");

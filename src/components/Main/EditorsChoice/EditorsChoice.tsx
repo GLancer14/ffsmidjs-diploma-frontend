@@ -45,7 +45,8 @@ export function EditorsChoice() {
               id={book.id}
               title={book.title}
               author={book.author}
-              library={book.library[0].library.name}
+              // library={book.library}
+              libraryName={book.library[0].library.name}
               cover={book.coverImage}
               year={book.year}
               description={book.description}

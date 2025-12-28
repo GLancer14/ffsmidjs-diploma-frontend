@@ -90,12 +90,14 @@ export const getNewIncomings = async () => {
   }
 };
 
-export const findBooks = async (title: string, author: string) => {
+export const findBooks = async (title: string, author: string, dateStart: string, dateEnd: string) => {
   try {
     const projectData = await connection.get("/api/common/books", {
       params: {
         title,
         author,
+        dateStart,
+        dateEnd,
       }
     });
 

@@ -3,13 +3,16 @@ import { useEffect, useRef } from "react";
 import { applyDynamicEllipsis } from "../../utils/dynamicEllipsis";
 import classNames from "classnames";
 import { useNavigate } from "react-router";
+import type { BookOnLibrary, Library } from "../../types/library";
 
 export interface BookCardProps {
   id: number;
   type?: "regular" | "small" | "rent" | "exists";
   title: string;
   author: string;
-  library: string | number;
+  librariesCount?: number;
+  libraryName?: string;
+  // library: BookOnLibrary[];
   cover?: string;
   year?: number;
   description?: string;
@@ -20,7 +23,8 @@ export function BookCard({
   type = "regular",
   title,
   author,
-  library,
+  librariesCount,
+  libraryName,
   cover,
   year,
   description
@@ -29,7 +33,7 @@ export function BookCard({
   const bookDescriptionElement = useRef(null);
 
   function handleRentClickButton() {
-    navigation(`/rent-book/${title}/${author}`);
+    navigation(`/rent-book/${id}`);
   }
 
   useEffect(() => {
@@ -42,11 +46,11 @@ export function BookCard({
   if (type === "regular") {
     librariesBlock = (<div className={styles.dataLibrary}>
       <span className={styles.field}>Библиотека: </span>
-      <span>{library}</span>
+      <span>{libraryName}</span>
     </div>);
   } else if (type === "small") {
     librariesBlock = (<div className={styles.dataLibrary}>
-      <span className={styles.field}>Доступна в {library} библиотеке(ах)</span>
+      <span className={styles.field}>Доступна в {librariesCount} библиотеке(ах)</span>
     </div>);
   } else {
     librariesBlock = null;
@@ -77,7 +81,7 @@ export function BookCard({
         </div>
         {librariesBlock}
       </div>
-      {(type !== "rent") ? null :
+      {(type !== "rent") &&
         <button
           className={styles.rentBtn}
           onClick={handleRentClickButton}

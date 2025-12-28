@@ -141,7 +141,8 @@ export function AddExistingBook() {
               type="exists"
               title={selectedBook.title}
               author={selectedBook.author}
-              library={observedLibraryProfile.id}
+              libraryName={observedLibraryProfile.name}
+              // library={observedLibraryProfile}
               cover={selectedBook.coverImage}
               description={selectedBook.description}
             />
