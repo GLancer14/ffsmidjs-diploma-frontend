@@ -138,5 +138,12 @@
       height: auto;
     }
   }
+  
+  &.exists {
+    height: 300px;
+    width: 405px;
+
+    font: text.$cardText;
+  }
 }
 

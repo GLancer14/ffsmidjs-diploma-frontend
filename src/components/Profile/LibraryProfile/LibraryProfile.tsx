@@ -23,6 +23,7 @@ import { AddBook } from "../Actions/AddBook/AddBook";
 import { EditBook } from "../Actions/EditBook/EditBook";
 import { DeleteBook } from "../Actions/DeleteBook/DeleteBook";
 import { LibraryProfileCard } from "../LibraryProfileCard/LibraryProfileCard";
+import { AddExistingBook } from "../Actions/AddExistingBook/AddExistingBook";
 
 export function LibraryProfile() {
   const params = useParams();
@@ -152,15 +153,26 @@ export function LibraryProfile() {
               onChange={handleRentTypeChange}
             />
           </label>
-          <button
-            className={styles.addBookBtn}
-            type="button"
-            onClick={() => {
-              showActionModal!(<AddBook />);
-            }}
-          >
-            Добавить книгу
-          </button>
+          <div className={styles.btnsWrp}>
+            <button
+              className={classNames(styles.addBookBtn, styles.addExistingBookBtn)}
+              type="button"
+              onClick={() => {
+                showActionModal!(<AddExistingBook />);
+              }}
+            >
+              Поиск
+            </button>
+            <button
+              className={styles.addBookBtn}
+              type="button"
+              onClick={() => {
+                showActionModal!(<AddBook />);
+              }}
+            >
+              Добавить книгу
+            </button>
+          </div>
         </form>
         <div className={styles.table}>
           <div className={styles.headerRow}>

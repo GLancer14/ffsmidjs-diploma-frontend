@@ -97,36 +97,43 @@
         }
       }
 
-      .addBookBtn {
-        width: 300px;
-        height: 50px;
-        padding: 16px 24px;
-        margin-right: 4px;
+      .btnsWrp {
         margin-left: auto;
 
-        font: text.$buttonText;
-        text-align: center;
+        .addBookBtn {
+          width: 200px;
+          height: 50px;
+          padding: 16px 24px;
+          margin-right: 4px;
 
-        background-color: colors.$button1;
-        box-shadow: buttons.$btnShadow;
-        vertical-align: middle;
-        border-radius: 16px;
+          font: text.$buttonText;
+          text-align: center;
 
-        cursor: pointer;
+          background-color: colors.$button1;
+          box-shadow: buttons.$btnShadow;
+          vertical-align: middle;
+          border-radius: 16px;
 
-        &:hover {
-          box-shadow: none;
+          cursor: pointer;
+
+          &:hover {
+            box-shadow: none;
+          }
+
+          &:active {
+            background-color: colors.$button1Pressed;
+            box-shadow: none;
+          }
+
+          &:disabled {
+            background-color: colors.$disabled;
+            box-shadow: none;
+            color: colors.$disabled;
+          }
         }
 
-        &:active {
-          background-color: colors.$button1Pressed;
-          box-shadow: none;
-        }
-
-        &:disabled {
-          background-color: colors.$disabled;
-          box-shadow: none;
-          color: colors.$disabled;
+        .addExistingBookBtn {
+          margin-right: 30px;
         }
       }
     }

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 
 export interface BookCardProps {
   id: number;
-  type?: "regular" | "small" | "rent";
+  type?: "regular" | "small" | "rent" | "exists";
   title: string;
   author: string;
   library: string | number;
@@ -77,13 +77,13 @@ export function BookCard({
         </div>
         {librariesBlock}
       </div>
-      {type !== "rent" &&
+      {(type !== "rent") ? null :
         <button
           className={styles.rentBtn}
           onClick={handleRentClickButton}
         >
           Забронировать
-          </button>
+        </button>
       }
     </div>
   );

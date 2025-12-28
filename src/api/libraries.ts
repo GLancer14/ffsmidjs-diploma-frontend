@@ -111,6 +111,22 @@ export const findBooks = async (title: string, author: string) => {
   }
 };
 
+export const findBooksByTitle = async (title: string) => {
+  try {
+    const booksData = await connection.get(`/api/common/books/search/${title}`);
+
+    return booksData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
 export const getBookById = async (id: string) => {
   try {
     const projectData = await connection.get(`/api/common/books/${id}`);
@@ -130,6 +146,27 @@ export const getBookById = async (id: string) => {
 export  const getBooksCount = async () => {
   try {
     const booksData = await connection.get(`/api/common/books-count/`);
+
+    return booksData.data;
+  } catch(e) {
+    if (request.isAxiosError(e)) {
+      if (e.response) {
+        return e.response.data;
+      }
+    }
+
+    return { message: "error", status: "error" };
+  }
+};
+
+export  const addExistingBook = async (libraryId: number, bookId: number, copies: number) => {
+  try {
+    const booksData = await connection.post(`/api/admin/books/existing`, {
+      libraryId,
+      bookId,
+      availableCopies: copies,
+      totalCopies: copies
+    });
 
     return booksData.data;
   } catch(e) {
