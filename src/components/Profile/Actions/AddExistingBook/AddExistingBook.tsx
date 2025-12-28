@@ -7,7 +7,6 @@ import classNames from "classnames";
 import { ActionModalContext } from "../../../../context/ActionModalContext";
 import { AlertContext } from "../../../../context/AlertContext";
 import {
-  ChevronUp,
   Minus,
   Plus,
 } from "lucide-react";
@@ -16,7 +15,6 @@ import { addExistingBook, findBooksByTitle } from "../../../../api/libraries";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHook";
 import type { Book } from "../../../../types/library";
 import { BookCard } from "../../../BookCard/BookCard";
-import { addBookToLibrary } from "../../../../store/reducers/observedLibraryProfileSlice";
 
 export function AddExistingBook() {
   const dispatch = useAppDispatch();
@@ -30,7 +28,7 @@ export function AddExistingBook() {
   const [selectedBook, setSelectedBook] = useState<Book>();
 
   async function handleSimpleBookSearch() {
-    const foundBooks = await findBooksByTitle(selectedBookTitle);
+    const foundBooks = await findBooksByTitle(selectedBookTitle, observedLibraryProfile.id);
     if (foundBooks.status === "fail") {
       showAlert!(foundBooks.data);
       setBooks([]);
@@ -66,18 +64,17 @@ export function AddExistingBook() {
             className={styles.select}
             type="text"
             value={selectedBookTitle}
-            onInput={(e) => {
+            onChange={(e) => {
               if (selectedBookTitle !== "") {
                 setBooksVisibility(true);
               }
 
-              handleSimpleBookSearch();
               setSelectedBookTitle(e.currentTarget.value);
+              if (selectedBookTitle !== "") {
+                handleSimpleBookSearch();
+              }
             }}
           />
-          {/* <ChevronUp className={classNames(styles.arrow, {
-            [styles.rotatedArrow]: !booksVisibility,
-          })} /> */}
           <ul className={classNames(styles.books, {
             [styles.visibleBooks]: booksVisibility
           })}>

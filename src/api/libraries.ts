@@ -111,9 +111,9 @@ export const findBooks = async (title: string, author: string) => {
   }
 };
 
-export const findBooksByTitle = async (title: string) => {
+export const findBooksByTitle = async (title: string, libraryId: number) => {
   try {
-    const booksData = await connection.get(`/api/common/books/search/${title}`);
+    const booksData = await connection.get(`/api/common/books/search/${libraryId}/${title}`);
 
     return booksData.data;
   } catch(e) {

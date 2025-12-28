@@ -88,7 +88,7 @@ export function LibraryProfile() {
     setPage(page);
   }
 
-  function handleRentTypeChange(e: ChangeEvent<HTMLInputElement>) {
+  function handleBooksTypeChange(e: ChangeEvent<HTMLInputElement>) {
     setSortType(e.currentTarget.value);
   }
 
@@ -130,7 +130,7 @@ export function LibraryProfile() {
               type="radio"
               name="sort-type"
               value="all"
-              onChange={handleRentTypeChange}
+              onChange={handleBooksTypeChange}
             />
           </label>
           <label className={styles.label}>
@@ -140,7 +140,7 @@ export function LibraryProfile() {
               type="radio"
               name="sort-type"
               value="reserved"
-              onChange={handleRentTypeChange}
+              onChange={handleBooksTypeChange}
             />
           </label>
           <label className={styles.label}>
@@ -150,7 +150,7 @@ export function LibraryProfile() {
               type="radio"
               name="sort-type"
               value="complete"
-              onChange={handleRentTypeChange}
+              onChange={handleBooksTypeChange}
             />
           </label>
           <div className={styles.btnsWrp}>
