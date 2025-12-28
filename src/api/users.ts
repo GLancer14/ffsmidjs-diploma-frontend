@@ -1,8 +1,6 @@
 import connection from ".";
 import request from "axios";
 
-// import type { ProjectDataDTO } from "../types/ProjectDataDTO";
-// import type { ErrorResponse } from "../types/ErrorResponse";
 export interface UserUpdateParams {
   email?: string;
   name?: string;
@@ -169,9 +167,7 @@ export const getUserById = async (id: string) => {
 export const deleteUser = async (id: number) => {
   try {
     const userData = await connection.delete(`/api/admin/users`, {
-      data: {
-        id,
-      }
+      data: { id },
     });
 
     return userData.data;

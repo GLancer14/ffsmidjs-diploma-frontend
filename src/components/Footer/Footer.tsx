@@ -4,7 +4,6 @@ import vk from "../../assets/social-vk.svg";
 import tg from "../../assets/social-telegram.svg";
 import yt from "../../assets/social-youtube.svg";
 import ok from "../../assets/social-odnoklassniki.svg";
-import { Link } from "react-router";
 import { HashLink } from "react-router-hash-link";
 
 export function Footer() {

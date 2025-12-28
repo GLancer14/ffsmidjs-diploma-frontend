@@ -1,13 +1,13 @@
-import { useContext, useEffect, useRef, useState, type ChangeEvent } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styles from "./EditBook.module.scss";
 import classNames from "classnames";
 import { ActionModalContext } from "../../../../context/ActionModalContext";
 import { AlertContext } from "../../../../context/AlertContext";
 import { Minus, Paperclip, Plus, X } from "lucide-react";
 import { fileToDataUrl } from "../../../../utils/fileToDataUrl";
-import { addBook, updateBook, updateLibrary } from "../../../../api/libraries";
+import { updateBook } from "../../../../api/libraries";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHook";
-import { addBookToLibrary, updateLibraryBook } from "../../../../store/reducers/observedLibraryProfileSlice";
+import { updateLibraryBook } from "../../../../store/reducers/observedLibraryProfileSlice";
 
 export function EditBook({ bookId }: { bookId: number }) {
   const dispatch = useAppDispatch();

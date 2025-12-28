@@ -56,7 +56,6 @@ export function FindBook() {
         ? <img className={styles.booksStack} src={stackOfBooks} alt="Стопка книг" />
         : <img className={styles.booksStack} src={books2} alt="раскрытая книга" />
       }
-      
     </div>
   );
 }

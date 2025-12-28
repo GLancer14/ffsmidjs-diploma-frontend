@@ -1,22 +1,18 @@
-// import { useContext, useEffect, useState, type ChangeEvent } from "react";
 import { EllipsisVertical, Paperclip, Search, SendHorizonal, Smile } from "lucide-react";
 import styles from "./Chat.module.scss";
-import { addMessage, readMessage, type Chat } from "../../../store/reducers/observedUserProfileSlice";
+import { readMessage, type Chat } from "../../../store/reducers/observedUserProfileSlice";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
 import { Message } from "./Message/Message";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { markMessagesAsRead, sendMessage } from "../../../api/supportChat";
 import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
-import { useInView } from "react-intersection-observer";
 
-// export function Chat({ chat }: { chat: Chat }) {
 export function Chat() {
   
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.userReducer);
   const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
   const [message, setMessage] = useState("");
-  const messagesRef = useRef<HTMLDivElement>(null);
 
   async function handleSendMessage(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

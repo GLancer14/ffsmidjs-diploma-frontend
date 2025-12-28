@@ -1,13 +1,20 @@
-import { useContext, useRef, useState, type ChangeEvent } from "react";
+import {
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import styles from "./AddBook.module.scss";
 import classNames from "classnames";
 import { ActionModalContext } from "../../../../context/ActionModalContext";
-import { createUser } from "../../../../api/users";
 import { AlertContext } from "../../../../context/AlertContext";
-import { Minus, Paperclip, Plus, X } from "lucide-react";
+import {
+  Minus,
+  Paperclip,
+  Plus,
+  X,
+} from "lucide-react";
 import { fileToDataUrl } from "../../../../utils/fileToDataUrl";
 import { addBook } from "../../../../api/libraries";
-import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHook";
 import { addBookToLibrary } from "../../../../store/reducers/observedLibraryProfileSlice";
 
@@ -73,23 +80,6 @@ export function AddBook() {
         setCover(null);
       }
     }
-    // const createdUser = await createUser({
-    //   name,
-    //   email,
-    //   contactPhone,
-    //   password,
-    //   role: selectedRole,
-    // });
-
-    // if (createdUser) {
-    //   showAlert!("Пользователь успешно создан!", "success");
-    //   closeActionModal!();
-    //   setName("");
-    //   setEmail("");
-    //   setContactPhone("");
-    //   setPassword("");
-    //   setSelectedRole("client");
-    // }
   }
 
   return (

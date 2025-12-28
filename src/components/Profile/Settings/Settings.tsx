@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./Settings.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
-import { getLibrariesCount } from "../../../api/libraries";
 import { Paperclip, X } from "lucide-react";
 import { fileToDataUrl } from "../../../utils/fileToDataUrl";
 import { updateSelf } from "../../../api/users";
@@ -10,7 +9,6 @@ import { updateCurrentUser } from "../../../store/reducers/userSlice";
 export function Settings() {
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.userReducer);
-  console.log(user)
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");

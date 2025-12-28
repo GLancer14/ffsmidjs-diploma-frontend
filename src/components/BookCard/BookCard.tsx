@@ -2,7 +2,7 @@ import styles from "./BookCard.module.scss";
 import { useEffect, useRef } from "react";
 import { applyDynamicEllipsis } from "../../utils/dynamicEllipsis";
 import classNames from "classnames";
-import { useNavigate, useNavigation } from "react-router";
+import { useNavigate } from "react-router";
 
 export interface BookCardProps {
   id: number;

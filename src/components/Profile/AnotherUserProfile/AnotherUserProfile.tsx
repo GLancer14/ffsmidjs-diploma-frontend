@@ -1,34 +1,38 @@
-import { useContext, useEffect, useState, type ChangeEvent } from "react";
+import {
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import styles from "./AnotherUserProfile.module.scss";
 import { getUserById } from "../../../api/users";
 import { ActionModalContext } from "../../../context/ActionModalContext";
-import { ArrowBigLeft, BookMarked, MessageSquare, SquareCheck, X } from "lucide-react";
+import { ArrowBigLeft } from "lucide-react";
 import classNames from "classnames";
 import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
 import { findUserBookRents } from "../../../api/bookRent";
-import { type BookRentalResponseDto } from "../../../store/reducers/usersRentsSlice";
-import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
+import { type BookRentalResponseDto } from "../../../types/bookRent";
 import { EditProfile } from "../Actions/EditProfile/EditProfile";
-import { resetObservedUserProfile, updateObservedUserChat, updateObservedUserProfile } from "../../../store/reducers/observedUserProfileSlice";
+import {
+  resetObservedUserProfile,
+  updateObservedUserChat,
+  updateObservedUserProfile,
+} from "../../../store/reducers/observedUserProfileSlice";
 import { DeleteUser } from "../Actions/DeleteUser/DeleteUser";
-import { Chat } from "../Chat/Chat";
 import { SocketContext } from "../../../context/SocketContext";
 import { getChatData } from "../../../api/supportChat";
 import { UserRents } from "../UserRents/UserRents";
+import { ChatButton } from "../Actions/ChatButton/ChatButton";
 
 export function AnotherUserProfile() {
   const params = useParams();
   const dispatch = useAppDispatch();
   const { socket } = useContext(SocketContext);
   const user = useAppSelector(state => state.userReducer);
-  const { closeActionModal, showActionModal } = useContext(ActionModalContext);
+  const { showActionModal } = useContext(ActionModalContext);
   const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
   const navigation = useNavigate();
   const [userRents, setUserRents] = useState<BookRentalResponseDto[]>([]);
-  const [rentType, setRentType] = useState("all");
-  const [chatBtnVisibility, setChatBtnVisibility] = useState(false);
-  // const [userData, setUserData] = useState<User>();
   
   async function handleSubscribeToChatMessages() {
     if (params.id) {
@@ -69,10 +73,6 @@ export function AnotherUserProfile() {
     handleGetUserData();
     handleSubscribeToChatMessages();
   }, []);
-
-  function handleRentTypeChange(e: ChangeEvent<HTMLInputElement>) {
-    setRentType(e.currentTarget.value);
-  }
 
   return (
     <div className={styles.profile}>
@@ -129,23 +129,7 @@ export function AnotherUserProfile() {
         }
       </div>
       <UserRents userRents={userRents}/>
-      <button 
-        className={styles.chatBtn}
-        type="button"
-        onClick={() => {
-          chatBtnVisibility
-            ? closeActionModal!()
-            : showActionModal!(<Chat />, "chat");
-            // : showActionModal!(<Chat chat={observedUserProfile.chat} />, "chat");
-          setChatBtnVisibility(!chatBtnVisibility);
-        }}
-      >
-        {
-          chatBtnVisibility
-            ? <X />
-            : <MessageSquare />
-        }
-      </button>
+      <ChatButton />
     </div>
   );
 }

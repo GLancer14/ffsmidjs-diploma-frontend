@@ -1,13 +1,19 @@
 import styles from "./SidePanel.module.scss";
 import avatar from "../../../assets/avatars/avatar 1.svg";
 import { Link, useLocation } from "react-router";
-import { House, LibraryBig, LogOut, Settings, UserRound, UsersRound } from "lucide-react";
+import {
+  House,
+  LibraryBig,
+  LogOut,
+  Settings,
+  UserRound,
+  UsersRound,
+} from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
 import classNames from "classnames";
 import { logout } from "../../../api/auth";
 import { updateCurrentUser } from "../../../store/reducers/userSlice";
 import { useEffect, useState } from "react";
-import { ActionModal } from "../../UI/ActionModal/ActionModal";
 
 export function SidePanel() {
   const location = useLocation();
@@ -68,8 +74,6 @@ export function SidePanel() {
     } else {
       setCurrentPage("");
     }
-
-    console.log(currentPage);
   });
 
   return (

@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState, type ChangeEvent } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./Libraries.module.scss";
 import { ActionModalContext } from "../../../context/ActionModalContext";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
-import type { User } from "../../../types/users";
 import classNames from "classnames";
 import { Link } from "react-router";
 import { getLibraries, getLibrariesCount, type LibrariesSearchResponseDto } from "../../../api/libraries";
@@ -11,9 +10,7 @@ import { AddLibrary } from "../Actions/AddLibrary/AddLibrary";
 
 export function Libraries() {
   const [libraries, setLibraries] = useState<LibrariesSearchResponseDto[]>([]);
-  const [foundUsers, setFoundUserRents] = useState<User[]>([]);
   const { showActionModal } = useContext(ActionModalContext);
-  const [userType, setUserType] = useState("");
   const [searchString, setSearchString] = useState("");
   const [page, setPage] = useState(1);
   const [pagesCount, setPagesCount] = useState(1);

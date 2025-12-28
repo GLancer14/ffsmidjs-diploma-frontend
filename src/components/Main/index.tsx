@@ -19,6 +19,5 @@ export function MainLayout() {
       </main>
       <Footer />
     </>
-    
   );
 }

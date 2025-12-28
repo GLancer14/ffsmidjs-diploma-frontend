@@ -15,8 +15,6 @@ export function ActionModal({ isOpen, handleClose, type = "action", children }: 
     handleClose();
   }
 
-  console.log(type)
-
   return (
     <motion.div
       className={classNames(styles.wrp, {

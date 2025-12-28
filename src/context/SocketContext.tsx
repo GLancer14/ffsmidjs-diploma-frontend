@@ -1,4 +1,4 @@
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef } from "react";
 import { io, type Socket } from "socket.io-client";
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHook";
 import { addMessage } from "../store/reducers/observedUserProfileSlice";
@@ -14,57 +14,51 @@ export interface SocketStateProps {
 export const SocketContext = createContext<SocketContextInterface>({});
 
 export function SocketState({ children }: SocketStateProps) {
-    const dispatch = useAppDispatch();
-    const [isConnected, setIsConnected] = useState(false);
-    const user = useAppSelector(state => state.userReducer);
-    const [socketId, setSocketId] = useState<string | undefined>("");
-    const socketRef = useRef<Socket | null>(null)
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.userReducer);
+  const socketRef = useRef<Socket | null>(null)
 
-    function handleSocketCreate(userId: number) {
-      const socket = io(
-        import.meta.env.VITE_SERVER_URL || "http://localhost:3000", {
-          withCredentials: true,
-          transports: ["websocket", "polling"],
-          query: {
-            userId
-          },
-      });
+  function handleSocketCreate(userId: number) {
+    const socket = io(
+      import.meta.env.VITE_SERVER_URL || "http://localhost:3000", {
+        withCredentials: true,
+        transports: ["websocket", "polling"],
+        query: {
+          userId
+        },
+    });
 
-      socket.on("connect", () => {
-        console.log("Socket connected: ", socket.id);
-        setIsConnected(true);
-      });
+    socket.on("connect", () => {
+      console.log("Socket connected: ", socket.id);
+    });
 
-      socket.on("disconnect", (reason) => {
-        console.log("Socket disconnected: ", reason);
-        setIsConnected(false);
-      });
+    socket.on("disconnect", (reason) => {
+      console.log("Socket disconnected: ", reason);
+    });
 
-      return socket;
-    }
+    return socket;
+  }
     
-    useEffect(() => {
-      let socket: Socket;
-      if (user.email !== "") {
-        socket = handleSocketCreate(user.id);
-        socketRef.current = socket;
-        socket.connect();
-        setSocketId(socket.id)
+  useEffect(() => {
+    let socket: Socket;
+    if (user.email !== "") {
+      socket = handleSocketCreate(user.id);
+      socketRef.current = socket;
+      socket.connect();
 
-        socket.on("newMessage", (payload) => {
-          dispatch(addMessage(payload.message));
-        })
+      socket.on("newMessage", (payload) => {
+        dispatch(addMessage(payload.message));
+      });
 
-        return () => {
-          socket.disconnect();
-        };
-      }
-      
-    }, [user.email]);
+      return () => {
+        socket.disconnect();
+      };
+    }
+  }, [user.email]);
 
-    return (
-        <SocketContext.Provider value={{ socket: socketRef.current || undefined }}>
-            {children}
-        </SocketContext.Provider>
-    );
+  return (
+    <SocketContext.Provider value={{ socket: socketRef.current || undefined }}>
+      {children}
+    </SocketContext.Provider>
+  );
 };

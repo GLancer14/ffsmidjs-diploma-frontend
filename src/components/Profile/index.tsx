@@ -2,7 +2,6 @@ import { Outlet, useNavigate } from "react-router";
 import { Profile } from "./Profile/Profile";
 import { SidePanel } from "./SidePanel/SidePanel";
 import { useAppSelector } from "../../hooks/reduxHook";
-import { statsBuffer } from "motion/react";
 import { useEffect } from "react";
 
 export function ProfileLayout() {

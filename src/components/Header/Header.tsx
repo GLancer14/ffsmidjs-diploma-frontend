@@ -13,68 +13,66 @@ export function Header() {
   const userState = useAppSelector((state) => state.userReducer);
 
   return (
-    <>
-      <header className={styles.header}>
-        <AuthModal
-          visibility={authModalVisibility}
-          setVisibility={setAuthModalVisibility}
-          type={authModalType}
-          setAuthModalType={setAuthModalType}
-        />
-        <div className={styles.authWrp}>
-          {userState?.email !== ""
-            ? (
+    <header className={styles.header}>
+      <AuthModal
+        visibility={authModalVisibility}
+        setVisibility={setAuthModalVisibility}
+        type={authModalType}
+        setAuthModalType={setAuthModalType}
+      />
+      <div className={styles.authWrp}>
+        {userState?.email !== ""
+          ? (
+            <button
+              className={styles.authBtn}
+              onClick={() => {
+                navigation("/profile");
+              }}
+            >
+              <img className={styles.avatar} src={avatar} alt="аватар" />
+              <span>Войти в ЛК</span>
+            </button>
+            )
+          : (
+            <>
               <button
                 className={styles.authBtn}
                 onClick={() => {
-                  navigation("/profile");
+                  setAuthModalType("login");
+                  setAuthModalVisibility(true);
                 }}
               >
-                <img className={styles.avatar} src={avatar} alt="аватар" />
-                <span>Войти в ЛК</span>
+                Вход
               </button>
-              )
-            : (
-              <>
-                <button
-                  className={styles.authBtn}
-                  onClick={() => {
-                    setAuthModalType("login");
-                    setAuthModalVisibility(true);
-                  }}
-                >
-                  Вход
-                </button>
-                <button
-                  className={styles.authBtn}
-                  onClick={() => {
-                    setAuthModalType("register");
-                    setAuthModalVisibility(true);
-                  }}
-                >
-                  Регистрация
-                </button>
-              </>
-            )
-          }
-        </div>
-        <div className={styles.logo}>
-          <Link to="/">LOGO</Link>
-        </div>
-        <nav>
-          <ul className={styles.navMenu}>
-            <li>
-              <HashLink smooth to="/#libraries">Библиотеки</HashLink>
-            </li>
-            <li>
-              <HashLink smooth to="/#about-us">О нас</HashLink>
-            </li>
-            <li>
-              <HashLink smooth to="#footer">Контакты</HashLink>
-            </li>
-          </ul>
-        </nav>
-      </header>
-    </>
+              <button
+                className={styles.authBtn}
+                onClick={() => {
+                  setAuthModalType("register");
+                  setAuthModalVisibility(true);
+                }}
+              >
+                Регистрация
+              </button>
+            </>
+          )
+        }
+      </div>
+      <div className={styles.logo}>
+        <Link to="/">LOGO</Link>
+      </div>
+      <nav>
+        <ul className={styles.navMenu}>
+          <li>
+            <HashLink smooth to="/#libraries">Библиотеки</HashLink>
+          </li>
+          <li>
+            <HashLink smooth to="/#about-us">О нас</HashLink>
+          </li>
+          <li>
+            <HashLink smooth to="#footer">Контакты</HashLink>
+          </li>
+        </ul>
+      </nav>
+    </header>
   );
 }

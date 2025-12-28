@@ -11,12 +11,11 @@ export function ChatButton() {
   const user = useAppSelector(state => state.userReducer);
   const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
   const [chatBtnVisibility, setChatBtnVisibility] = useState(false);
-  const [currentChat, setCurrentChat] = useState<ChatType>();
   const [unreadMessages, setUnreadMessages] = useState(0);
 
   useEffect(() => {
     const unreadMessages = observedUserProfile.chat.messages.filter(message => {
-      return message.readAt === null && message.author !== observedUserProfile.id
+      return message.readAt === null && message.author !== user.id
     });
     setUnreadMessages(unreadMessages.length);
   }, [observedUserProfile.chat.messages])
@@ -28,7 +27,6 @@ export function ChatButton() {
         onClick={() => {
           chatBtnVisibility
             ? closeActionModal!()
-            // : showActionModal!(<Chat chat={observedUserProfile.chat} />, "chat");
             : showActionModal!(<Chat />, "chat");
           setChatBtnVisibility(!chatBtnVisibility);
         }}

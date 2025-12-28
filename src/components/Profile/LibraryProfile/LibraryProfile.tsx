@@ -1,16 +1,24 @@
-import { useContext, useEffect, useState, type ChangeEvent } from "react";
+import {
+  useContext,
+  useEffect,
+  useState,
+  type ChangeEvent,
+} from "react";
 import styles from "./LibraryProfile.module.scss";
 import { ActionModalContext } from "../../../context/ActionModalContext";
-import { ArrowBigLeft, ChevronsLeft, ChevronsRight, Pencil, Trash2 } from "lucide-react";
+import {
+  ArrowBigLeft,
+  ChevronsLeft,
+  ChevronsRight,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 import classNames from "classnames";
 import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
-import { DeleteUser } from "../Actions/DeleteUser/DeleteUser";
 import { getLibraryById } from "../../../api/libraries";
 import { updateObservedLibraryProfile } from "../../../store/reducers/observedLibraryProfileSlice";
 import Pagination from "@mui/material/Pagination";
-import { EditLibrary } from "../Actions/EditLibrary/EditLibrary";
-import { DeleteLibrary } from "../Actions/DeleteLibrary/DeleteLibrary";
 import { AddBook } from "../Actions/AddBook/AddBook";
 import { EditBook } from "../Actions/EditBook/EditBook";
 import { DeleteBook } from "../Actions/DeleteBook/DeleteBook";
@@ -79,6 +87,10 @@ export function LibraryProfile() {
     setPage(page);
   }
 
+  function handleRentTypeChange(e: ChangeEvent<HTMLInputElement>) {
+    setSortType(e.currentTarget.value);
+  }
+
   useEffect(() => {
     handleGetPagesCount();
   }, [observedLibraryProfile.book.length])
@@ -86,11 +98,7 @@ export function LibraryProfile() {
   useEffect(() => {
     handleGetLibraryData();
   }, [observedLibraryProfile.id]);
-
-  function handleRentTypeChange(e: ChangeEvent<HTMLInputElement>) {
-    setSortType(e.currentTarget.value);
-  }
-
+  
   return (
     <div className={styles.libraryProfile}>
       <header className={styles.header}>

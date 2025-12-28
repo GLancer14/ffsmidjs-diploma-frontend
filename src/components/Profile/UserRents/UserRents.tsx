@@ -1,32 +1,16 @@
-import { useContext, useEffect, useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent } from "react";
 import styles from "./UserRents.module.scss";
-import { getUserById } from "../../../api/users";
-import { ActionModalContext } from "../../../context/ActionModalContext";
-import { ArrowBigLeft, BookMarked, MessageSquare, SquareCheck, X } from "lucide-react";
+import { BookMarked, SquareCheck } from "lucide-react";
 import classNames from "classnames";
-import { useNavigate, useParams } from "react-router";
-import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
-import { findUserBookRents } from "../../../api/bookRent";
-import { type BookRentalResponseDto } from "../../../store/reducers/usersRentsSlice";
+import { useAppSelector } from "../../../hooks/reduxHook";
+import { type BookRentalResponseDto } from "../../../types/bookRent";
 import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
-import { EditProfile } from "../Actions/EditProfile/EditProfile";
-import { resetObservedUserProfile, updateObservedUserChat, updateObservedUserProfile } from "../../../store/reducers/observedUserProfileSlice";
-import { DeleteUser } from "../Actions/DeleteUser/DeleteUser";
-import { Chat } from "../Chat/Chat";
-import { SocketContext } from "../../../context/SocketContext";
-import { getChatData } from "../../../api/supportChat";
-
-
 
 export function UserRents({
   userRents
-}: {userRents: BookRentalResponseDto[]}) {
-  // const dispatch = useAppDispatch();
+}: { userRents: BookRentalResponseDto[] }) {
   const user = useAppSelector(state => state.userReducer);
-  // const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
-  // const [userRents, setUserRents] = useState<BookRentalResponseDto[]>([]);
   const [rentType, setRentType] = useState("all");
-  // const [userData, setUserData] = useState<User>();
 
   const userRentsList = userRents.filter(rent => {
     if (rentType === "all") {

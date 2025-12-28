@@ -1,19 +1,10 @@
-import { useContext, useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, useState } from "react";
 import styles from "./ManagerBooks.module.scss";
-import { ActionModalContext } from "../../../context/ActionModalContext";
-import { ArrowBigLeft, ChevronsLeft, ChevronsRight, ChevronUp, Pencil, Trash2 } from "lucide-react";
+import { ChevronUp } from "lucide-react";
 import classNames from "classnames";
-import { useNavigate, useParams } from "react-router";
-import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
-import { DeleteUser } from "../Actions/DeleteUser/DeleteUser";
-import { getLibraries, getLibraryById, type LibrariesSearchResponseDto } from "../../../api/libraries";
-import { updateLibraryInfo, updateObservedLibraryProfile } from "../../../store/reducers/observedLibraryProfileSlice";
-import Pagination from "@mui/material/Pagination";
-import { EditLibrary } from "../Actions/EditLibrary/EditLibrary";
-import { DeleteLibrary } from "../Actions/DeleteLibrary/DeleteLibrary";
-import { AddBook } from "../Actions/AddBook/AddBook";
-import { EditBook } from "../Actions/EditBook/EditBook";
-import { DeleteBook } from "../Actions/DeleteBook/DeleteBook";
+import { useAppDispatch } from "../../../hooks/reduxHook";
+import { getLibraries, type LibrariesSearchResponseDto } from "../../../api/libraries";
+import { updateLibraryInfo } from "../../../store/reducers/observedLibraryProfileSlice";
 import { LibraryProfileCard } from "../LibraryProfileCard/LibraryProfileCard";
 
 export function ManagerBooks() {

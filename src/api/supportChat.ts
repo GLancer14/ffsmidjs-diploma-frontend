@@ -55,7 +55,7 @@ export const sendMessage = async (supportChatId: number, message: string) => {
   }
 };
 
-export const getClientChat = async (userId: number) => {
+export const getClientChat = async () => {
   try {
     const chatData = await connection.get(`/api/client/support-requests`);
 

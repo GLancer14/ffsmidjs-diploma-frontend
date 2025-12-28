@@ -33,11 +33,12 @@ export function Login({ setAuthModalType }: LoginProps) {
     <div className={styles.wrp}>
       <header className={styles.header}>Вход</header>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <label className={styles.label} htmlFor="login-field">Email</label>
+        <label className={styles.label} htmlFor="login-field">Почта</label>
         <input
           className={styles.input}
           id="login-field"
           type="text"
+          placeholder="mail@mail.com"
           value={email}
           onInput={(e) => setEmail(e.currentTarget.value)}
         />
@@ -46,6 +47,7 @@ export function Login({ setAuthModalType }: LoginProps) {
           className={styles.input}
           id="password-field"
           type="password"
+          placeholder="Введите пароль"
           value={password}
           onInput={(e) => setPassword(e.currentTarget.value)}
         />

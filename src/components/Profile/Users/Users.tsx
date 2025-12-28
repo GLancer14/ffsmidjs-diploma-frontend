@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState, type ChangeEvent } from "react";
+import { useContext, useEffect, useState, type ChangeEvent } from "react";
 import styles from "./Users.module.scss";
 import { findUsers, getUsersCount } from "../../../api/users";
 import { AddUser } from "../Actions/AddUser/AddUser";
@@ -8,10 +8,9 @@ import Pagination from "@mui/material/Pagination";
 import type { User } from "../../../types/users";
 import classNames from "classnames";
 import { Link } from "react-router";
-import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
+import { useAppSelector } from "../../../hooks/reduxHook";
 import { findUserBookRents } from "../../../api/bookRent";
-import { updateUsersRents, type BookRentalResponseDto } from "../../../store/reducers/usersRentsSlice";
-import { updateFoundUsers } from "../../../store/reducers/foundUsers";
+import { type BookRentalResponseDto } from "../../../types/bookRent";
 
 export function Users() {
   const user = useAppSelector(state => state.userReducer);

@@ -14,10 +14,9 @@ export function Profile({children}: {children: React.ReactNode}) {
 
   async function handleSubscribeToChatMessages() {
       if (user.id) {
-        const chatData = await getClientChat(user.id);
+        const chatData = await getClientChat();
         if (!chatData.status) {
           dispatch(updateObservedUserChat(chatData));
-          
           socket?.emit("subscribeToChat", { chatId: chatData.id });
         }
       }

@@ -7,7 +7,11 @@ import type { Book, Library } from "../../../types/library";
 import { findBookRent } from "../../../api/bookRent";
 import books from "../../../assets/books.svg";
 import type { BookRent } from "../../../types/bookRent";
-import { BookOpen, CalendarDays, MapPin } from "lucide-react";
+import {
+  BookOpen,
+  CalendarDays,
+  MapPin,
+} from "lucide-react";
 import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
 
 export function RentOrder() {
@@ -33,9 +37,6 @@ export function RentOrder() {
 
   useEffect(() => {
     getRentedBookData();
-    console.log(rentData)
-    console.log(libraryData)
-    console.log(rentedBookData)
   }, []);
 
   return (

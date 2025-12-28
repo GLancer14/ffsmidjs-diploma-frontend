@@ -1,103 +1,103 @@
 .card {
-    width: 515px;
-    padding: 32px;
-    margin-top: 64px;
+  width: 515px;
+  padding: 32px;
+  margin-top: 64px;
 
-    text-align: left;
+  text-align: left;
 
-    background-color: colors.$accentBg;
-    border-radius: 32px;
-    border: 1px solid colors.$textAndBorder;
+  background-color: colors.$accentBg;
+  border-radius: 32px;
+  border: 1px solid colors.$textAndBorder;
 
-    .cardHeader {
-      font: text.$h1h2v2;
+  .cardHeader {
+    font: text.$h1h2v2;
+  }
+  
+  .dataWrp {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    align-items: flex-start;
+    column-gap: 24px;
+    row-gap: 16px;
+    margin-top: 24px;
+  
+    // word-break: break-all;
+  
+    .desc {
+      font: text.$buttonText;
+    
+      color: colors.$placeholder;
     }
-
-    .dataWrp {
-      display: grid;
-      grid-template-columns: 2fr 3fr;
-      align-items: flex-start;
-      column-gap: 24px;
-      row-gap: 16px;
-      margin-top: 24px;
-
-      // word-break: break-all;
-
-      .desc {
-        font: text.$buttonText;
-
-        color: colors.$placeholder;
-      }
-
-      .content {
-        font: text.$textP;
-
-        color: colors.$textAndBorder;
-      }
+  
+    .content {
+      font: text.$textP;
+    
+      color: colors.$textAndBorder;
     }
+  }
 
-    .btnsWrp {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
+  .btnsWrp {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    
+    width: 100%;
+    margin-top: 40px;
+  
+    .btn {
+      align-self: center;
+      width: max-content;
+      height: 50px;
+      padding: 16px 24px;
+    
+      font: text.$buttonText;
+      text-align: center;
+    
+      background-color: colors.$button1;
+      box-shadow: buttons.$btnShadow;
+      vertical-align: middle;
+      border-radius: 16px;
       
-      width: 100%;
-      margin-top: 40px;
-
-      .btn {
-        align-self: center;
-        width: max-content;
-        height: 50px;
-        padding: 16px 24px;
-
-        font: text.$buttonText;
-        text-align: center;
-
-        background-color: colors.$button1;
-        box-shadow: buttons.$btnShadow;
-        vertical-align: middle;
-        border-radius: 16px;
-        
-        cursor: pointer;
-
-        &:hover {
-          box-shadow: none;
-        }
-
-        &:active {
-          background-color: colors.$button1Pressed;
-          box-shadow: none;
-        }
-
-        &:disabled {
-          background-color: colors.$disabled;
-          box-shadow: none;
-          color: colors.$disabled;
-        }
+      cursor: pointer;
+    
+      &:hover {
+        box-shadow: none;
       }
-
-      .delete {
-        background-color: colors.$button3;
-
-        &:active {
-          background-color: colors.$error;
-        }
+    
+      &:active {
+        background-color: colors.$button1Pressed;
+        box-shadow: none;
       }
-
-      .add {
-        background-color: colors.$button2;
-
-        &:active {
-          background-color: colors.$button2Pressed;
-        }
+    
+      &:disabled {
+        background-color: colors.$disabled;
+        box-shadow: none;
+        color: colors.$disabled;
       }
-
-      .open {
-        background-color: colors.$button1;
-
-        &:active {
-          background-color: colors.$button1Pressed;
-        }
+    }
+  
+    .delete {
+      background-color: colors.$button3;
+    
+      &:active {
+        background-color: colors.$error;
+      }
+    }
+  
+    .add {
+      background-color: colors.$button2;
+    
+      &:active {
+        background-color: colors.$button2Pressed;
+      }
+    }
+  
+    .open {
+      background-color: colors.$button1;
+    
+      &:active {
+        background-color: colors.$button1Pressed;
       }
     }
   }
+}

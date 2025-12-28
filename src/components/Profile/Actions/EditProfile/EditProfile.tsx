@@ -8,14 +8,6 @@ import { ChevronUp } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHook";
 import { updateObservedUserProfile } from "../../../../store/reducers/observedUserProfileSlice";
 
-// export interface UserDataProp {
-//   id?: number;
-//   name?: string;
-//   email?: string;
-//   contactPhone?: string;
-//   role?: string;
-// }
-
 export function EditProfile() {
   const dispatch = useAppDispatch();
   const { showAlert } = useContext(AlertContext);
@@ -43,18 +35,13 @@ export function EditProfile() {
       if (!updatedUser.status) {
       showAlert!("Пользователь успешно обновлён!", "success");
         closeActionModal!();
-        // setName("");
-        // setEmail("");
-        // setContactPhone("");
-        // setPassword("");
         setRolesVisibility(false);
         dispatch(updateObservedUserProfile({
           name,
           email,
           contactPhone,
           role: selectedRole,
-        }))
-        console.log(observedUserProfile)
+        }));
       }
     }
   }

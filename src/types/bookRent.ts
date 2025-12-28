@@ -8,3 +8,20 @@ export interface BookRent {
   dateEnd: string;
   status: string;
 }
+
+export interface BookRentalResponseDto {
+  id: number;
+  userId: number;
+  library: {
+    name?: string;
+    address?: string;
+  };
+  book: {
+    title?: string;
+    author?: string;
+    coverImage?: string;
+  };
+  dateStart: string;
+  dateEnd: string;
+  status: string;
+}

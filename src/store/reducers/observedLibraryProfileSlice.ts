@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { CreateLibraryParams, UpdateLibraryParams } from "../../api/libraries";
+import type { CreateLibraryParams } from "../../api/libraries";
 
 export interface LibraryState {
   id: number;
@@ -11,14 +11,6 @@ export interface LibraryState {
   availableCopies: number;
   book: BookDataForLibrary[];
 }
-
-// export interface Book {
-//     id: number;
-//     title: string;
-//     author: string;
-//     year?: number;
-//     description?: string;
-//   }
 
 export interface BookDataForLibrary {
   totalCopies: number;

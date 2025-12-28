@@ -1,4 +1,3 @@
-
 import styles from "./RentRange.module.scss";
 import { useEffect, useState } from "react";
 import { CustomCalendar, type Value } from "../UI/Calendar/CustomCalendar";

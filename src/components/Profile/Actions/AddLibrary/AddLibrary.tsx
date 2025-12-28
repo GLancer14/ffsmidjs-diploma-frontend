@@ -17,25 +17,12 @@ export function AddLibrary() {
 
   async function hanldeSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log({
-      name,
-      address,
-      description
-    })
     const createdLibrary = await createLibrary({
       name,
       address,
       description
     });
-    // const createdUser = await createUser({
-    //   name,
-    //   description,
-    //   address,
-    //   password,
-    //   role: selectedRole,
-    // });
 
-    console.log(createdLibrary)
     if (!createdLibrary.status) {
       showAlert!("Библиотека успешно добавлена!", "success");
       closeActionModal!();

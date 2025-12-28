@@ -1,8 +1,6 @@
 import connection from ".";
 import request from "axios";
 
-// import type { ProjectDataDTO } from "../types/ProjectDataDTO";
-// import type { ErrorResponse } from "../types/ErrorResponse";
 export interface RentBookDto {
   libraryId: number;
   bookId: number;

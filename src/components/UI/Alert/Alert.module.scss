@@ -1,15 +1,17 @@
 .container {
   position: relative;
-
-  width: 450px;
-  transform: translateY(-80px);
+  z-index: 2000;
+  
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  width: 450px;
+  padding: 16px 36px 16px 16px;
+
   border-radius: 16px;
   transition: transform 0.5s, color 0.3s;
-  padding: 16px 36px 16px 16px;
-  z-index: 2000;
+
+  transform: translateY(-80px);
 
   .check {
     width: 34px;

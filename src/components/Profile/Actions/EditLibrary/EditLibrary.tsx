@@ -1,19 +1,17 @@
-import { useContext, useEffect, useState, type ChangeEvent } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./EditLibrary.module.scss";
 import classNames from "classnames";
 import { ActionModalContext } from "../../../../context/ActionModalContext";
 import { AlertContext } from "../../../../context/AlertContext";
-import { createLibrary, updateLibrary } from "../../../../api/libraries";
+import { updateLibrary } from "../../../../api/libraries";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHook";
-import { updateLibraryInfo, updateObservedLibraryProfile } from "../../../../store/reducers/observedLibraryProfileSlice";
+import { updateLibraryInfo } from "../../../../store/reducers/observedLibraryProfileSlice";
 
 export function EditLibrary() {
   const dispatch = useAppDispatch();
   const { showAlert } = useContext(AlertContext);
   const { closeActionModal } = useContext(ActionModalContext);
-
   const observedLibraryProfile = useAppSelector(state => state.observedLibraryProfileReducer);
-  const [selectedRole, setSelectedRole] = useState("client");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
@@ -24,15 +22,8 @@ export function EditLibrary() {
       id: observedLibraryProfile.id,
       name,
       address,
-      description
+      description,
     });
-    // const createdUser = await createUser({
-    //   name,
-    //   description,
-    //   address,
-    //   password,
-    //   role: selectedRole,
-    // });
 
     if (!updatedLibrary.status) {
       showAlert!("Библиотека успешно обновлена!", "success");

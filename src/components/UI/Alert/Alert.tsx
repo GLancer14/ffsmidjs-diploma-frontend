@@ -2,7 +2,11 @@ import { useEffect } from "react";
 import ReactPortal from "../ReactPortal/ReactPortal";
 import styles from "./Alert.module.scss";
 import classNames from "classnames";
-import { CircleAlert, CircleCheck, X } from "lucide-react";
+import {
+  CircleAlert,
+  CircleCheck,
+  X,
+} from "lucide-react";
 
 interface AlertProps {
   children: React.ReactNode;

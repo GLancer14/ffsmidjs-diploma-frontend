@@ -1,20 +1,13 @@
 
-import { useContext, useEffect, useState, type ChangeEvent } from "react";
+import { useContext } from "react";
 import styles from "./LibraryProfileCard.module.scss";
 import { ActionModalContext } from "../../../context/ActionModalContext";
-import { ArrowBigLeft, ChevronsLeft, ChevronsRight, Pencil, Trash2 } from "lucide-react";
 import classNames from "classnames";
-import { useLocation, useNavigate, useParams } from "react-router";
-import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
-import { DeleteUser } from "../Actions/DeleteUser/DeleteUser";
-import { getLibraryById } from "../../../api/libraries";
-import { observedLibraryProfileSlice, updateObservedLibraryProfile } from "../../../store/reducers/observedLibraryProfileSlice";
-import Pagination from "@mui/material/Pagination";
+import { useLocation, useNavigate } from "react-router";
+import { useAppSelector } from "../../../hooks/reduxHook";
 import { EditLibrary } from "../Actions/EditLibrary/EditLibrary";
 import { DeleteLibrary } from "../Actions/DeleteLibrary/DeleteLibrary";
 import { AddBook } from "../Actions/AddBook/AddBook";
-import { EditBook } from "../Actions/EditBook/EditBook";
-import { DeleteBook } from "../Actions/DeleteBook/DeleteBook";
 
 export interface observedLibraryDataProp {
   name?: string;

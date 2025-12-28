@@ -21,13 +21,17 @@
       margin-top: 8px;
       padding: 16px 24px;
 
+      font: text.$placeholder;
+
       border-radius: 16px;
       border: 1px solid colors.$textAndBorder;
       background-color: colors.$cardBg;
 
-      &::placeholder {
-        font: text.$placeholder;
+      &:focus {
+        background-color: colors.$accentBg;
+      }
 
+      &::placeholder {
         color: colors.$placeholder;
       }
     }

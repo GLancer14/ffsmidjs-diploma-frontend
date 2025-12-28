@@ -1,6 +1,5 @@
 import "./CustomCalendar.scss";
 import { X } from "lucide-react";
-import { useState } from "react";
 import Calendar from "react-calendar";
 
 export type ValuePiece = Date | null;
