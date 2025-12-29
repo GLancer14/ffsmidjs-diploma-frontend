@@ -5,13 +5,11 @@ import { AddUser } from "../Actions/AddUser/AddUser";
 import { ActionModalContext } from "../../../context/ActionModalContext";
 import { BookOpen, ChevronsLeft, ChevronsRight, ContactRound, MessageSquare, UserRound } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
-import type { User, UsersSearch } from "../../../types/users";
+import type { UsersSearch } from "../../../types/users";
 import classNames from "classnames";
 import { Link } from "react-router";
 import { useAppSelector } from "../../../hooks/reduxHook";
-import { findUserBookRents } from "../../../api/bookRent";
-import { type BookRentalResponseDto } from "../../../types/bookRent";
-
+import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
 export function Users() {
   const user = useAppSelector(state => state.userReducer);
   const [foundUsers, setFoundUserRents] = useState<UsersSearch[]>([]);
@@ -30,6 +28,7 @@ export function Users() {
       role: userType === "all" ? undefined : userType,
     });
 
+    console.log(foundUsers);
     setFoundUserRents(users);
   }
 
@@ -148,7 +147,13 @@ export function Users() {
                     <div className={styles.contactPhone}>{user.contactPhone}</div>
                     <div className={styles.email}>{user.email}</div>
                   </div>
-                  <div className={classNames(styles.activity, styles.cell)}>{user.id}</div>
+                  <div className={classNames(styles.activity, styles.cell)}>
+                    {
+                      (new Date(user.lastActivity)).getTime() === 0
+                        ? "-"
+                        : parseDateFromUTCToRu(user.lastActivity.toString())
+                    }
+                  </div>
                   <div className={classNames(styles.rents, styles.cell)}>
                     {
                       user.role !== "client"

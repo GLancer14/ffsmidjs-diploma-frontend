@@ -6,4 +6,9 @@ export interface User {
   role: string;
 }
 
-export type UsersSearch = User & {bookRents: Array<{dateEnd: Date}>};
+export interface UserSearchAdditional {
+  bookRents: Array<{dateEnd: Date}>;
+  lastActivity: Date;
+}
+
+export type UsersSearch = User & UserSearchAdditional;
