@@ -10,6 +10,7 @@ import classNames from "classnames";
 import { Link } from "react-router";
 import { useAppSelector } from "../../../hooks/reduxHook";
 import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
+
 export function Users() {
   const user = useAppSelector(state => state.userReducer);
   const [foundUsers, setFoundUserRents] = useState<UsersSearch[]>([]);
@@ -159,7 +160,7 @@ export function Users() {
                       user.role !== "client"
                         ? "-"
                         : user.bookRents.length
-                        // : activeRentsCount
+
                     }
                   </div>
                   <div
