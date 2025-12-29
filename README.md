@@ -1,73 +1,95 @@
-# React + TypeScript + Vite
+# Cайт-агрегатор поиска и бронирования книг в библиотеках (клиентская часть)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Сслыка на клиентскую часть: [Серверная часть](https://github.com/GLancer14/ffsmidjs-diploma-backend)
 
-Currently, two official plugins are available:
+Структура файлов и папок:
+  - src - основная папка с файлами проекта
+  - - api - каталог с запросами axios к серверу
+  - - - index.ts - общие настройки запросов
+  - - assets - статические файлы (изображения, общие файлы стилей для всего проекта)
+  - - components - компонетны React и их стили
+  - - - 404 - страница NotFound
+  - - - BookCard - карточка книги
+  - - - BookRent - компоненты для осуществления аренды книги
+  - - - - BookRent - компонент для осуществления аренды книги
+  - - - - RentOrder - компонент с информацией о арендованной книге
+  - - - - index.tsx - подложка страницы аренды
+  - - - FindBook - компоненты поиска книги
+  - - - - BooksNotFound - книга не найдена
+  - - - - FindBook - форма поиска книги
+  - - - - SearchResult - результаты поиска книги
+  - - - - index.tsx - подложка для компонентов поиска книги
+  - - - Footer - нижний колонтитул главной страницы
+  - - - Header - верхний колонтитул главной страницы
+  - - - Login - форма авторизации
+  - - - Main - компоненты главной страницы
+  - - - - AboutUs - блок "О нас"
+  - - - - EditorsChoice - блок "Выбор редакции"
+  - - - - NewIncomings - блок "Новые поступления"
+  - - - - index.tsx - подложка главной страницы
+  - - - Profile - компненты профиля пользователя
+  - - - - Actions - компоненты действия с данными приложения
+  - - - - - AddBook - добавить книгу
+  - - - - - AddExistingBook - добавить уже имеющуюся в БД книгу
+  - - - - - AddLibrary - добавить библиотеку
+  - - - - - AddUser - добавить пользователя
+  - - - - - ChatButton - чат поддержки
+  - - - - - DeleteBook - удалить книгу
+  - - - - - DeleteLibrary - удалить библиотеку
+  - - - - - DeleteUser - удалить пользователя
+  - - - - - EditBook - редактировать книгу
+  - - - - - EditLibrary - редактировать библиотеку
+  - - - - - EditProfile - редактировать профиль пользователя
+  - - - - AnotherUserProfile - просматриваемый профиль пользователя
+  - - - - Chat - чат
+  - - - - - Message - сообщение
+  - - - - Libraries - страница со списком библиотек
+  - - - - LibraryProfile - профиль библиотеки
+  - - - - LibraryProfileCard - карточка библиотеки
+  - - - - ManagerBooks - страница поиска библиотек пользователя "Библиотекарь"
+  - - - - MyBooks - страница арендованных пользователем "Клиент" книг
+  - - - - Profile - контейнер для профиля пользователя
+  - - - - Settings - страница редактирования собственного профиля пользователя
+  - - - - SidePanel - боковая панель профиля пользователя
+  - - - - UserRents - таблица арендованных книг
+  - - - - Users - страница поиска и выбора пользователей
+  - - - - Welcome - главная страница профиля пользователя
+  - - - - index.tsx - подложка профиля пользователя
+  - - - Register - форма регистрации
+  - - - RentRange - компонент выбора диапазона дат аренды книги
+  - - - UI - элементы интерфейса
+  - - - - ActionModal - модальное окно для компонентов действий
+  - - - - Alert - компонент оповещения
+  - - - - AuthModal - модально окно регистрации/аутентификации
+  - - - - Calendar - календарьдля выбора дат аренды
+  - - - - ReactPortal - компонент для перемещения элементов по дереву DOM
+  - - - context - экземпляры useContext()
+  - - - - ActionModalContext - контекст для модального окна действия
+  - - - - AlertContext - контекст для компонента оповещения
+  - - - - SocketContext - контекст для веб-сокет подключения
+  - - - hooks - кастомные хуки React
+  - - - store - хранилище Redux
+  - - - - reducers - редьюсеры Redux
+  - - - - index.ts - файл конфигурации хранилища Redux
+  - - - types - типы TypeScript
+  - - - utils - различные утилиты
+  - - App.tsx - корневой компонент React
+  - - main.tsx - файл инициализации приложения React
+  - .env.example - содержит пример необходимых для работы приложения переменных окружения для запуска в окружении хоста 
+  - Dockerfile - конфигурация Docker для клиентской части приложения
+  - index.html - точка входа в приложение
+  - package.json - основной файл пакета npm
+  - vite.config.js - файл конфигурации Vite (здесь в глобальную область видимости внесены переменные CSS для управления стилями)
+  
+## Запуск приложения в окружении хоста
+Открыть терминал в каталоге с репозиторием и выполнить команды
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    `npm install`
 
-## React Compiler
+    `npm run dev`
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Технологии, которые не изучались в программе профессии - 
+  - продвинутый React,
+  - [Redux](https://redux.js.org/) и [Redux Toolkit](https://redux-toolkit.js.org/),
+  - [Axios](https://axios-http.com/)
+  - [SASS](https://sass-lang.com/)
