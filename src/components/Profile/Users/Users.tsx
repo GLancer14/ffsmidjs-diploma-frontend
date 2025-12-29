@@ -5,7 +5,7 @@ import { AddUser } from "../Actions/AddUser/AddUser";
 import { ActionModalContext } from "../../../context/ActionModalContext";
 import { BookOpen, ChevronsLeft, ChevronsRight, ContactRound, MessageSquare, UserRound } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
-import type { User } from "../../../types/users";
+import type { User, UsersSearch } from "../../../types/users";
 import classNames from "classnames";
 import { Link } from "react-router";
 import { useAppSelector } from "../../../hooks/reduxHook";
@@ -14,27 +14,22 @@ import { type BookRentalResponseDto } from "../../../types/bookRent";
 
 export function Users() {
   const user = useAppSelector(state => state.userReducer);
-  const [usersRents, setUserRents] = useState<BookRentalResponseDto[][]>([]);
-  const [foundUsers, setFoundUserRents] = useState<User[]>([]);
+  const [foundUsers, setFoundUserRents] = useState<UsersSearch[]>([]);
   const { showActionModal } = useContext(ActionModalContext);
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState("all");
   const [searchString, setSearchString] = useState("");
   const [page, setPage] = useState(1);
   const [pagesCount, setPagesCount] = useState(1);
   const limit = 10;
 
   async function handleSearchUsers() {
-    const users: User[] = await findUsers({
+    const users: UsersSearch[] = await findUsers({
       limit: limit,
       offset: limit * (page - 1),
       searchString,
+      role: userType === "all" ? undefined : userType,
     });
 
-    const usersRents: Array<BookRentalResponseDto[]> = await Promise.all(users.map(async (user) => {
-      return await findUserBookRents(user.id);
-    }));
-
-    setUserRents(usersRents);
     setFoundUserRents(users);
   }
 
@@ -53,13 +48,12 @@ export function Users() {
   }
 
   useEffect(() => {
-    console.log(pagesCount)
     handleGetPagesCount();
   }, [searchString]);
 
   useEffect(() => {
     handleSearchUsers();
-  }, [searchString, page]);
+  }, [searchString, page, userType]);
 
   return (
     <div className={styles.users}>
@@ -146,15 +140,6 @@ export function Users() {
           foundUsers.length === 0
             ? (<div className={styles.noResults}>Результаты не найдены</div>)
             : (foundUsers.map(user => {
-              let activeRentsCount = 0;
-              const activeRents = usersRents.find(rents => {
-                return rents.length > 0 && rents[0].userId === user.id;
-              });
-
-              if (activeRents) {
-                activeRentsCount = activeRents.filter(rent => rent.status === "active").length;
-              }
-
               return (
                 <Link className={styles.row} to={`/profile/users/${user.id}`} key={user.id}>
                   <div className={classNames(styles.id, styles.cell)}>{user.id}</div>
@@ -166,9 +151,10 @@ export function Users() {
                   <div className={classNames(styles.activity, styles.cell)}>{user.id}</div>
                   <div className={classNames(styles.rents, styles.cell)}>
                     {
-                    user.role !== "client"
-                      ? "-"
-                      : activeRentsCount
+                      user.role !== "client"
+                        ? "-"
+                        : user.bookRents.length
+                        // : activeRentsCount
                     }
                   </div>
                   <div

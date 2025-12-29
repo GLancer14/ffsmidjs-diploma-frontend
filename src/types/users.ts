@@ -5,3 +5,5 @@ export interface User {
   contactPhone: string;
   role: string;
 }
+
+export type UsersSearch = User & {bookRents: Array<{dateEnd: Date}>};

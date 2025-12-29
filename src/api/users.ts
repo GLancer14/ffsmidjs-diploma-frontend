@@ -14,6 +14,7 @@ export interface SearchUserParams {
   limit?: number;
   offset?: number;
   searchString?: string;
+  role?: string;
 }
 
 export interface CreateUserParams {
@@ -75,6 +76,7 @@ export const findUsers = async (params: SearchUserParams) => {
         limit: params.limit,
         offset: params.offset,
         searchString: params.searchString,
+        role: params.role,
       }
     });
 

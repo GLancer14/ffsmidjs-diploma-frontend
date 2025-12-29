@@ -14,10 +14,12 @@ export function ChatButton() {
   const [unreadMessages, setUnreadMessages] = useState(0);
 
   useEffect(() => {
-    const unreadMessages = observedUserProfile.chat.messages.filter(message => {
-      return message.readAt === null && message.author !== user.id
-    });
-    setUnreadMessages(unreadMessages.length);
+    if (observedUserProfile.chat.messages) {
+      const unreadMessages = observedUserProfile.chat.messages.filter(message => {
+        return message.readAt === null && message.author !== user.id
+      });
+      setUnreadMessages(unreadMessages.length);
+    }
   }, [observedUserProfile.chat.messages])
 
   return (
