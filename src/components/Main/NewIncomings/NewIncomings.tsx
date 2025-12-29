@@ -1,9 +1,10 @@
 import styles from "./NewIncomings.module.scss";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { getNewIncomings } from "../../../api/libraries";
 import { BookCard } from "../../BookCard/BookCard";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import type { Book } from "../../../types/library";
+import { AlertContext } from "../../../context/AlertContext";
 
 // export interface Book {
 //   title: string;
@@ -21,9 +22,15 @@ import type { Book } from "../../../types/library";
 export function NewIncomings() {
   const [books, setBooks] = useState<Book[]>([]);
   const booksRef = useRef(null);
+  const { showAlert } = useContext(AlertContext);
 
   async function getChoosedBooks() {
     const booksFromApi = await getNewIncomings();
+    if (booksFromApi.status === "fail") {
+      showAlert!(booksFromApi.data);
+      setBooks([]);
+      return;
+    }
     setBooks(booksFromApi);
   }
 
