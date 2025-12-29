@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 import { applyDynamicEllipsis } from "../../utils/dynamicEllipsis";
 import classNames from "classnames";
 import { useNavigate } from "react-router";
-import type { BookOnLibrary, Library } from "../../types/library";
 
 export interface BookCardProps {
   id: number;
@@ -12,7 +11,6 @@ export interface BookCardProps {
   author: string;
   librariesCount?: number;
   libraryName?: string;
-  // library: BookOnLibrary[];
   cover?: string;
   year?: number;
   description?: string;

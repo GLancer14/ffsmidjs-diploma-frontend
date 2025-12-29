@@ -12,6 +12,7 @@ import { AlertContext } from "../../../context/AlertContext";
 
 export function FindBook() {
   const dispatch = useAppDispatch();
+  const dateRange = useAppSelector(state => state.bookRentRangeSlice);
   const searchedBooksAtStore = useAppSelector(state => state.booksSearchReducer);
   const location = useLocation();
   const navigation = useNavigate();
@@ -23,16 +24,16 @@ export function FindBook() {
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const parsedRuDates = [
-      parseRuDate(e.currentTarget.elements["find-book_start-rent"].value),
-      parseRuDate(e.currentTarget.elements["find-book_end-rent"].value),
+      parseRuDate(dateRange.dateStart),
+      parseRuDate(dateRange.dateEnd),
     ];
 
     const searchedBooks = await findBooks(title, author, parsedRuDates[0], parsedRuDates[1]);
-
-    if (searchedBooks.status === "fail") {
-      console.log(searchedBooks)
-      showAlert!(searchedBooks.data)
+    if (searchedBooks.status === "fail" || searchedBooks.status === "error") {
+      showAlert!(searchedBooks.data);
+      return;
     }
+
     dispatch(updateFoundBooks(searchedBooks));
     navigation("/find-book");
   }

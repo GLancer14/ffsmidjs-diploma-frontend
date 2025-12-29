@@ -3,6 +3,7 @@ import userReducer from "./reducers/userSlice";
 import booksSearchReducer from "./reducers/booksSearchSlice";
 import observedUserProfileReducer from "./reducers/observedUserProfileSlice";
 import observedLibraryProfileReducer from "./reducers/observedLibraryProfileSlice";
+import bookRentRangeSlice from "./reducers/bookRentRangeSlice";
 
 export const setupStore = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const setupStore = configureStore({
     booksSearchReducer,
     observedUserProfileReducer,
     observedLibraryProfileReducer,
+    bookRentRangeSlice,
   },
 })
 

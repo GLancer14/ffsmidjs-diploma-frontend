@@ -1,13 +1,15 @@
 import styles from "./RentRange.module.scss";
 import { useEffect, useState } from "react";
 import { CustomCalendar, type Value } from "../UI/Calendar/CustomCalendar";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHook";
+import { updateDateEnd, updateDateStart } from "../../store/reducers/bookRentRangeSlice";
 
-export function RentRange({ onDateChange }: { onDateChange?: () => void}) {
+export function RentRange({ disabled = false }: { disabled?: boolean }) {
   const [startRentCalendarVisiblility, setStartRentCalendarVisiblility] = useState(false);
   const [endRentCalendarVisiblility, setEndRentCalendarVisiblility] = useState(false);
-  const [startBookRent, setStartBookRent] = useState("");
+  const dispatch = useAppDispatch();
+  const dateRange = useAppSelector(state => state.bookRentRangeSlice);
   const [startBookRentFormCalendar, setStartBookRentFormCalendar] = useState<Value>(null);
-  const [endBookRent, setEndBookRent] = useState("");
   const [endBookRentFormCalendar, setEndBookRentFormCalendar] = useState<Value>(null);
 
   useEffect(() => {
@@ -17,7 +19,7 @@ export function RentRange({ onDateChange }: { onDateChange?: () => void}) {
       day: "2-digit",
     });
     if (stringFromCalendarDate) {
-      setStartBookRent(stringFromCalendarDate);
+      dispatch(updateDateStart(stringFromCalendarDate));
     }
   }, [startBookRentFormCalendar]);
   
@@ -28,7 +30,7 @@ export function RentRange({ onDateChange }: { onDateChange?: () => void}) {
       day: "2-digit",
     });
     if (stringFromCalendarDate) {
-      setEndBookRent(stringFromCalendarDate);
+      dispatch(updateDateEnd(stringFromCalendarDate));
     }
   }, [endBookRentFormCalendar]);
 
@@ -41,13 +43,14 @@ export function RentRange({ onDateChange }: { onDateChange?: () => void}) {
           id="find-book_start-rent"
           name="find-book_start-rent"
           type="text"
-          value={startBookRent}
+          value={dateRange.dateStart}
           placeholder="Выберите дату"
+          disabled={disabled}
           onClick={() => {
             setStartRentCalendarVisiblility(true)
           }}
           onInput={(e: React.FormEvent<HTMLInputElement>) => {
-            setStartBookRent(e.currentTarget.value);
+            dispatch(updateDateStart(e.currentTarget.value));
             setStartRentCalendarVisiblility(false);
           }}
         />
@@ -65,13 +68,14 @@ export function RentRange({ onDateChange }: { onDateChange?: () => void}) {
           id="find-book_end-rent"
           name="find-book_end-rent"
           type="text"
-          value={endBookRent}
+          value={dateRange.dateEnd}
           placeholder="Выберите дату"
+          disabled={disabled}
           onClick={() => {
             setEndRentCalendarVisiblility(true)
           }}
           onInput={(e: React.FormEvent<HTMLInputElement>) => {
-            setEndBookRent(e.currentTarget.value);
+            dispatch(updateDateEnd(e.currentTarget.value));
             setEndRentCalendarVisiblility(false);
           }}
         />
