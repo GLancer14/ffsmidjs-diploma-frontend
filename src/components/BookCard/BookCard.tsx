@@ -3,8 +3,10 @@ import { useContext, useEffect, useRef } from "react";
 import { applyDynamicEllipsis } from "../../utils/dynamicEllipsis";
 import classNames from "classnames";
 import { useNavigate } from "react-router";
-import { useAppSelector } from "../../hooks/reduxHook";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHook";
 import { AlertContext } from "../../context/AlertContext";
+import { addBookToSearchResults } from "../../store/reducers/booksSearchSlice";
+import { getBookById } from "../../api/libraries";
 
 export interface BookCardProps {
   id: number;
@@ -31,16 +33,28 @@ export function BookCard({
 }: BookCardProps) {
   const navigation = useNavigate();
   const bookDescriptionElement = useRef(null);
+  const dispatch = useAppDispatch();
+  const booksSearchResults = useAppSelector(state => state.booksSearchReducer);
   const { showAlert } = useContext(AlertContext);
   const user = useAppSelector(state => state.userReducer);
 
-  function handleRentClickButton() {
+  async function handleRentClickButton() {
     if (user.role === "") {
       showAlert!("Вы не авторизоавны");
       return;
     } else if (user.role !== "client") {
       showAlert!("Не подходящая роль для аренды книги");
       return;
+    }
+
+    if (!booksSearchResults.find(book => book.id === id)) {
+      const findedBook = await getBookById(String(id));
+      if (findedBook?.status === "fail") {
+        showAlert!(findedBook.data);
+        return;
+      }
+
+      dispatch(addBookToSearchResults(findedBook));
     }
     
     navigation(`/rent-book/${id}`);
@@ -91,7 +105,7 @@ export function BookCard({
         </div>
         {librariesBlock}
       </div>
-      {(type !== "rent") &&
+      {((type !== "rent" && type !== "exists")) &&
         <button
           className={styles.rentBtn}
           onClick={handleRentClickButton}

@@ -11,8 +11,11 @@ export const booksSearchSlice = createSlice({
     updateFoundBooks: (state, action: PayloadAction<Book[]>) => {
       return action.payload;
     },
+    addBookToSearchResults: (state, action: PayloadAction<Book>) => {
+      state.push(action.payload);
+    },
   }
 });
 
-export const { updateFoundBooks } = booksSearchSlice.actions;
+export const { updateFoundBooks, addBookToSearchResults } = booksSearchSlice.actions;
 export default booksSearchSlice.reducer;
