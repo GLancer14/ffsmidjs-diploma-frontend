@@ -23,10 +23,12 @@ import { SocketContext } from "../../../context/SocketContext";
 import { getChatData } from "../../../api/supportChat";
 import { UserRents } from "../UserRents/UserRents";
 import { ChatButton } from "../Actions/ChatButton/ChatButton";
+import { AlertContext } from "../../../context/AlertContext";
 
 export function AnotherUserProfile() {
   const params = useParams();
   const dispatch = useAppDispatch();
+  const { showAlert } = useContext(AlertContext);
   const { socket } = useContext(SocketContext);
   const user = useAppSelector(state => state.userReducer);
   const { showActionModal } = useContext(ActionModalContext);
@@ -37,10 +39,13 @@ export function AnotherUserProfile() {
   async function handleSubscribeToChatMessages() {
     if (params.id) {
       const chatData = await getChatData(+params.id);
-      if (chatData) {
-        dispatch(updateObservedUserChat(chatData));
-        socket?.emit("subscribeToChat", { chatId: chatData.id });
+      if (chatData?.status === "fail") {
+        showAlert!(chatData.data);
+        return;
       }
+
+      dispatch(updateObservedUserChat(chatData));
+      socket?.emit("subscribeToChat", { chatId: chatData.id });
     }
   }
 
@@ -48,13 +53,18 @@ export function AnotherUserProfile() {
     if (params.id) {
       const user = await getUserById(params.id);
 
+      if (user?.status === "fail") {
+        showAlert!(user.data);
+        return;
+      }
+
       dispatch(updateObservedUserProfile({
         id: user.id,
         name: user.name,
         email: user.email,
         contactPhone: user.contactPhone,
         role: user.role,
-      }))
+      }));
       // setUserData(user);
     }
   }
@@ -62,7 +72,11 @@ export function AnotherUserProfile() {
   async function handleSetUserRents() {
     if (params.id) {
       const userRentsRequsetResult = await findUserBookRents(+params.id);
-
+      if (userRentsRequsetResult?.status === "fail") {
+        showAlert!(userRentsRequsetResult.data);
+        return;
+      }
+      
       setUserRents(userRentsRequsetResult);
     }
   }

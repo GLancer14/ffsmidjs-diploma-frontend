@@ -24,10 +24,12 @@ import { EditBook } from "../Actions/EditBook/EditBook";
 import { DeleteBook } from "../Actions/DeleteBook/DeleteBook";
 import { LibraryProfileCard } from "../LibraryProfileCard/LibraryProfileCard";
 import { AddExistingBook } from "../Actions/AddExistingBook/AddExistingBook";
+import { AlertContext } from "../../../context/AlertContext";
 
 export function LibraryProfile() {
   const params = useParams();
   const dispatch = useAppDispatch();
+  const { showAlert } = useContext(AlertContext);
   const { showActionModal } = useContext(ActionModalContext);
   const observedLibraryProfile = useAppSelector(state => state.observedLibraryProfileReducer);
   const navigation = useNavigate();
@@ -73,6 +75,10 @@ export function LibraryProfile() {
   async function handleGetLibraryData() {
     if (params.id) {
       const library = await getLibraryById(params.id);
+      if (library?.status === "fail") {
+        showAlert!(library.data);
+        return;
+      }
 
       dispatch(updateObservedLibraryProfile(library));
     }

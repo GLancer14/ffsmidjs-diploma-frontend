@@ -56,29 +56,33 @@ export function AddBook() {
       formForSending.append("libraryId", String(observedLibraryProfile.id));
       const addedBook = await addBook(formForSending);
 
-      if (!addedBook.status) {
-        showAlert!("Книга успешно добавлена!", "success");
-        closeActionModal!();
-
-        dispatch(addBookToLibrary({
-          totalCopies: +copies,
-          availableCopies: +copies,
-          book: {
-            id: addedBook.id,
-            title: title,
-            author: author,
-            description: description,
-            year: +year,
-            coverImage: addedBook.coverImage,
-          },
-        }));
-        setTitle("");
-        setAuthor("");
-        setDescription("");
-        setYear("");
-        setCopies("1");
-        setCover(null);
+      if (addedBook?.status === "fail") {
+        showAlert!(addedBook.data);
+        return;
       }
+
+      showAlert!("Книга успешно добавлена!", "success");
+      closeActionModal!();
+
+      dispatch(addBookToLibrary({
+        totalCopies: +copies,
+        availableCopies: +copies,
+        book: {
+          id: addedBook.id,
+          title: title,
+          author: author,
+          description: description,
+          year: +year,
+          coverImage: addedBook.coverImage,
+        },
+      }));
+      
+      setTitle("");
+      setAuthor("");
+      setDescription("");
+      setYear("");
+      setCopies("1");
+      setCover(null);
     }
   }
 

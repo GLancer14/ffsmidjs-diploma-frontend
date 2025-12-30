@@ -41,7 +41,7 @@ export function BookRent() {
       dateEnd: parsedRuDates[1],
     });
 
-    if (sentRentedBook.status === "fail" || sentRentedBook.status === "error") {
+    if (sentRentedBook?.status === "fail") {
       showAlert!(sentRentedBook.data);
       return;
     }

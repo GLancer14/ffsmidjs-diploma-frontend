@@ -3,12 +3,13 @@ import styles from "./Chat.module.scss";
 import { readMessage, type Chat } from "../../../store/reducers/observedUserProfileSlice";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
 import { Message } from "./Message/Message";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { markMessagesAsRead, sendMessage } from "../../../api/supportChat";
 import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
+import { AlertContext } from "../../../context/AlertContext";
 
 export function Chat() {
-  
+  const { showAlert } = useContext(AlertContext);
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.userReducer);
   const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
@@ -17,18 +18,20 @@ export function Chat() {
   async function handleSendMessage(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const sendedMessage = await sendMessage(observedUserProfile.chat.id, message);
-    if (!sendedMessage.status) {
-      // dispatch(addMessage({
-      //   id: sendedMessage.id,
-      //   author: sendedMessage.author,
-      //   sentAt: sendedMessage.sentAt,
-      //   text: sendedMessage.textAt,
-      //   readAt: sendedMessage.readAt,
-      //   supportRequestId: sendedMessage.supportRequestId,
-      // }));
-
-      setMessage("");
+    if (sendedMessage?.status === "fail") {
+      showAlert!(sendedMessage.data);
+      return;
     }
+
+    // dispatch(addMessage({
+    //   id: sendedMessage.id,
+    //   author: sendedMessage.author,
+    //   sentAt: sendedMessage.sentAt,
+    //   text: sendedMessage.textAt,
+    //   readAt: sendedMessage.readAt,
+    //   supportRequestId: sendedMessage.supportRequestId,
+    // }));
+    setMessage("");
   }
 
   async function handleReadingMessages(supportRequestId: number, sentAt: string) {

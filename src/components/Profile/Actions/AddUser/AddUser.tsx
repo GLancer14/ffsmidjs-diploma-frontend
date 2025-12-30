@@ -28,15 +28,18 @@ export function AddUser() {
       role: selectedRole,
     });
 
-    if (createdUser) {
-      showAlert!("Пользователь успешно создан!", "success");
-      closeActionModal!();
-      setName("");
-      setEmail("");
-      setContactPhone("");
-      setPassword("");
-      setSelectedRole("client");
+    if (createdUser?.status === "fail") {
+      showAlert!(createdUser.data);
+      return;
     }
+
+    showAlert!("Пользователь успешно создан!", "success");
+    closeActionModal!();
+    setName("");
+    setEmail("");
+    setContactPhone("");
+    setPassword("");
+    setSelectedRole("client");
   }
 
   return (

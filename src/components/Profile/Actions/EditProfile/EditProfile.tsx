@@ -32,17 +32,20 @@ export function EditProfile() {
         role: selectedRole,
       });
 
-      if (!updatedUser.status) {
-      showAlert!("Пользователь успешно обновлён!", "success");
-        closeActionModal!();
-        setRolesVisibility(false);
-        dispatch(updateObservedUserProfile({
-          name,
-          email,
-          contactPhone,
-          role: selectedRole,
-        }));
+      if (updatedUser?.status === "fail") {
+        showAlert!(updatedUser.data);
+        return;
       }
+
+      showAlert!("Пользователь успешно обновлён!", "success");
+      closeActionModal!();
+      setRolesVisibility(false);
+      dispatch(updateObservedUserProfile({
+        name,
+        email,
+        contactPhone,
+        role: selectedRole,
+      }));
     }
   }
 

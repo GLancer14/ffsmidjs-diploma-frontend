@@ -20,16 +20,19 @@ export function AddLibrary() {
     const createdLibrary = await createLibrary({
       name,
       address,
-      description
+      description,
     });
 
-    if (!createdLibrary.status) {
-      showAlert!("Библиотека успешно добавлена!", "success");
-      closeActionModal!();
-      setName("");
-      setAddress("");
-      setDescription("");
+    if (createdLibrary?.status === "fail") {
+      showAlert!(createdLibrary.data);
+      return;
     }
+
+    showAlert!("Библиотека успешно добавлена!", "success");
+    closeActionModal!();
+    setName("");
+    setAddress("");
+    setDescription("");
   }
 
   return (

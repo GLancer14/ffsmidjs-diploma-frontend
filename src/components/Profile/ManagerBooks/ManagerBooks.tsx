@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./ManagerBooks.module.scss";
 import { ChevronUp } from "lucide-react";
 import classNames from "classnames";
@@ -6,9 +6,11 @@ import { useAppDispatch } from "../../../hooks/reduxHook";
 import { getLibraries, type LibrariesSearchResponseDto } from "../../../api/libraries";
 import { updateLibraryInfo } from "../../../store/reducers/observedLibraryProfileSlice";
 import { LibraryProfileCard } from "../LibraryProfileCard/LibraryProfileCard";
+import { AlertContext } from "../../../context/AlertContext";
 
 export function ManagerBooks() {
   const dispatch = useAppDispatch();
+  const { showAlert } = useContext(AlertContext);
   const [librariesVisibility, setLibrariesVisibility] = useState(false);
   const [selectedLibraryName, setSelectedLibraryName] = useState("Выберите библиотеку");
   const [selectedLibrary, setSelectedLibrary] = useState<LibrariesSearchResponseDto | null>(null);
@@ -17,11 +19,16 @@ export function ManagerBooks() {
 
   async function handleGetLibrariesData() {
     const libraries = await getLibraries({ searchString: "" });
+    if (libraries?.status === "fail") {
+      showAlert!(libraries.data);
+      return;
+    }
+    
     setLibraries(libraries);
   }
 
   useEffect(() => {
-    handleGetLibrariesData()
+    handleGetLibrariesData();
   }, []);
 
   return (

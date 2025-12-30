@@ -1,8 +1,6 @@
-import { useAppSelector } from "../../../hooks/reduxHook";
 import styles from "./BooksNotFound.module.scss";
 
 export function BooksNotFound() {
-
   return (
     <div className={styles.wrp}>
       <header className={styles.header}>По вашему запросу ничего не найдено</header>

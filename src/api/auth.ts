@@ -25,7 +25,7 @@ export const register = async (name: string, email: string, password: string) =>
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -44,7 +44,7 @@ export const login = async (email: string, password: string) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -60,7 +60,7 @@ export const getLoggedUser = async () => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -76,6 +76,6 @@ export const logout = async () => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };

@@ -1,6 +1,6 @@
 import styles from "./EditorsChoice.module.scss";
 import { useContext, useEffect, useRef, useState } from "react";
-import { getEditorsChoiceBooks } from "../../../api/libraries";
+import { getDigestBooks } from "../../../api/libraries";
 import { BookCard } from "../../BookCard/BookCard";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import type { Book } from "../../../types/library";
@@ -12,8 +12,8 @@ export function EditorsChoice() {
   const { showAlert } = useContext(AlertContext);
 
   async function getChoosedBooks() {
-    const booksFromApi = await getEditorsChoiceBooks();
-    if (booksFromApi.status === "fail") {
+    const booksFromApi = await getDigestBooks();
+    if (booksFromApi?.status === "fail") {
       showAlert!(booksFromApi.data);
       setBooks([]);
       return;

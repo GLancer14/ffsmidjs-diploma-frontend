@@ -25,18 +25,21 @@ export function EditLibrary() {
       description,
     });
 
-    if (!updatedLibrary.status) {
-      showAlert!("Библиотека успешно обновлена!", "success");
-      closeActionModal!();
-      setName("");
-      setAddress("");
-      setDescription("");
-      dispatch(updateLibraryInfo({
-        name,
-        address,
-        description,
-      }));
+    if (updatedLibrary?.status === "fail") {
+      showAlert!(updatedLibrary.data);
+      return;
     }
+
+    showAlert!("Библиотека успешно обновлена!", "success");
+    closeActionModal!();
+    setName("");
+    setAddress("");
+    setDescription("");
+    dispatch(updateLibraryInfo({
+      name,
+      address,
+      description,
+    }));
   }
 
   useEffect(() => {

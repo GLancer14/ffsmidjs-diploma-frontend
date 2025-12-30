@@ -48,16 +48,15 @@ export interface UpdateLibraryParams {
   description?: string;
 }
 
-export const getEditorsChoiceBooks = async () => {
+export const getDigestBooks = async () => {
   try {
     const projectData = await connection.get("/api/common/books", {
       params: {
-        library: 4,
-        author: "Федор Достоевский",
+        library: 1,
       }
     });
 
-    return projectData.data;
+    return projectData.data.slice(0, 5);
   } catch(e) {
     if (request.isAxiosError(e)) {
       if (e.response) {
@@ -65,28 +64,7 @@ export const getEditorsChoiceBooks = async () => {
       }
     }
 
-    return { message: "error", status: "error" };
-  }
-};
-
-export const getNewIncomings = async () => {
-  try {
-    const projectData = await connection.get("/api/common/books", {
-      params: {
-        library: 3,
-        author: "Антон Чехов",
-      }
-    });
-
-    return projectData.data;
-  } catch(e) {
-    if (request.isAxiosError(e)) {
-      if (e.response) {
-        return e.response.data;
-      }
-    }
-
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -109,7 +87,7 @@ export const findBooks = async (title: string, author: string, dateStart: string
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -125,7 +103,7 @@ export const findBooksByTitle = async (title: string, libraryId: number) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -141,7 +119,7 @@ export const getBookById = async (id: string) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -157,7 +135,7 @@ export  const getBooksCount = async () => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -178,7 +156,7 @@ export  const addExistingBook = async (libraryId: number, bookId: number, copies
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -200,7 +178,7 @@ export const addBook = async (form: FormData) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -222,7 +200,7 @@ export const updateBook = async (form: FormData) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -238,7 +216,7 @@ export const deleteBook = async (bookId: number) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -254,7 +232,7 @@ export const getLibraryById = async (id: string) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -274,7 +252,7 @@ export const getLibrariesCount = async (params: { searchString: string }) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -296,7 +274,7 @@ export const getLibraries = async (params: SearchLibrariesParams) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -316,7 +294,7 @@ export const createLibrary = async (params: CreateLibraryParams) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -337,7 +315,7 @@ export const updateLibrary = async (params: UpdateLibraryParams) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -354,6 +332,6 @@ export const deleteLibrary = async (libraryId: number) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };

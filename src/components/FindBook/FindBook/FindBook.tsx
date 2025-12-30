@@ -29,7 +29,7 @@ export function FindBook() {
     ];
 
     const searchedBooks = await findBooks(title, author, parsedRuDates[0], parsedRuDates[1]);
-    if (searchedBooks.status === "fail" || searchedBooks.status === "error") {
+    if (searchedBooks?.status === "fail") {
       showAlert!(searchedBooks.data);
       return;
     }

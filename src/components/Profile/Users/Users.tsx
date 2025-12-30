@@ -10,9 +10,11 @@ import classNames from "classnames";
 import { Link } from "react-router";
 import { useAppSelector } from "../../../hooks/reduxHook";
 import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
+import { AlertContext } from "../../../context/AlertContext";
 
 export function Users() {
   const user = useAppSelector(state => state.userReducer);
+  const { showAlert } = useContext(AlertContext);
   const [foundUsers, setFoundUserRents] = useState<UsersSearch[]>([]);
   const { showActionModal } = useContext(ActionModalContext);
   const [userType, setUserType] = useState("all");
@@ -22,19 +24,26 @@ export function Users() {
   const limit = 10;
 
   async function handleSearchUsers() {
-    const users: UsersSearch[] = await findUsers({
+    const users = await findUsers({
       limit: limit,
       offset: limit * (page - 1),
       searchString,
       role: userType === "all" ? undefined : userType,
     });
+    if (users?.status === "fail") {
+      showAlert!(users.data);
+      return;
+    }
 
-    console.log(foundUsers);
     setFoundUserRents(users);
   }
 
   async function handleGetPagesCount() {
     const usersCount = await getUsersCount({searchString});
+    if (usersCount?.status === "fail") {
+      showAlert!(usersCount.data);
+      return;
+    }
 
     setPagesCount(Math.ceil(usersCount / limit));
   }

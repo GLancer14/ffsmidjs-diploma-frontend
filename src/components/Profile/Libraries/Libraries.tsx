@@ -7,8 +7,10 @@ import classNames from "classnames";
 import { Link } from "react-router";
 import { getLibraries, getLibrariesCount, type LibrariesSearchResponseDto } from "../../../api/libraries";
 import { AddLibrary } from "../Actions/AddLibrary/AddLibrary";
+import { AlertContext } from "../../../context/AlertContext";
 
 export function Libraries() {
+  const { showAlert } = useContext(AlertContext);
   const [libraries, setLibraries] = useState<LibrariesSearchResponseDto[]>([]);
   const { showActionModal } = useContext(ActionModalContext);
   const [searchString, setSearchString] = useState("");
@@ -17,15 +19,18 @@ export function Libraries() {
   const limit = 10;
 
   async function handleSearchLibraries() {
-    const librariesFromApi: LibrariesSearchResponseDto[] = await getLibraries({
+    const librariesFromApi = await getLibraries({
       limit: limit,
       offset: limit * (page - 1),
       searchString,
     });
 
-    if (librariesFromApi) {
-      setLibraries(librariesFromApi);
+    if (librariesFromApi?.status === "fail") {
+      showAlert!(librariesFromApi.data);
+      return;
     }
+
+    setLibraries(librariesFromApi);
   }
 
   async function handleGetPagesCount() {

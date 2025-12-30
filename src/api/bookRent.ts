@@ -20,7 +20,7 @@ export const rentBook = async (rentBookData: RentBookDto) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -36,7 +36,7 @@ export const findBookRent = async (id: string) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -56,7 +56,7 @@ export const findUserBookRents = async (userId: number) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -77,7 +77,7 @@ export const getRentsCountForWelcome = async (userId: number) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -93,6 +93,6 @@ export const getClientOwnRents = async () => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };

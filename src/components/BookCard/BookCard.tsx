@@ -1,8 +1,10 @@
 import styles from "./BookCard.module.scss";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { applyDynamicEllipsis } from "../../utils/dynamicEllipsis";
 import classNames from "classnames";
 import { useNavigate } from "react-router";
+import { useAppSelector } from "../../hooks/reduxHook";
+import { AlertContext } from "../../context/AlertContext";
 
 export interface BookCardProps {
   id: number;
@@ -29,8 +31,18 @@ export function BookCard({
 }: BookCardProps) {
   const navigation = useNavigate();
   const bookDescriptionElement = useRef(null);
+  const { showAlert } = useContext(AlertContext);
+  const user = useAppSelector(state => state.userReducer);
 
   function handleRentClickButton() {
+    if (user.role === "") {
+      showAlert!("Вы не авторизоавны");
+      return;
+    } else if (user.role !== "client") {
+      showAlert!("Не подходящая роль для аренды книги");
+      return;
+    }
+    
     navigation(`/rent-book/${id}`);
   }
 
@@ -38,7 +50,7 @@ export function BookCard({
     if (bookDescriptionElement.current && type !== "rent") {
       applyDynamicEllipsis(bookDescriptionElement.current, 1.5);
     }
-  });
+  }, []);
 
   let librariesBlock;
   if (type === "regular") {

@@ -48,29 +48,32 @@ export function EditBook({ bookId }: { bookId: number }) {
       formForSending.append("id", String(bookId));
       const updatedBook = await updateBook(formForSending);
 
-      if (!updatedBook.status) {
-        showAlert!("Книга успешно обновлена!", "success");
-        closeActionModal!();
-
-        dispatch(updateLibraryBook({
-          totalCopies: +copies,
-          availableCopies: +copies,
-          book: {
-            id: updatedBook.id,
-            title: title,
-            author: author,
-            description: description,
-            year: +year,
-            coverImage: updatedBook.coverImage,
-          },
-        }));
-        setTitle("");
-        setAuthor("");
-        setDescription("");
-        setYear("");
-        setCopies("0");
-        setCover(null);
+      if (updatedBook?.status === "fail") {
+        showAlert!(updatedBook.data);
+        return;
       }
+
+      showAlert!("Книга успешно обновлена!", "success");
+      closeActionModal!();
+      
+      dispatch(updateLibraryBook({
+        totalCopies: +copies,
+        availableCopies: +copies,
+        book: {
+          id: updatedBook.id,
+          title: title,
+          author: author,
+          description: description,
+          year: +year,
+          coverImage: updatedBook.coverImage,
+        },
+      }));
+      setTitle("");
+      setAuthor("");
+      setDescription("");
+      setYear("");
+      setCopies("0");
+      setCover(null);
     }
   }
 

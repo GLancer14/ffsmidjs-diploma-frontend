@@ -42,7 +42,7 @@ export const updateSelf = async (params: UserUpdateParams) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -64,7 +64,7 @@ export const updateAnotherUser = async (params: AnotherUserUpdateParams) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -88,7 +88,7 @@ export const findUsers = async (params: SearchUserParams) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -104,7 +104,7 @@ export const getUsersCountForWelcome = async () => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -124,7 +124,7 @@ export const getUsersCount = async (params: { searchString: string }) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -146,7 +146,7 @@ export const createUser = async (params: CreateUserParams) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -162,7 +162,7 @@ export const getUserById = async (id: string) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -180,6 +180,6 @@ export const deleteUser = async (id: number) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };

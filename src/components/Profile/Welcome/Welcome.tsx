@@ -12,11 +12,13 @@ import { useNavigate } from "react-router";
 import { getUsersCountForWelcome } from "../../../api/users";
 import classNames from "classnames";
 import { getRentsCountForWelcome } from "../../../api/bookRent";
+import { AlertContext } from "../../../context/AlertContext";
 
 
 export function Welcome() {
   const navigation = useNavigate();
   const { showActionModal } = useContext(ActionModalContext);
+  const { showAlert } = useContext(AlertContext);
   const user = useAppSelector(state => state.userReducer);
   const [librariesCount, setLibrariesCount] = useState<number>(0);
   const [booksCount, setBooksCount] = useState<{all: number; activeRents: number}>()
@@ -29,21 +31,41 @@ export function Welcome() {
 
   async function getLibrariesCountFromApi() {
     const count = await getLibrariesCount({searchString: ""});
+    if (count?.status === "fail") {
+      showAlert!(count.data);
+      return;
+    }
+
     setLibrariesCount(count);
   }
 
   async function getBooksCountFromApi() {
     const count = await getBooksCount();
+    if (count?.status === "fail") {
+      showAlert!(count.data);
+      return;
+    }
+
     setBooksCount(count);
   }
 
   async function getUsersDataForWelcomeFromApi() {
     const count = await getUsersCountForWelcome();
+    if (count?.status === "fail") {
+      showAlert!(count.data);
+      return;
+    }
+
     setUsersCount(count);
   }
 
   async function getRentsCountForWelcomeFromApi() {
     const count = await getRentsCountForWelcome(user.id);
+    if (count?.status === "fail") {
+      showAlert!(count.data);
+      return;
+    }
+    
     setRentsCount(count);
   }
 

@@ -5,9 +5,11 @@ import { updateObservedUserChat, updateObservedUserProfile } from "../../../stor
 import styles from "./Profile.module.scss";
 import { SocketContext } from "../../../context/SocketContext";
 import { ChatButton } from "../Actions/ChatButton/ChatButton";
+import { AlertContext } from "../../../context/AlertContext";
 
 export function Profile({children}: {children: React.ReactNode}) {
   const dispatch = useAppDispatch();
+  const { showAlert } = useContext(AlertContext);
   const { socket } = useContext(SocketContext);
   const user = useAppSelector(state => state.userReducer);
   const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
@@ -15,10 +17,13 @@ export function Profile({children}: {children: React.ReactNode}) {
   async function handleSubscribeToChatMessages() {
       if (user.id) {
         const chatData = await getClientChat();
-        if (!chatData.status) {
-          dispatch(updateObservedUserChat(chatData));
-          socket?.emit("subscribeToChat", { chatId: chatData.id });
+        if (chatData?.status === "fail") {
+          showAlert!(chatData.data);
+          return;
         }
+
+        dispatch(updateObservedUserChat(chatData));
+        socket?.emit("subscribeToChat", { chatId: chatData.id });
       }
     }
   
@@ -45,7 +50,7 @@ export function Profile({children}: {children: React.ReactNode}) {
           chatId: observedUserProfile.chat.id
         });
       }
-    }, []);
+    }, [user.id]);
   return (
     <div className={styles.wrp}>
       {children}

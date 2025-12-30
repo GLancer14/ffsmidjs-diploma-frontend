@@ -47,10 +47,6 @@ export function Message({
       })}
       ref={ref}
     >
-      {/* {
-        avatar && 
-        <img className={styles.avatar} src={avatar} alt="аватар" />
-      } */}
       <div className={styles.cloud}>
         <div className={styles.author}>{authorName}</div>
         <div className={styles.content}>{content}</div>

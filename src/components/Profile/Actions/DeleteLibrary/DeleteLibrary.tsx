@@ -20,12 +20,15 @@ export function DeleteLibrary() {
     if (observedLibraryProfile.id) {
       const deletedUser = await deleteLibrary(observedLibraryProfile.id);
 
-      if (!deletedUser.status) {
-        showAlert!("Библиотека успешно удалёна!", "success");
-        closeActionModal!();
-        dispatch(resetObservedLibraryProfile());
-        navigation("/profile/libraries");
+      if (deletedUser?.status === "fail") {
+        showAlert!(deletedUser.data);
+        return;
       }
+
+      showAlert!("Библиотека успешно удалёна!", "success");
+      closeActionModal!();
+      dispatch(resetObservedLibraryProfile());
+      navigation("/profile/libraries");
     }
   }
 

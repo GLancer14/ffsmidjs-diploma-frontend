@@ -19,13 +19,15 @@ export function DeleteUser() {
     e.preventDefault();
     if (observedUserProfile.id) {
       const deletedUser = await deleteUser(+observedUserProfile.id);
-
-      if (!deletedUser.status) {
-        showAlert!("Пользователь успешно удалён!", "success");
-        closeActionModal!();
-        dispatch(resetObservedUserProfile());
-        navigation("/profile/users");
+      if (deletedUser?.status === "fail") {
+        showAlert!(deletedUser.data);
+        return;
       }
+
+      showAlert!("Пользователь успешно удалён!", "success");
+      closeActionModal!();
+      dispatch(resetObservedUserProfile());
+      navigation("/profile/users");
     }
   }
 

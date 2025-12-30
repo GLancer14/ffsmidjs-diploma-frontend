@@ -4,7 +4,6 @@ import styles from "./ChatButton.module.scss";
 import { useAppSelector } from "../../../../hooks/reduxHook";
 import { ActionModalContext } from "../../../../context/ActionModalContext";
 import { Chat } from "../../Chat/Chat";
-import type { Chat as ChatType } from "../../../../store/reducers/observedUserProfileSlice";
 
 export function ChatButton() {
   const { closeActionModal, showActionModal } = useContext(ActionModalContext);

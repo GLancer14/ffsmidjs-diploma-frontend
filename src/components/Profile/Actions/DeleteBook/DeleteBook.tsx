@@ -16,12 +16,14 @@ export function DeleteBook({ bookId }: { bookId: number }) {
     e.preventDefault();
     if (bookId) {
       const deletedBook = await deleteBook(bookId);
-
-      if (!deletedBook.status) {
-        showAlert!("Книга успешно удалена!", "success");
-        closeActionModal!();
-        dispatch(deleteBookFromLibrary({bookId}));
+      if (deletedBook?.status === "fail") {
+        showAlert!(deletedBook.data);
+        return;
       }
+
+      showAlert!("Книга успешно удалена!", "success");
+      closeActionModal!();
+      dispatch(deleteBookFromLibrary({bookId}));
     }
   }
 

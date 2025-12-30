@@ -10,7 +10,6 @@ import {
   Minus,
   Plus,
 } from "lucide-react";
-
 import { addExistingBook, findBooksByTitle } from "../../../../api/libraries";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHook";
 import type { Book } from "../../../../types/library";
@@ -42,7 +41,7 @@ export function AddExistingBook() {
     e.preventDefault();
     if (selectedBook?.id) {
       const addedBook = await addExistingBook(observedLibraryProfile.id, selectedBook.id, +copies);
-      if (addedBook.status === "fail") {
+      if (addedBook?.status === "fail") {
         showAlert!(addedBook.data);
         return;
       }
@@ -142,7 +141,6 @@ export function AddExistingBook() {
               title={selectedBook.title}
               author={selectedBook.author}
               libraryName={observedLibraryProfile.name}
-              // library={observedLibraryProfile}
               cover={selectedBook.coverImage}
               description={selectedBook.description}
             />

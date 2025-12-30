@@ -88,6 +88,8 @@
 
     `npm run dev`
 
+Приложение доступно по адресу http://localhost:5173
+
 Технологии, которые не изучались в программе профессии - 
   - продвинутый React,
   - [Redux](https://redux.js.org/) и [Redux Toolkit](https://redux-toolkit.js.org/),

@@ -17,7 +17,7 @@ export const getChatData = async (clientId: number) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -33,7 +33,7 @@ export const getChatMessages = async (chatId: number) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -51,7 +51,7 @@ export const sendMessage = async (supportChatId: number, message: string) => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -67,7 +67,7 @@ export const getClientChat = async () => {
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };
 
@@ -85,6 +85,6 @@ export const markMessagesAsRead = async (supportRequestId: number, createdBefore
       }
     }
 
-    return { message: "error", status: "error" };
+    return { data: { data: "unknown error", status: "fail" } };
   }
 };

@@ -23,7 +23,7 @@ export function Settings() {
       password,
     });
 
-    if (updatedUser.status === "fail" || updatedUser.status === "error") {
+    if (updatedUser?.status === "fail") {
       showAlert!(updatedUser.data);
       return;
     }

@@ -1,23 +1,10 @@
 import styles from "./NewIncomings.module.scss";
 import { useContext, useEffect, useRef, useState } from "react";
-import { getNewIncomings } from "../../../api/libraries";
+import { getDigestBooks } from "../../../api/libraries";
 import { BookCard } from "../../BookCard/BookCard";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import type { Book } from "../../../types/library";
 import { AlertContext } from "../../../context/AlertContext";
-
-// export interface Book {
-//   title: string;
-//   description?: string;
-//   libraryId: number;
-//   author: string;
-//   year?: number;
-//   totalCopies: number;
-//   id: number;
-//   coverImage?: string;
-//   isAvailable: boolean;
-//   availableCopies: number;
-// }
 
 export function NewIncomings() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -25,13 +12,13 @@ export function NewIncomings() {
   const { showAlert } = useContext(AlertContext);
 
   async function getChoosedBooks() {
-    const booksFromApi = await getNewIncomings();
-    if (booksFromApi.status === "fail") {
+    const booksFromApi = await getDigestBooks();
+    if (booksFromApi?.status === "fail") {
       showAlert!(booksFromApi.data);
-      setBooks([]);
       return;
     }
-    setBooks(booksFromApi);
+    
+    setBooks(booksFromApi.reverse());
   }
 
   function handleScrollRight(element: any) {

@@ -1,7 +1,7 @@
 
 import { useNavigate, useParams } from "react-router";
 import styles from "./RentOrder.module.scss";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getBookById, getLibraryById } from "../../../api/libraries";
 import type { Book, Library } from "../../../types/library";
 import { findBookRent } from "../../../api/bookRent";
@@ -13,10 +13,12 @@ import {
   MapPin,
 } from "lucide-react";
 import { parseDateFromUTCToRu } from "../../../utils/parseRuDate";
+import { AlertContext } from "../../../context/AlertContext";
 
 export function RentOrder() {
   const params = useParams();
   const navigation = useNavigate();
+  const { showAlert } = useContext(AlertContext);
   const [rentData, setRentData] = useState<BookRent | null>(null);
   const [libraryData, setLibraryData] = useState<Library | null>(null);
   const [rentedBookData, setRentedBookData] = useState<Book | null>(null);
@@ -24,14 +26,17 @@ export function RentOrder() {
   async function getRentedBookData() {
     if (params.id) {
       const newRentData = await findBookRent(params.id);
-      if (newRentData.status !== "fail") {
-        const bookData = await getBookById(newRentData.bookId);
-        const libraryData = await getLibraryById(newRentData.libraryId);
-
-        setRentedBookData(bookData);
-        setLibraryData(libraryData);
-        setRentData(newRentData);
+      if (newRentData?.status === "fail") {
+        showAlert!(newRentData.data);
+        return;
       }
+
+      const bookData = await getBookById(newRentData.bookId);
+      const libraryData = await getLibraryById(newRentData.libraryId);
+
+      setRentedBookData(bookData);
+      setLibraryData(libraryData);
+      setRentData(newRentData);
     }
   }
 
