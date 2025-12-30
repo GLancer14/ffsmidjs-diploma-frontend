@@ -38,6 +38,11 @@
 
       background-color: colors.$button2;
       border-radius: 50%;
+      border: 1px solid colors.$textAndBorder;
+
+      &:hover {
+        background-color: colors.$button1;
+      }
     }
   }
 

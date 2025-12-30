@@ -62,7 +62,7 @@ export function BookCard({
 
   useEffect(() => {
     if (bookDescriptionElement.current && type !== "rent") {
-      applyDynamicEllipsis(bookDescriptionElement.current, 1.5);
+      applyDynamicEllipsis(bookDescriptionElement.current, 2);
     }
   }, []);
 
@@ -101,7 +101,7 @@ export function BookCard({
         </div>
         <div className={styles.dataDesc}>
           <span className={styles.fieldDesc}>Описание: </span>
-          <span className={styles.content}ref={bookDescriptionElement}>{description}</span>
+          <span className={styles.content} ref={bookDescriptionElement}>{description}</span>
         </div>
         {librariesBlock}
       </div>

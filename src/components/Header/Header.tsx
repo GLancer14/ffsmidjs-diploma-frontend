@@ -5,6 +5,7 @@ import { AuthModal } from "../UI/AuthModal/AuthModal";
 import { useState } from "react";
 import { useAppSelector } from "../../hooks/reduxHook";
 import avatar from "../../assets/avatars/avatar 1.svg";
+import classNames from "classnames";
 
 export function Header() {
   const navigation = useNavigate();
@@ -24,7 +25,7 @@ export function Header() {
         {userState?.email !== ""
           ? (
             <button
-              className={styles.authBtn}
+              className={classNames(styles.authBtn, styles.lk)}
               onClick={() => {
                 navigation("/profile");
               }}

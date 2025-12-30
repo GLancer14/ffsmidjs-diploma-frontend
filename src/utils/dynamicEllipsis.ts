@@ -13,5 +13,4 @@ export function applyDynamicEllipsis(element: HTMLElement, lineHeight = 1.5) {
       element.style.webkitBoxOrient = "vertical";
     }
   }
-  ;
 }
