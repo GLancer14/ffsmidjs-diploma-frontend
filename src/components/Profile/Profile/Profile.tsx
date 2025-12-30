@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { getChatData, getClientChat } from "../../../api/supportChat";
+import { getClientChat } from "../../../api/supportChat";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHook";
 import { updateObservedUserChat, updateObservedUserProfile } from "../../../store/reducers/observedUserProfileSlice";
 import styles from "./Profile.module.scss";
@@ -46,7 +46,7 @@ export function Profile({children}: {children: React.ReactNode}) {
       }
 
       return () => {
-        socket?.emit("unSubscribeToChat", {
+        socket?.emit("unsubscribeToChat", {
           chatId: observedUserProfile.chat.id
         });
       }

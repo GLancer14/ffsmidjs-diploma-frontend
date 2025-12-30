@@ -1,4 +1,4 @@
-import { Link, NavLink, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { HashLink } from "react-router-hash-link";
 import styles from "./Header.module.scss";
 import { AuthModal } from "../UI/AuthModal/AuthModal";

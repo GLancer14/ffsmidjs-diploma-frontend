@@ -35,9 +35,10 @@ export function AnotherUserProfile() {
   const observedUserProfile = useAppSelector(state => state.observedUserProfileReducer);
   const navigation = useNavigate();
   const [userRents, setUserRents] = useState<BookRentalResponseDto[]>([]);
+  const [chatId, setChatId] = useState(0);
   
   async function handleSubscribeToChatMessages() {
-    if (params.id) {
+    if (params.id && user.id) {
       const chatData = await getChatData(+params.id);
       if (chatData?.status === "fail") {
         showAlert!(chatData.data);
@@ -46,6 +47,7 @@ export function AnotherUserProfile() {
 
       dispatch(updateObservedUserChat(chatData));
       socket?.emit("subscribeToChat", { chatId: chatData.id });
+      setChatId(chatData.id);
     }
   }
 
@@ -86,6 +88,10 @@ export function AnotherUserProfile() {
     handleSetUserRents();
     handleGetUserData();
     handleSubscribeToChatMessages();
+
+    return () => {
+      socket?.emit("unsubscribeToChat", { chatId: chatId });
+    }
   }, []);
 
   return (

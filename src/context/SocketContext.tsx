@@ -41,7 +41,8 @@ export function SocketState({ children }: SocketStateProps) {
     
   useEffect(() => {
     let socket: Socket;
-    if (user.id !== 0) {
+    console.log(user.id)
+    if (user.id && user.id !== 0) {
       socket = handleSocketCreate(user.id);
       socketRef.current = socket;
       socket.connect();
@@ -52,9 +53,13 @@ export function SocketState({ children }: SocketStateProps) {
 
       return () => {
         socket.disconnect();
+        if (socketRef.current) {
+          socketRef.current.disconnect();
+          socketRef.current = null;
+        }
       };
     }
-  }, [user.email]);
+  }, [user.id]);
 
   return (
     <SocketContext.Provider value={{ socket: socketRef.current || undefined }}>
