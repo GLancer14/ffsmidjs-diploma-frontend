@@ -41,7 +41,7 @@ export function SocketState({ children }: SocketStateProps) {
     
   useEffect(() => {
     let socket: Socket;
-    if (user.email !== "") {
+    if (user.id !== 0) {
       socket = handleSocketCreate(user.id);
       socketRef.current = socket;
       socket.connect();
